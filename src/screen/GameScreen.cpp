@@ -1,19 +1,19 @@
 #include "GameScreen.h"
 
-GameScreen::GameScreen(ZombieAftermath* gamePtr)
-{
+GameScreen::GameScreen(ZombieAftermath* gamePtr) {
     this->gamePtr = gamePtr;
+    circle = CircleShape(100.0f);
+//    setInput(new GameScreenController());
 }
 
-void GameScreen::update(const float&)
-{
+void GameScreen::update(const float& delta) {
 }
 
-void GameScreen::render(RenderWindow& win, const float&)
-{
+void GameScreen::render(RenderWindow& win, const float& delta) {
+    cout << "" << delta << endl;
+    win.draw(circle);
 }
 
-GameScreen::~GameScreen()
-{
+GameScreen::~GameScreen() {
     //dtor
 }

@@ -5,11 +5,10 @@
 
 class ZombieAftermath : public Game {
     public:
-        ZombieAftermath();
+        ZombieAftermath(const float width, const float height);
         virtual ~ZombieAftermath();
     protected:
     private:
-//        Settings settings;
 };
 
 #endif // ZOMBIEAFTERMATH_H

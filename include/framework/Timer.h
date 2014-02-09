@@ -17,8 +17,6 @@ class Timer
         float currentTime;
         float previousTime;
         float deltaTime;
-
-        void update();
 };
 
 #endif // TIMER_H

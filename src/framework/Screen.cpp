@@ -1,13 +1,13 @@
 #include "Screen.h"
 
 Screen::Screen() {
-//    inputPtr = NULL;
+    inputPtr = NULL;
 }
 
 ///< Still figuring out what is the flexible type of getting input
 void Screen::updateInputEvent(RenderWindow& win, Event& event) {
-/*
-    if (inputPtr != NULL) {    ///< Ensures the setInput() runs first before doing anything
+
+    if (inputPtr != NULL) {    // Ensures the setInput() is called first before doing anything
 
         if ( (event.type == Event::KeyPressed) ) {
             inputPtr->keyPressed(event.key.code);
@@ -39,21 +39,24 @@ void Screen::updateInputEvent(RenderWindow& win, Event& event) {
             inputPtr->mouseMoved(mousePos.x, mousePos.y);
         }
     }
-    */
+
 }
 
 void Screen::updateMouseMotion(RenderWindow& win) {
+    if (inputPtr == NULL)  // Ensures the setInput() is called first before doing anything
+        return;
+
     mousePos = Mouse::getPosition(win);
-//    inputPtr->mouseMotion(mousePos.x, mousePos.y);
+    inputPtr->mouseMotion(mousePos.x, mousePos.y);
 }
 
-/*
+
 void Screen::setInput(Input* i) {
     delete inputPtr;
     inputPtr = i;
 }
-*/
+
 
 Screen::~Screen() {
-//    delete inputPtr;
+    delete inputPtr;
 }

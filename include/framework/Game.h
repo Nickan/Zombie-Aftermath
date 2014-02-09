@@ -2,6 +2,7 @@
 #define GAME_H
 #include "SFML/Graphics.hpp"
 #include "Screen.h"
+#include "framework/Timer.h"
 
 using namespace sf;
 
@@ -11,24 +12,29 @@ using namespace sf;
 
 class Game {
     public:
-        Game();
-        void update(const float&);
-        void render(RenderWindow&, const float&);
-        void setScreen(Screen*);
-        void close();
+        Game(const float width, const float height);
 
-        void setScreenSize(const Vector2i&);
+        void setScreen(Screen* scr);
+        void startLooping();
+
+        void setScreenSize(const Vector2i& scrSize);
         const Vector2i& getScreenSize();
 
+        float width;
+        float height;
         virtual ~Game();
     protected:
+
+        // Variables to set the mouse update speed
         float updateTime;
         float cumulativeTime;
 
-        Screen* screenPtr;
+        Screen* scrPtr;
         Vector2i screenSize;
+
+        // Newly created variables
+        Timer* timerPtr;
     private:
-        bool closed;
 };
 
 #endif // GAME_H

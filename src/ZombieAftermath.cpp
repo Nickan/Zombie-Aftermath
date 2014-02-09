@@ -1,6 +1,7 @@
 #include "ZombieAftermath.h"
 
-ZombieAftermath::ZombieAftermath()
+ZombieAftermath::ZombieAftermath(const float width, const float height)
+: Game(width, height)
 {
     //ctor
 }

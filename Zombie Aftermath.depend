@@ -1,6 +1,5 @@
 # depslib dependency file v1.0
-1391941006 source:/home/nickan/C++ Projects/Zombie Aftermath/main.cpp
-	<SFML/Graphics.hpp>
+1391952135 source:/home/nickan/C++ Projects/Zombie Aftermath/main.cpp
 	"ZombieAftermath.h"
 	"screen/GameScreen.h"
 
@@ -344,7 +343,7 @@
 
 1391935967 /home/nickan/C++ Projects/Zombie Aftermath/include/framework/Test.h
 
-1391939490 source:/home/nickan/C++ Projects/Zombie Aftermath/src/framework/Game.cpp
+1391954631 source:/home/nickan/C++ Projects/Zombie Aftermath/src/framework/Game.cpp
 	"Game.h"
 
 1391936553 source:/home/nickan/C++ Projects/Zombie Aftermath/src/Test.cpp
@@ -352,27 +351,50 @@
 
 1391936552 /home/nickan/C++ Projects/Zombie Aftermath/include/Test.h
 
-1391939475 /home/nickan/C++ Projects/Zombie Aftermath/include/framework/Game.h
+1391953947 /home/nickan/C++ Projects/Zombie Aftermath/include/framework/Game.h
 	"SFML/Graphics.hpp"
 	"Screen.h"
+	"framework/Timer.h"
 
-1391937795 source:/home/nickan/C++ Projects/Zombie Aftermath/src/ZombieAftermath.cpp
+1391950587 source:/home/nickan/C++ Projects/Zombie Aftermath/src/ZombieAftermath.cpp
 	"ZombieAftermath.h"
 
-1391939173 /home/nickan/C++ Projects/Zombie Aftermath/include/ZombieAftermath.h
+1391950614 /home/nickan/C++ Projects/Zombie Aftermath/include/ZombieAftermath.h
 	"framework/Game.h"
 
-1391939451 source:/home/nickan/C++ Projects/Zombie Aftermath/src/framework/Screen.cpp
+1391955021 source:/home/nickan/C++ Projects/Zombie Aftermath/src/framework/Screen.cpp
 	"Screen.h"
 
-1391939386 /home/nickan/C++ Projects/Zombie Aftermath/include/framework/Screen.h
+1391955187 /home/nickan/C++ Projects/Zombie Aftermath/include/framework/Screen.h
 	<SFML/Graphics/RenderWindow.hpp>
 	<SFML/Window/Event.hpp>
 	<SFML/Window/Mouse.hpp>
+	"Input.h"
 
-1391941119 /home/nickan/C++ Projects/Zombie Aftermath/include/screen/GameScreen.h
+1391954823 /home/nickan/C++ Projects/Zombie Aftermath/include/screen/GameScreen.h
+	<SFML/Graphics.hpp>
 	"Screen.h"
+	"ZombieAftermath.h"
+	"../view/GameScreenController.h"
+	<iostream>
 
-1391941157 source:/home/nickan/C++ Projects/Zombie Aftermath/src/screen/GameScreen.cpp
+1391954935 source:/home/nickan/C++ Projects/Zombie Aftermath/src/screen/GameScreen.cpp
 	"GameScreen.h"
+
+1391952487 /home/nickan/C++ Projects/Zombie Aftermath/include/framework/Timer.h
+	"SFML/Graphics.hpp"
+
+1391952489 source:/home/nickan/C++ Projects/Zombie Aftermath/src/framework/Timer.cpp
+	"Timer.h"
+
+1391953824 /home/nickan/C++ Projects/Zombie Aftermath/include/framework/Input.h
+
+1391953273 source:/home/nickan/C++ Projects/Zombie Aftermath/src/framework/Input.cpp
+	"Input.h"
+
+1391954540 source:/home/nickan/C++ Projects/Zombie Aftermath/src/view/GameScreenController.cpp
+	"GameScreenController.h"
+
+1391954848 /home/nickan/C++ Projects/Zombie Aftermath/include/view/GameScreenController.h
+	"../framework/Input.h"
 
