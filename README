@@ -1,0 +1,8 @@
+My C++ 2D tower defense. Powered by SFML (I need to know how they put links XD) 
+http://www.sfml-dev.org/. using Code Blocks as my IDE.
+
+I created this game on Windows 7 and decided to revive it using Ubuntu 13.10, 
+and the experience is so painful as there are many things that has to be done 
+by hand. My aim is to improve my overall C++ skills, polish this game. 
+
+I will provide the needed files (The compiled SFML 2.1) and other updates later.
