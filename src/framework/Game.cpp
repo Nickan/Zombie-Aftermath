@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(const float width, const float height) {
+Game::Game(const float width, const float height, const string gameName) {
     this->width = width;
     this->height = height;
     scrPtr = NULL;
@@ -9,15 +9,15 @@ Game::Game(const float width, const float height) {
     updateTime = (1000.0f / updateRate) / 1000.0f;
 
     timerPtr = new Timer();
+    this->gameName = gameName;
 }
 
 void Game::startLooping() {
-    RenderWindow win(VideoMode(width, height), "Game Created!");
+    RenderWindow win(VideoMode(width, height), gameName);
     while (win.isOpen()) {
         win.clear();
 
         float delta = timerPtr->getDeltaTime();
-        scrPtr->update(delta);
         scrPtr->render(win, delta);
 
         Event event;
@@ -38,32 +38,6 @@ void Game::startLooping() {
         win.display();
     }
 }
-
-/*
-void Game::render(RenderWindow& win, const float& delta) {
-    Event event;
-    while (win.pollEvent(event)) {
-        ///< Close window
-        if (event.type == Event::Closed) {
-            win.close();
-        }
-        screenPtr->updateInputEvent(win, event);
-    }
-
-    cumulativeTime += delta;
-    if (cumulativeTime >= updateTime) {
-        cumulativeTime -= updateTime;
-        screenPtr->updateMouseMotion(win);
-    }
-
-    screenPtr->render(win, delta);
-
-    if (closed) {
-        win.close();
-    }
-
-}
-*/
 
 void Game::setScreen(Screen* scrPtr) {
     delete this->scrPtr;
