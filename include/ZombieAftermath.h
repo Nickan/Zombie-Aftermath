@@ -5,7 +5,7 @@
 
 class ZombieAftermath : public Game {
     public:
-        ZombieAftermath(const float width, const float height);
+        ZombieAftermath(const float width, const float height, const string gameName);
         virtual ~ZombieAftermath();
     protected:
     private:
