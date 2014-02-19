@@ -6,9 +6,11 @@ GameScreenController::GameScreenController()
 }
 
 void GameScreenController::keyPressed(const int& keycode) {
+
 }
 
 void GameScreenController::keyReleased(const int& keycode) {
+
 }
 
 void GameScreenController::leftMousePressed(const int& x, const int& y) {

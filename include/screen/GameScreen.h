@@ -1,10 +1,9 @@
 #ifndef GAMESCREEN_H
 #define GAMESCREEN_H
-#include <SFML/Graphics.hpp>
 
 #include "Screen.h"
 #include "ZombieAftermath.h"
-#include "../view/GameScreenController.h"
+#include "GameScreenController.h"
 
 // For debugging
 #include <iostream>
@@ -14,7 +13,6 @@ class GameScreen : public Screen
 {
     public:
         GameScreen(ZombieAftermath* gamePtr);
-        void update(const float& delta);
         void render(RenderWindow& win, const float& delta);
         ~GameScreen();
     protected:

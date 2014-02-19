@@ -1,7 +1,15 @@
 #ifndef GAMESCREENCONTROLLER_H
 #define GAMESCREENCONTROLLER_H
 
+#include <SFML/Window/Keyboard.hpp>
 #include "../framework/Input.h"
+
+
+using namespace sf;
+
+// For debugging
+#include <iostream>
+using namespace std;
 
 class GameScreenController : public Input
 {

@@ -11,7 +11,6 @@ using namespace sf;
 class Screen {
     public:
         Screen();
-        virtual void update(const float& delta) = 0;
         virtual void render(RenderWindow&, const float& delta) = 0;
 
         // Will be called when there is an event

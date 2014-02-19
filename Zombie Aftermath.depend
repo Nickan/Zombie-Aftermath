@@ -398,3 +398,77 @@
 1391954848 /home/nickan/C++ Projects/Zombie Aftermath/include/view/GameScreenController.h
 	"../framework/Input.h"
 
+1392772968 source:/home/nickan/C++ Projects/Zombie-Aftermath/main.cpp
+	"ZombieAftermath.h"
+	"screen/GameScreen.h"
+	"screen/MenuScreen.h"
+
+1392773003 /home/nickan/C++ Projects/Zombie-Aftermath/include/ZombieAftermath.h
+	"framework/Game.h"
+
+1392773010 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/Game.h
+	<SFML/Graphics.hpp>
+	<sstream>
+	"Screen.h"
+	"framework/Timer.h"
+
+1392525015 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/Screen.h
+	<SFML/Graphics/RenderWindow.hpp>
+	<SFML/Window/Event.hpp>
+	<SFML/Window/Mouse.hpp>
+	"Input.h"
+
+1391953824 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/Input.h
+
+1391952487 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/Timer.h
+	"SFML/Graphics.hpp"
+
+1392772351 /home/nickan/C++ Projects/Zombie-Aftermath/include/screen/GameScreen.h
+	"Screen.h"
+	"ZombieAftermath.h"
+	"GameScreenController.h"
+	<iostream>
+
+1392771055 /home/nickan/C++ Projects/Zombie-Aftermath/include/view/GameScreenController.h
+	<SFML/Window/Keyboard.hpp>
+	"../framework/Input.h"
+	<iostream>
+
+1392786099 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Game.cpp
+	"Game.h"
+
+1391955021 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Screen.cpp
+	"Screen.h"
+
+1391952489 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Timer.cpp
+	"Timer.h"
+
+1392527868 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/screen/GameScreen.cpp
+	"GameScreen.h"
+
+1392772997 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/ZombieAftermath.cpp
+	"ZombieAftermath.h"
+
+1391953273 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Input.cpp
+	"Input.h"
+
+1392771110 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/view/GameScreenController.cpp
+	"GameScreenController.h"
+
+1392804893 /home/nickan/C++ Projects/Zombie-Aftermath/include/screen/MenuScreen.h
+	"ZombieAftermath.h"
+	"Screen.h"
+	"Animation.h"
+	<iostream>
+
+1392805894 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/screen/MenuScreen.cpp
+	"MenuScreen.h"
+
+1392805885 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Animation.cpp
+	"Animation.h"
+
+1392805791 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/Animation.h
+	<SFML/Graphics.hpp>
+	<vector>
+	<iostream>
+

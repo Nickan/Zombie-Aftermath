@@ -43,21 +43,30 @@
 			<Add directory="include" />
 			<Add directory="include/framework" />
 			<Add directory="include/screen" />
+			<Add directory="include/view" />
 		</Compiler>
 		<Linker>
 			<Add directory="/home/nickan/SFML2/lib" />
 		</Linker>
 		<Unit filename="include/ZombieAftermath.h" />
+		<Unit filename="include/framework/Animation.h" />
 		<Unit filename="include/framework/Game.h" />
+		<Unit filename="include/framework/Input.h" />
 		<Unit filename="include/framework/Screen.h" />
 		<Unit filename="include/framework/Timer.h" />
 		<Unit filename="include/screen/GameScreen.h" />
+		<Unit filename="include/screen/MenuScreen.h" />
+		<Unit filename="include/view/GameScreenController.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/ZombieAftermath.cpp" />
+		<Unit filename="src/framework/Animation.cpp" />
 		<Unit filename="src/framework/Game.cpp" />
+		<Unit filename="src/framework/Input.cpp" />
 		<Unit filename="src/framework/Screen.cpp" />
 		<Unit filename="src/framework/Timer.cpp" />
 		<Unit filename="src/screen/GameScreen.cpp" />
+		<Unit filename="src/screen/MenuScreen.cpp" />
+		<Unit filename="src/view/GameScreenController.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
