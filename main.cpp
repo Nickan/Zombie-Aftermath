@@ -1,7 +1,7 @@
 #include "ZombieAftermath.h"
 
-#include "screen/GameScreen.h"
-#include "screen/MenuScreen.h"
+#include "GameScreen.h"
+#include "MenuScreen.h"
 
 using namespace sf;
 

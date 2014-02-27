@@ -11,7 +11,7 @@
 using namespace sf;
 
 ///
-//#include <iostream>
+#include <iostream>
 using namespace std;
 
 class Game {
@@ -23,6 +23,7 @@ class Game {
 
         void setScreenSize(const Vector2i& scrSize);
         const Vector2i& getScreenSize();
+        void exit();
 
         float width;
         float height;
@@ -36,6 +37,7 @@ class Game {
         Vector2i screenSize;
 
         string gameName;
+        bool closed;
 
         // Newly created variables
         Timer* timerPtr;

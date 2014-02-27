@@ -398,19 +398,20 @@
 1391954848 /home/nickan/C++ Projects/Zombie Aftermath/include/view/GameScreenController.h
 	"../framework/Input.h"
 
-1392772968 source:/home/nickan/C++ Projects/Zombie-Aftermath/main.cpp
+1393433305 source:/home/nickan/C++ Projects/Zombie-Aftermath/main.cpp
 	"ZombieAftermath.h"
-	"screen/GameScreen.h"
-	"screen/MenuScreen.h"
+	"GameScreen.h"
+	"MenuScreen.h"
 
 1392773003 /home/nickan/C++ Projects/Zombie-Aftermath/include/ZombieAftermath.h
 	"framework/Game.h"
 
-1392773010 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/Game.h
+1393484802 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/Game.h
 	<SFML/Graphics.hpp>
 	<sstream>
 	"Screen.h"
 	"framework/Timer.h"
+	<iostream>
 
 1392525015 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/Screen.h
 	<SFML/Graphics/RenderWindow.hpp>
@@ -434,7 +435,7 @@
 	"../framework/Input.h"
 	<iostream>
 
-1392786099 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Game.cpp
+1393484790 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Game.cpp
 	"Game.h"
 
 1391955021 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Screen.cpp
@@ -455,20 +456,204 @@
 1392771110 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/view/GameScreenController.cpp
 	"GameScreenController.h"
 
-1392804893 /home/nickan/C++ Projects/Zombie-Aftermath/include/screen/MenuScreen.h
+1393432654 /home/nickan/C++ Projects/Zombie-Aftermath/include/screen/MenuScreen.h
 	"ZombieAftermath.h"
 	"Screen.h"
 	"Animation.h"
+	"GameSprite.h"
+	"Settings.h"
 	<iostream>
 
-1392805894 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/screen/MenuScreen.cpp
+1392946687 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/screen/MenuScreen.cpp
 	"MenuScreen.h"
 
-1392805885 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Animation.cpp
+1392807344 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Animation.cpp
 	"Animation.h"
 
 1392805791 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/Animation.h
 	<SFML/Graphics.hpp>
 	<vector>
 	<iostream>
+
+1392944476 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/GameSprite.cpp
+	"GameSprite.h"
+
+1392944507 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/GameSprite.h
+	<iostream>
+	<SFML/Graphics/RenderWindow.hpp>
+	<SFML/Graphics/Texture.hpp>
+	<SFML/Graphics/Sprite.hpp>
+
+1393445954 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/GameAudio.cpp
+	"GameAudio.h"
+
+1393445958 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/GameAudio.h
+	<SFML/Audio/Music.hpp>
+	<SFML/Audio/Sound.hpp>
+	<SFML/Audio/SoundBuffer.hpp>
+	<iostream>
+	<vector>
+
+1391714541 /home/nickan/SFML2/include/SFML/Audio.hpp
+	<SFML/System.hpp>
+	<SFML/Audio/Listener.hpp>
+	<SFML/Audio/Music.hpp>
+	<SFML/Audio/Sound.hpp>
+	<SFML/Audio/SoundBuffer.hpp>
+	<SFML/Audio/SoundBufferRecorder.hpp>
+	<SFML/Audio/SoundRecorder.hpp>
+	<SFML/Audio/SoundStream.hpp>
+
+1391714541 /home/nickan/SFML2/include/SFML/Audio/Listener.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/Vector3.hpp>
+
+1391714541 /home/nickan/SFML2/include/SFML/Audio/Export.hpp
+	<SFML/Config.hpp>
+
+1391714541 /home/nickan/SFML2/include/SFML/Audio/Music.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundStream.hpp>
+	<SFML/System/Mutex.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<vector>
+
+1391714541 /home/nickan/SFML2/include/SFML/Audio/SoundStream.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/Time.hpp>
+	<cstdlib>
+
+1391714541 /home/nickan/SFML2/include/SFML/Audio/SoundSource.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/Vector3.hpp>
+
+1391714541 /home/nickan/SFML2/include/SFML/Audio/Sound.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/System/Time.hpp>
+	<cstdlib>
+
+1391714541 /home/nickan/SFML2/include/SFML/Audio/SoundBuffer.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<vector>
+	<set>
+
+1391714541 /home/nickan/SFML2/include/SFML/Audio/SoundBufferRecorder.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundBuffer.hpp>
+	<SFML/Audio/SoundRecorder.hpp>
+	<vector>
+
+1391714541 /home/nickan/SFML2/include/SFML/Audio/SoundRecorder.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/Time.hpp>
+	<vector>
+	<string>
+
+1392948786 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/ScoreHandler.cpp
+	"ScoreHandler.h"
+
+1392948770 /home/nickan/C++ Projects/Zombie-Aftermath/include/ScoreHandler.h
+	<fstream>
+	<vector>
+	<iostream>
+
+1393481115 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/Settings.cpp
+	"Settings.h"
+
+1393443681 /home/nickan/C++ Projects/Zombie-Aftermath/include/Settings.h
+	"GameAudio.h"
+	"ScoreHandler.h"
+	<iostream>
+
+1392949761 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/GameMusic.cpp
+	"GameMusic.h"
+
+1392950006 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/GameMusic.h
+	<SFML/Audio/Music.hpp>
+	<iostream>
+
+1393508782 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/gamescreen/GameScreen.cpp
+	"GameScreen.h"
+
+1393490600 /home/nickan/C++ Projects/Zombie-Aftermath/include/gamescreen/GameScreen.h
+	"Screen.h"
+	"ZombieAftermath.h"
+	"GameScreenController.h"
+	"GameScreenUpdate.h"
+	"GameScreenRenderer.h"
+	<iostream>
+
+1393490398 /home/nickan/C++ Projects/Zombie-Aftermath/include/gamescreen/GameScreenController.h
+	<SFML/Window/Keyboard.hpp>
+	"framework/Input.h"
+	<iostream>
+
+1392771110 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/gamescreen/GameScreenController.cpp
+	"GameScreenController.h"
+
+1393484742 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/menuscreen/MenuScreen.cpp
+	"MenuScreen.h"
+
+1393441612 /home/nickan/C++ Projects/Zombie-Aftermath/include/menuscreen/MenuScreen.h
+	"ZombieAftermath.h"
+	"Screen.h"
+	"Animation.h"
+	"GameSprite.h"
+	"Settings.h"
+	"MenuScreenInput.h"
+	<iostream>
+
+1393485028 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/menuscreen/MenuScreenInput.cpp
+	"MenuScreenInput.h"
+
+1393445110 /home/nickan/C++ Projects/Zombie-Aftermath/include/menuscreen/MenuScreenInput.h
+	"MenuScreen.h"
+	"GameScreen.h"
+	"framework/Input.h"
+	"Settings.h"
+	<iostream>
+
+1393508600 /home/nickan/C++ Projects/Zombie-Aftermath/include/gamescreen/GameScreenUpdate.h
+	"RotationManager.h"
+	<iostream>
+
+1393489716 /home/nickan/C++ Projects/Zombie-Aftermath/include/GameScreenRenderer.h
+	<SFML/Graphics.hpp>
+	"GameScreenUpdate.h"
+	<iostream>
+
+1393490530 /home/nickan/C++ Projects/Zombie-Aftermath/include/gamescreen/GameScreenRenderer.h
+	<SFML/Graphics.hpp>
+	<iostream>
+
+1393490529 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/gamescreen/GameScreenRenderer.cpp
+	"GameScreenRenderer.h"
+
+1393508652 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/gamescreen/GameScreenUpdate.cpp
+	"GameScreenUpdate.h"
+
+1393493347 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/model/Cannon.cpp
+	"Cannon.h"
+
+1393493305 /home/nickan/C++ Projects/Zombie-Aftermath/include/model/Cannon.h
+	"Entity.h"
+
+1393493429 /home/nickan/C++ Projects/Zombie-Aftermath/include/model/Entity.h
+	<SFML/Graphics/Rect.hpp>
+
+1393493399 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/model/Entity.cpp
+	"Entity.h"
+
+1393508407 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/RotationManager.cpp
+	"RotationManager.h"
+
+1393508464 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/RotationManager.h
+	<cmath>
 

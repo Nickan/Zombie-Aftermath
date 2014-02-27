@@ -62,7 +62,7 @@ void Animation::updateSprite(const float& stateTime) {
     sprite.setTextureRect(drawRect);
 
     //...
-    cout << "Current frame: " << currentFrame << endl;
+//    cout << "Current frame: " << currentFrame << endl;
 }
 
 ////////////////////////////////////////////////////////////////////

@@ -18,6 +18,7 @@
 					<Add library="sfml-graphics-d" />
 					<Add library="sfml-window-d" />
 					<Add library="sfml-system-d" />
+					<Add library="sfml-audio-d" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -33,6 +34,7 @@
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
+					<Add library="sfml-audio" />
 				</Linker>
 			</Target>
 		</Build>
@@ -42,31 +44,50 @@
 			<Add directory="/home/nickan/SFML2/include" />
 			<Add directory="include" />
 			<Add directory="include/framework" />
-			<Add directory="include/screen" />
-			<Add directory="include/view" />
+			<Add directory="include/gamescreen" />
+			<Add directory="include/menuscreen" />
+			<Add directory="include/model" />
 		</Compiler>
 		<Linker>
 			<Add directory="/home/nickan/SFML2/lib" />
 		</Linker>
+		<Unit filename="include/ScoreHandler.h" />
+		<Unit filename="include/Settings.h" />
 		<Unit filename="include/ZombieAftermath.h" />
 		<Unit filename="include/framework/Animation.h" />
 		<Unit filename="include/framework/Game.h" />
+		<Unit filename="include/framework/GameAudio.h" />
+		<Unit filename="include/framework/GameSprite.h" />
 		<Unit filename="include/framework/Input.h" />
 		<Unit filename="include/framework/Screen.h" />
 		<Unit filename="include/framework/Timer.h" />
-		<Unit filename="include/screen/GameScreen.h" />
-		<Unit filename="include/screen/MenuScreen.h" />
-		<Unit filename="include/view/GameScreenController.h" />
+		<Unit filename="include/gamescreen/GameScreen.h" />
+		<Unit filename="include/gamescreen/GameScreenController.h" />
+		<Unit filename="include/gamescreen/GameScreenRenderer.h" />
+		<Unit filename="include/gamescreen/GameScreenUpdate.h" />
+		<Unit filename="include/menuscreen/MenuScreen.h" />
+		<Unit filename="include/menuscreen/MenuScreenInput.h" />
+		<Unit filename="include/model/Cannon.h" />
+		<Unit filename="include/model/Entity.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/ScoreHandler.cpp" />
+		<Unit filename="src/Settings.cpp" />
 		<Unit filename="src/ZombieAftermath.cpp" />
 		<Unit filename="src/framework/Animation.cpp" />
 		<Unit filename="src/framework/Game.cpp" />
+		<Unit filename="src/framework/GameAudio.cpp" />
+		<Unit filename="src/framework/GameSprite.cpp" />
 		<Unit filename="src/framework/Input.cpp" />
 		<Unit filename="src/framework/Screen.cpp" />
 		<Unit filename="src/framework/Timer.cpp" />
-		<Unit filename="src/screen/GameScreen.cpp" />
-		<Unit filename="src/screen/MenuScreen.cpp" />
-		<Unit filename="src/view/GameScreenController.cpp" />
+		<Unit filename="src/gamescreen/GameScreen.cpp" />
+		<Unit filename="src/gamescreen/GameScreenController.cpp" />
+		<Unit filename="src/gamescreen/GameScreenRenderer.cpp" />
+		<Unit filename="src/gamescreen/GameScreenUpdate.cpp" />
+		<Unit filename="src/menuscreen/MenuScreen.cpp" />
+		<Unit filename="src/menuscreen/MenuScreenInput.cpp" />
+		<Unit filename="src/model/Cannon.cpp" />
+		<Unit filename="src/model/Entity.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
