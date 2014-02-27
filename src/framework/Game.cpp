@@ -35,8 +35,14 @@ void Game::startLooping() {
             scrPtr->updateMouseMotion(win);
         }
 
+
+        if (closed) {
+            win.close();
+        }
+
         win.display();
     }
+
 }
 
 void Game::setScreen(Screen* scrPtr) {
@@ -51,6 +57,10 @@ void Game::setScreenSize(const Vector2i& scrSize) {
 
 const Vector2i& Game::getScreenSize() {
     return screenSize;
+}
+
+void Game::exit() {
+    closed = true;
 }
 
 Game::~Game() {
