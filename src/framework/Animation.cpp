@@ -69,7 +69,7 @@ void Animation::updateSprite(const float& stateTime) {
 //    My attempt to simulate the modulus operation
 //    Not accurate, I might change this to double for accuracy
 ////////////////////////////////////////////////////////////////////
-const float& Animation::getModulus(const float& firstNum, const float& secondNum) {
+const float Animation::getModulus(const float& firstNum, const float& secondNum) {
     float mod = 0;
     float div = firstNum / secondNum;
 

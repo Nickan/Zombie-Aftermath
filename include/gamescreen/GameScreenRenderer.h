@@ -24,13 +24,14 @@ class GameScreenRenderer {
         GameScreenRenderer(GameScreenUpdate* updatePtr);
         void render(RenderWindow& win, const float& delta);
 
+
         TiledMap* tiledMapPtr;
+        GameScreenUpdate* updatePtr;
+        GameSprite* tempSpritePtr;
+
         virtual ~GameScreenRenderer();
     protected:
     private:
-        GameScreenUpdate* updatePtr;
-
-        GameSprite* tempSpritePtr;
 };
 
 #endif // GAMESCREENRENDERER_H

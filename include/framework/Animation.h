@@ -44,7 +44,7 @@ class Animation {
         static const int NORMAL;
         static const int LOOP;
 
-        const float& getModulus(const float& firstNum, const float& secondNum);
+        const float getModulus(const float& firstNum, const float& secondNum);
         virtual ~Animation();
     protected:
         void updateSprite(const float& stateTime);

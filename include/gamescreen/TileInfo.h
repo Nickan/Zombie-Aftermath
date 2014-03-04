@@ -7,7 +7,7 @@ class TileInfo
     public:
         TileInfo();
 
-        static float tileMapInfo[100];
+        static float tileMapInfo[];
         virtual ~TileInfo();
     protected:
     private:

@@ -7,9 +7,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <sstream>
-
-#include <cstdlib>
 
 #include "Cell.h"
 #include "GameSprite.h"
@@ -21,14 +18,12 @@ using namespace std;
 class TextureAtlas
 {
     public:
-        TextureAtlas(const Texture& texture, const string& filePath);
         TextureAtlas(const string& texturePath, const string& filePath);
 
         GameSprite* getSprite(const string& name);
         virtual ~TextureAtlas();
     protected:
     private:
-
         // will trim off the unnecessary characters
         void setNeededString(string& str, unsigned int startingIndex);
         void readFile(ifstream& atlasFile, vector<Cell*>& cellsList);
@@ -36,15 +31,9 @@ class TextureAtlas
         void setCellInfo(ifstream& atlasFile, Cell* cellPtr);
         void createGameSprite(vector<Cell*>& cellsPtrList, const string& texturePath);
 
-        Texture texture;
-        vector<GameSprite*> spritesPtrList;
-        vector<string> spriteNameList;
-        vector<string> textureList;
-
         // The value for each cell is not saved when I am not using pointer for the cell
         vector<Cell*> cellsPtrList;
-
-        vector<GameSprite*> spriteList;
+        vector<GameSprite*> spritesPtrList;
 };
 
 #endif // TEXTUREATLAS_H

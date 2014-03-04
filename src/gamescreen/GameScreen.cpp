@@ -2,7 +2,7 @@
 
 GameScreen::GameScreen(ZombieAftermath* gamePtr) {
     this->gamePtr = gamePtr;
-    setInput(new GameScreenController());
+    setInput(new GameScreenController(this));
 
     updatePtr = new GameScreenUpdate();
     rendererPtr = new GameScreenRenderer(updatePtr);

@@ -15,12 +15,14 @@ class GameScreen : public Screen {
     public:
         GameScreen(ZombieAftermath* gamePtr);
         void render(RenderWindow& win, const float& delta);
-        ~GameScreen();
-    protected:
+
         ZombieAftermath* gamePtr;
 
         GameScreenUpdate* updatePtr;
         GameScreenRenderer* rendererPtr;
+        ~GameScreen();
+    protected:
+
     private:
 };
 

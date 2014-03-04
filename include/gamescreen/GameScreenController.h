@@ -2,8 +2,9 @@
 #define GAMESCREENCONTROLLER_H
 
 #include <SFML/Window/Keyboard.hpp>
-#include "framework/Input.h"
+//#include "framework/Input.h"
 
+#include "GameScreen.h"
 
 using namespace sf;
 
@@ -11,10 +12,12 @@ using namespace sf;
 #include <iostream>
 using namespace std;
 
+class GameScreen;
+
 class GameScreenController : public Input
 {
     public:
-        GameScreenController();
+        GameScreenController(GameScreen* gameScreenPtr);
 
         void leftMousePressed(const int& x, const int& y);
         void leftMouseReleased(const int& x, const int& y);
@@ -29,6 +32,7 @@ class GameScreenController : public Input
         virtual ~GameScreenController();
     protected:
     private:
+        GameScreen* gameScreenPtr;
 };
 
 #endif // GAMESCREENCONTROLLER_H

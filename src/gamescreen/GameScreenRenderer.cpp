@@ -9,16 +9,10 @@ GameScreenRenderer::GameScreenRenderer(GameScreenUpdate* ptr) {
 
     texture.loadFromImage(image, IntRect(0, 0, 128, 32));
 
-    unsigned int width = 32;
-    unsigned int height = 32;
-    unsigned int rows = 10;
-    unsigned int columns = 10;
-    unsigned int screenWidth = 800;
-    unsigned int screenHeight = 600;
-    tiledMapPtr = new TiledMap(texture, TileInfo::tileMapInfo, 4, width, height, rows, columns, screenWidth, screenHeight);
+    tiledMapPtr = new TiledMap(texture, TileInfo::tileMapInfo, 4, 32, 32, 38, 50, 800, 600);
 
     vector<vector<float> > tileInfo = tiledMapPtr->tileInfo;
-
+    /*
     // For debugging...
     for (unsigned int col = 0; col < tileInfo.size(); ++col) {
         for (unsigned int row = 0; row < tileInfo.at(0).size(); ++row) {
@@ -26,7 +20,7 @@ GameScreenRenderer::GameScreenRenderer(GameScreenUpdate* ptr) {
         }
         cout << endl;
     }
-
+    */
 
     TextureAtlas* textureAtlasPtr = new TextureAtlas("assets/images.png", "assets/images.xml");
     tempSpritePtr = textureAtlasPtr->getSprite("normalcannon");
@@ -36,9 +30,9 @@ GameScreenRenderer::GameScreenRenderer(GameScreenUpdate* ptr) {
 
 
 void GameScreenRenderer::render(RenderWindow& win, const float& delta) {
-    tiledMapPtr->draw(win);
+    tiledMapPtr->draw(win, 32, 32);
 
-    tempSpritePtr->draw(win);
+    tempSpritePtr->draw(win, 32, 32, 0);
 }
 
 GameScreenRenderer::~GameScreenRenderer() {

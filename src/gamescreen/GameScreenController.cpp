@@ -1,8 +1,7 @@
 #include "GameScreenController.h"
 
-GameScreenController::GameScreenController()
-{
-    //ctor
+GameScreenController::GameScreenController(GameScreen* gameScreenPtr) {
+    this->gameScreenPtr = gameScreenPtr;
 }
 
 void GameScreenController::keyPressed(const int& keycode) {
@@ -33,5 +32,5 @@ void GameScreenController::mouseMotion(const int& x, const int& y) {
 }
 
 GameScreenController::~GameScreenController() {
-    //dtor
+
 }
