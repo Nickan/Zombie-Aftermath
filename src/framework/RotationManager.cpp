@@ -32,25 +32,25 @@ const float RotationManager::getSmoothRotation(const float& curRot, const float&
     }
 
     // The current rotation is lower than the target rotation
-    if (currentRotation < targetRotation) {
+    if (curRot < tarRot) {
 
         // The difference between is lower than 180
-        if (diffRotation <= 180) {
-            return (currentRotation += rotationSpeed);
+        if (difRot <= 180) {
+            return curRot + incRot;
         } else {
             // Higher
-            return (currentRotation -= rotationSpeed);
+            return curRot - incRot;
         }
 
     } else {
 
         // The current rotation is higher than the target rotation
         // The difference between is lower than 180
-        if ( Math.abs(diffRotation) <= 180) {
-            return currentRotation -= rotationSpeed;
+        if ( abs(difRot) <= 180) {
+            return curRot - incRot;
         } else {
             // Higher
-            return (currentRotation += rotationSpeed);
+            return curRot + incRot;
         }
     }
 
