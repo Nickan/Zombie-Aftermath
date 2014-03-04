@@ -1,0 +1,14 @@
+#ifndef ZOMBIE_H
+#define ZOMBIE_H
+
+#include "Entity.h"
+
+class Zombie : public Entity {
+    public:
+        Zombie(FloatRect* boundPtr, float rotation);
+        virtual ~Zombie();
+    protected:
+    private:
+};
+
+#endif // ZOMBIE_H
