@@ -1,6 +1,7 @@
 #include "GameScreenRenderer.h"
 
 GameScreenRenderer::GameScreenRenderer(GameScreenUpdate* ptr) {
+    updatePtr = ptr;
     Image image;
     image.loadFromFile("assets/allgameimages.png");
 
@@ -30,7 +31,7 @@ GameScreenRenderer::GameScreenRenderer(GameScreenUpdate* ptr) {
 
 
 void GameScreenRenderer::render(RenderWindow& win, const float& delta) {
-    tiledMapPtr->draw(win, 32, 32);
+    tiledMapPtr->draw(win, updatePtr->mapPos.x, updatePtr->mapPos.y);
 
     tempSpritePtr->draw(win, 32, 32, 0);
 }

@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "GameSprite.h"
+#include "GameScreenUpdate.h"
 
 using namespace sf;
 
@@ -24,14 +25,13 @@ class GameScreenRenderer {
         GameScreenRenderer(GameScreenUpdate* updatePtr);
         void render(RenderWindow& win, const float& delta);
 
-
         TiledMap* tiledMapPtr;
-        GameScreenUpdate* updatePtr;
         GameSprite* tempSpritePtr;
 
         virtual ~GameScreenRenderer();
     protected:
     private:
+        GameScreenUpdate* updatePtr;
 };
 
 #endif // GAMESCREENRENDERER_H
