@@ -398,7 +398,7 @@
 1391954848 /home/nickan/C++ Projects/Zombie Aftermath/include/view/GameScreenController.h
 	"../framework/Input.h"
 
-1393433305 source:/home/nickan/C++ Projects/Zombie-Aftermath/main.cpp
+1393841814 source:/home/nickan/C++ Projects/Zombie-Aftermath/main.cpp
 	"ZombieAftermath.h"
 	"GameScreen.h"
 	"MenuScreen.h"
@@ -435,7 +435,7 @@
 	"../framework/Input.h"
 	<iostream>
 
-1393484790 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Game.cpp
+1393510845 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Game.cpp
 	"Game.h"
 
 1391955021 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/Screen.cpp
@@ -475,10 +475,10 @@
 	<vector>
 	<iostream>
 
-1392944476 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/GameSprite.cpp
+1393874728 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/GameSprite.cpp
 	"GameSprite.h"
 
-1392944507 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/GameSprite.h
+1393874839 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/GameSprite.h
 	<iostream>
 	<SFML/Graphics/RenderWindow.hpp>
 	<SFML/Graphics/Texture.hpp>
@@ -556,7 +556,7 @@
 	<vector>
 	<string>
 
-1392948786 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/ScoreHandler.cpp
+1393900802 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/ScoreHandler.cpp
 	"ScoreHandler.h"
 
 1392948770 /home/nickan/C++ Projects/Zombie-Aftermath/include/ScoreHandler.h
@@ -567,7 +567,7 @@
 1393481115 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/Settings.cpp
 	"Settings.h"
 
-1393443681 /home/nickan/C++ Projects/Zombie-Aftermath/include/Settings.h
+1393826150 /home/nickan/C++ Projects/Zombie-Aftermath/include/Settings.h
 	"GameAudio.h"
 	"ScoreHandler.h"
 	<iostream>
@@ -595,10 +595,10 @@
 	"framework/Input.h"
 	<iostream>
 
-1392771110 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/gamescreen/GameScreenController.cpp
+1393512554 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/gamescreen/GameScreenController.cpp
 	"GameScreenController.h"
 
-1393484742 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/menuscreen/MenuScreen.cpp
+1393852651 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/menuscreen/MenuScreen.cpp
 	"MenuScreen.h"
 
 1393441612 /home/nickan/C++ Projects/Zombie-Aftermath/include/menuscreen/MenuScreen.h
@@ -620,7 +620,7 @@
 	"Settings.h"
 	<iostream>
 
-1393508600 /home/nickan/C++ Projects/Zombie-Aftermath/include/gamescreen/GameScreenUpdate.h
+1393813599 /home/nickan/C++ Projects/Zombie-Aftermath/include/gamescreen/GameScreenUpdate.h
 	"RotationManager.h"
 	<iostream>
 
@@ -629,31 +629,87 @@
 	"GameScreenUpdate.h"
 	<iostream>
 
-1393490530 /home/nickan/C++ Projects/Zombie-Aftermath/include/gamescreen/GameScreenRenderer.h
+1393919833 /home/nickan/C++ Projects/Zombie-Aftermath/include/gamescreen/GameScreenRenderer.h
 	<SFML/Graphics.hpp>
+	"TileInfo.h"
+	"TiledMap.h"
+	"TextureAtlas.h"
+	<vector>
+	"GameSprite.h"
 	<iostream>
 
-1393490529 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/gamescreen/GameScreenRenderer.cpp
+1393918044 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/gamescreen/GameScreenRenderer.cpp
 	"GameScreenRenderer.h"
 
-1393508652 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/gamescreen/GameScreenUpdate.cpp
+1393813604 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/gamescreen/GameScreenUpdate.cpp
 	"GameScreenUpdate.h"
 
-1393493347 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/model/Cannon.cpp
+1393521634 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/model/Cannon.cpp
 	"Cannon.h"
 
-1393493305 /home/nickan/C++ Projects/Zombie-Aftermath/include/model/Cannon.h
+1393521329 /home/nickan/C++ Projects/Zombie-Aftermath/include/model/Cannon.h
+	<vector>
+	"Bullet.h"
 	"Entity.h"
 
-1393493429 /home/nickan/C++ Projects/Zombie-Aftermath/include/model/Entity.h
+1393512613 /home/nickan/C++ Projects/Zombie-Aftermath/include/model/Entity.h
 	<SFML/Graphics/Rect.hpp>
 
 1393493399 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/model/Entity.cpp
 	"Entity.h"
 
-1393508407 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/RotationManager.cpp
+1393512458 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/RotationManager.cpp
 	"RotationManager.h"
 
-1393508464 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/RotationManager.h
+1393512416 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/RotationManager.h
 	<cmath>
+
+1393512895 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/model/Bullet.cpp
+	"Bullet.h"
+
+1393512918 /home/nickan/C++ Projects/Zombie-Aftermath/include/model/Bullet.h
+	"Entity.h"
+
+1393513142 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/model/Zombie.cpp
+	"Zombie.h"
+
+1393512986 /home/nickan/C++ Projects/Zombie-Aftermath/include/model/Zombie.h
+	"Entity.h"
+
+1393875410 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/tiledmap/TiledMap.cpp
+	"TiledMap.h"
+
+1393874374 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/tiledmap/TiledMap.h
+	<SFML/Graphics/RenderWindow.hpp>
+	<SFML/Graphics/Texture.hpp>
+	"GameSprite.h"
+	<vector>
+	"Cell.h"
+	<iostream>
+
+1393824810 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/gamescreen/TileInfo.cpp
+	"TileInfo.h"
+
+1393815372 /home/nickan/C++ Projects/Zombie-Aftermath/include/gamescreen/TileInfo.h
+
+1393919947 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/TextureAtlas.h
+	<SFML/Graphics/Texture.hpp>
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<sstream>
+	<cstdlib>
+	"Cell.h"
+	"GameSprite.h"
+
+1393919744 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/TextureAtlas.cpp
+	"TextureAtlas.h"
+
+1393919497 /home/nickan/C++ Projects/Zombie-Aftermath/include/framework/tiledmap/Cell.h
+	<SFML/Graphics/Rect.hpp>
+	<string>
+
+1393919498 source:/home/nickan/C++ Projects/Zombie-Aftermath/src/framework/tiledmap/Cell.cpp
+	"Cell.h"
 

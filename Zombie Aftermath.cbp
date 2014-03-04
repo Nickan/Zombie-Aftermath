@@ -47,6 +47,7 @@
 			<Add directory="include/gamescreen" />
 			<Add directory="include/menuscreen" />
 			<Add directory="include/model" />
+			<Add directory="include/framework/tiledmap" />
 		</Compiler>
 		<Linker>
 			<Add directory="/home/nickan/SFML2/lib" />
@@ -59,16 +60,23 @@
 		<Unit filename="include/framework/GameAudio.h" />
 		<Unit filename="include/framework/GameSprite.h" />
 		<Unit filename="include/framework/Input.h" />
+		<Unit filename="include/framework/RotationManager.h" />
 		<Unit filename="include/framework/Screen.h" />
+		<Unit filename="include/framework/TextureAtlas.h" />
 		<Unit filename="include/framework/Timer.h" />
+		<Unit filename="include/framework/tiledmap/Cell.h" />
+		<Unit filename="include/framework/tiledmap/TiledMap.h" />
 		<Unit filename="include/gamescreen/GameScreen.h" />
 		<Unit filename="include/gamescreen/GameScreenController.h" />
 		<Unit filename="include/gamescreen/GameScreenRenderer.h" />
 		<Unit filename="include/gamescreen/GameScreenUpdate.h" />
+		<Unit filename="include/gamescreen/TileInfo.h" />
 		<Unit filename="include/menuscreen/MenuScreen.h" />
 		<Unit filename="include/menuscreen/MenuScreenInput.h" />
+		<Unit filename="include/model/Bullet.h" />
 		<Unit filename="include/model/Cannon.h" />
 		<Unit filename="include/model/Entity.h" />
+		<Unit filename="include/model/Zombie.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/ScoreHandler.cpp" />
 		<Unit filename="src/Settings.cpp" />
@@ -78,16 +86,23 @@
 		<Unit filename="src/framework/GameAudio.cpp" />
 		<Unit filename="src/framework/GameSprite.cpp" />
 		<Unit filename="src/framework/Input.cpp" />
+		<Unit filename="src/framework/RotationManager.cpp" />
 		<Unit filename="src/framework/Screen.cpp" />
+		<Unit filename="src/framework/TextureAtlas.cpp" />
 		<Unit filename="src/framework/Timer.cpp" />
+		<Unit filename="src/framework/tiledmap/Cell.cpp" />
+		<Unit filename="src/framework/tiledmap/TiledMap.cpp" />
 		<Unit filename="src/gamescreen/GameScreen.cpp" />
 		<Unit filename="src/gamescreen/GameScreenController.cpp" />
 		<Unit filename="src/gamescreen/GameScreenRenderer.cpp" />
 		<Unit filename="src/gamescreen/GameScreenUpdate.cpp" />
+		<Unit filename="src/gamescreen/TileInfo.cpp" />
 		<Unit filename="src/menuscreen/MenuScreen.cpp" />
 		<Unit filename="src/menuscreen/MenuScreenInput.cpp" />
+		<Unit filename="src/model/Bullet.cpp" />
 		<Unit filename="src/model/Cannon.cpp" />
 		<Unit filename="src/model/Entity.cpp" />
+		<Unit filename="src/model/Zombie.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
