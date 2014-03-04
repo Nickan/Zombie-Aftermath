@@ -2,7 +2,7 @@
 #define GAMESCREENCONTROLLER_H
 
 #include <SFML/Window/Keyboard.hpp>
-//#include "framework/Input.h"
+#include <SFML/System/Vector2.hpp>
 
 #include "GameScreen.h"
 
@@ -32,7 +32,12 @@ class GameScreenController : public Input
         virtual ~GameScreenController();
     protected:
     private:
+        void screenScrolling(const int& x, const int& y);
+
+
         GameScreen* gameScreenPtr;
+        bool scrollScreen;
+        Vector2i mousePrevPos;
 };
 
 #endif // GAMESCREENCONTROLLER_H
