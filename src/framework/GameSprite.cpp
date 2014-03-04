@@ -1,9 +1,24 @@
 #include "GameSprite.h"
 
-GameSprite::GameSprite(Texture& t, const int& x, const int& y) {
+GameSprite::GameSprite() {
+//    texture = NULL;
+//    setPosition(0, 0);
+}
+
+GameSprite::GameSprite(const string& fileName) {
+    texture.loadFromFile(fileName);
+    sprite.setTexture(texture);
+}
+
+GameSprite::GameSprite(Texture& t, const int x, const int y) {
     texture = t;
-    setPosition(x, y);
     initialize();
+    setPosition(x, y);
+}
+
+void GameSprite::loadFromFile(const string& filePath) {
+    texture.loadFromFile(filePath);
+    sprite.setTexture(texture);
 }
 
 void GameSprite::initialize() {
@@ -16,19 +31,10 @@ void GameSprite::draw(RenderWindow& win) {
     win.draw(sprite);
 }
 
-void GameSprite::draw(RenderWindow& win, const int& x, const int& y) {
+void GameSprite::draw(RenderWindow& win, const int& x, const int& y, const float& rotation) {
     setPosition(x, y);
+    sprite.setRotation(rotation);
     win.draw(sprite);
-}
-
-GameSprite::GameSprite(const string& fileName) {
-    texture.loadFromFile(fileName);
-    sprite.setTexture(texture);
-}
-
-void GameSprite::loadFromFile(const string& filePath) {
-    texture.loadFromFile(filePath);
-    sprite.setTexture(texture);
 }
 
 void GameSprite::setTexture(Texture& t) {
@@ -50,10 +56,6 @@ void GameSprite::setRotation(const float& rotation) {
 
 const Vector2f& GameSprite::getPosition() {
     return sprite.getPosition();
-}
-
-IntRect& GameSprite::getBounds() {
-    return bounds;
 }
 
 GameSprite::~GameSprite() { }
