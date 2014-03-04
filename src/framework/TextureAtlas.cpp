@@ -124,4 +124,8 @@ TextureAtlas::~TextureAtlas() {
     for (unsigned int index = 0; index < cellsPtrList.size(); ++ index) {
         delete cellsPtrList.at(index);
     }
+
+    for (unsigned int index = 0; index < spritesPtrList.size(); ++ index) {
+        delete spritesPtrList.at(index);
+    }
 }

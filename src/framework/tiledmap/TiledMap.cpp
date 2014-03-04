@@ -18,7 +18,7 @@ TiledMap::TiledMap(const Texture& texture, const float tileMap[], const unsigned
     Image image;
     image = texture.copyToImage();
 
-
+    // Create a sprite for each tile
     for (unsigned int frameNum = 0; frameNum < totalFrames; ++frameNum) {
         unsigned int colNum = frameNum / columns;
         unsigned int rowNum = frameNum % columns;
@@ -36,7 +36,6 @@ void TiledMap::initializeTileMap(const float tileMap[]) {
 
     for(unsigned int tileNum = 0; tileNum < totalTiles; ++tileNum) {
         unsigned int colNum = tileNum / columns;
-        unsigned int rowNum = tileNum % columns;
 
         // Detects if it is in new column
         if (colNum != previousColumn) {
@@ -71,8 +70,8 @@ void TiledMap::draw(RenderWindow& win) {
             // Don't draw if the tile is null and out of screen;
             if ( (cell.left > (int) -tileWidth && cell.left < screenWidth + tileWidth) &&
                     (cell.top > (int) -tileHeight && cell.top < screenHeight + tileHeight) ) {
-                if (tileType != -1) {
-                    GameSprite* sprPtr = spritePtrList.at((unsigned int) tileType);
+                if (tileType >= 0) {
+                    GameSprite* sprPtr = spritePtrList.at(tileType);
                     sprPtr->draw(win, cell.left, cell.top, cell.rotation);
                 }
             }
@@ -83,29 +82,16 @@ void TiledMap::draw(RenderWindow& win) {
 }
 
 void TiledMap::draw(RenderWindow& win, const float& x, const float& y) {
-/*
     setPosition(x, y);
-    for (unsigned int i = 0; i < tileSprite.size(); ++i) {
-        for (unsigned int j = 0; j < tileSprite.at(i).size(); ++j) {
-            tileType = tileInfo.at(i).at(j);
-            position = tileSprite.at(i).at(j)->getPosition();
-
-            // Don't draw if the tile is null and out of screen;
-            if ( (position.x > -tileWidth && position.x < screenWidth + tileWidth) &&
-                    (position.y > -tileHeight && position.y < screenHeight + tileHeight) ) {
-                if (tileType != -1) {
-                    tileSprite.at(i).at(j)->draw(win);
-                }
-            }
-        }
-    }
-    */
+    draw(win);
 }
 
 void TiledMap::setPosition(const float& posX, const float& posY) {
     for (unsigned int i = 0; i < tileInfo.size(); ++i) {
         for (unsigned int j = 0; j < tileInfo.at(i).size(); ++j) {
-//            tileSprite.at(i).at(j)->setPosition( (j * tileWidth) + posX, (i * tileHeight) + posY);
+            Cell& cell = cells.at(i).at(j);
+            cell.left = (j * tileWidth) + posX;
+            cell.top = (i * tileHeight) + posY;
         }
     }
 }
@@ -137,5 +123,7 @@ float TiledMap::getRotationType(const float& tileID) {
 }
 
 TiledMap::~TiledMap() {
-
+    for (unsigned int index = 0; index < spritePtrList.size(); ++index) {
+        delete spritePtrList.at(index);
+    }
 }

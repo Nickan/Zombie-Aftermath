@@ -21,6 +21,8 @@ using namespace std;
 
 // Initializing texture atlas from a texture and addressing tile by the passed width and height.
 
+// I might change the sprite calling using the TextureAtlas
+
 class TiledMap {
     public:
         TiledMap(const Texture& texture, const float tileMap[], const unsigned int totalFrames,
@@ -36,6 +38,9 @@ class TiledMap {
 
         vector<vector<float> > tileInfo;
         vector<vector<Cell> > cells;
+
+        // Pointer
+        vector<GameSprite* > spritePtrList;
 
         virtual ~TiledMap();
     protected:
@@ -53,7 +58,7 @@ class TiledMap {
         Vector2f position;
 
         Texture texture;
-        vector<GameSprite* > spritePtrList;
+
 
         void initializeTileMap(const float tileMap[]);
 
