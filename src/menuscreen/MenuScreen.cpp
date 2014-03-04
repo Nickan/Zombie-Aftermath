@@ -108,4 +108,9 @@ ZombieAftermath* MenuScreen::getGamePtr() {
 
 MenuScreen::~MenuScreen() {
     delete aniCursorPtr;
+    delete playSpritePtr;
+    delete exitSpritePtr;
+    delete gameTitleSpritePtr;
+    delete soundEnableSpritePtr;
+    delete soundDisableSpritePtr;
 }
