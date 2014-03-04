@@ -4,9 +4,7 @@ SoundBuffer GameAudio::buffer;
 vector<Music*>* GameAudio::vecMusicPtr = new vector<Music*>();
 vector<Sound*>* GameAudio::vecSoundPtr = new vector<Sound*>();
 
-GameAudio::GameAudio() {
-
-}
+GameAudio::GameAudio() { ]
 
 Music* GameAudio::newMusic(const string& file) {
     Music* music = new Music();
