@@ -5,7 +5,10 @@ Zombie::Zombie(FloatRect* boundPtr, float rotation)
     //ctor
 }
 
-Zombie::~Zombie()
-{
+void Zombie::update(const float& delta) {
+
+}
+
+Zombie::~Zombie() {
     //dtor
 }

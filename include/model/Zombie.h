@@ -6,6 +6,8 @@
 class Zombie : public Entity {
     public:
         Zombie(FloatRect* boundPtr, float rotation);
+
+        void update(const float& delta);
         virtual ~Zombie();
     protected:
     private:

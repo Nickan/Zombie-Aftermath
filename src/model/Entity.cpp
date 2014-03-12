@@ -1,10 +1,9 @@
 #include "Entity.h"
 
 Entity::Entity(FloatRect* boundPtr, float rotation)
-: boundPtr(boundPtr), rotation(rotation)
-{
-}
+: BaseEntity(EntityManager::getAvailableId(this)), boundPtr(boundPtr), rotation(rotation)
+{ }
 
 Entity::~Entity() {
-    //dtor
+    delete boundPtr;
 }
