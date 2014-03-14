@@ -108,12 +108,11 @@ void AStarPathfinder::setAdjNextNodePtrs(vector<Node*>& nodePtrs, Node* currentN
                 if (startY + y >= 0 && startY + y < nodePtrs2D.size()) {
                     Node* tempNodePtr = nodePtrs2D.at(startY + y).at(startX + x);
 
-                    // Ignore the node if it is belong in the closed nodes, unwalkable nodes
+                    // Ignore the node if it is belong in the closed nodes and Unwalkable node
                     // Only node that is available and belong in open list are valid to be in the adjacent nodes
-                    if (isInList(closedNodePtrs, tempNodePtr) || isInList(unwalkableNodePtrs, tempNodePtr) ) {
+                    if (isInList(closedNodePtrs, tempNodePtr) || tempNodePtr->type == NodeType::UNWALKABLE) {
                         continue;
                     }
-
                     nodePtrs.push_back(tempNodePtr);
                 }
             }
@@ -236,8 +235,23 @@ void AStarPathfinder::traceBackNodePath(Node* goalNodePtr) {
 }
 
 
-void AStarPathfinder::setUnwalkableNodes(const vector<Node*>& nodePtrs) {
-    this->unwalkableNodePtrs = nodePtrs;
+void AStarPathfinder::setAllNodesWalkable() {
+    for (unsigned int col = 0; col < nodePtrs2D.size(); ++col) {
+        for (unsigned int row = 0; row < nodePtrs2D.at(col).size(); ++row) {
+            nodePtrs2D.at(col).at(row)->type = NodeType::AVAILABLE;
+        }
+    }
+}
+
+const bool AStarPathfinder::setNodeType(const unsigned int& nodeX, const unsigned int& nodeY, const NodeType& nodeType) {
+    // Checking the range value of the given indices
+    // Never ever compare an unsigned int to a negative value
+    if ( (nodeX >= 0 && nodeX < nodePtrs2D.at(0).size()) &&
+        (nodeY >= 0 && nodeY < nodePtrs2D.size()) ) {
+            nodePtrs2D.at(nodeY).at(nodeX)->type = nodeType;
+        return true;
+    }
+    return false;
 }
 
 AStarPathfinder::~AStarPathfinder() {

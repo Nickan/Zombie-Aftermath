@@ -23,9 +23,11 @@ class AStarPathfinder {
         vector<Node*> getPath(const unsigned int& startX, const unsigned int& startY,
                                 const unsigned int& goalX, const unsigned int& goalY);
 
-        // Sets the unwalkable node pointers which will be ignored when finding shortest path
-        void setUnwalkableNodes(const vector<Node*>& nodePtrs);
+        // Set the type of the node, returns false if there is an error
+        const bool setNodeType(const unsigned int& nodeX, const unsigned int& nodeY, const NodeType& nodeType);
 
+        // Set the node pointers to be walkable
+        void setAllNodesWalkable();
 
         bool diagonalMoveEnable;
     protected:
@@ -58,7 +60,6 @@ class AStarPathfinder {
         vector<Node*> adjNextNodePtrs;
         vector<Node*> closedNodePtrs;
         vector<Node*> openNodePtrs;
-        vector<Node*> unwalkableNodePtrs;
         vector<vector<Node*> > nodePtrs2D;
 };
 
