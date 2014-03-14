@@ -20,12 +20,27 @@ void MessageDispatcher::update(const float& delta) {
 }
 
 void MessageDispatcher::dischargeMessage(Message* msgPtr, const int& index) {
+    // Error checking...
+    if (msgPtr->receiverId == -1) {
+        cout << "Receiver ID is -1" << endl;
+        delMsgPtr();
+        return;
+    } else if (msgPtr->senderId == -1) {
+        cout << "Sender ID is -1" << endl;
+        delMsgPtr();
+        return;
+    }
+
     BaseEntity* entity = EntityManager::getEntity(msgPtr->receiverId);
 
     if (entity->handleMessage(msgPtr)) {
-        msgPtrList.erase(msgPtrList.begin() + index);
-        delete msgPtr;
+        delMsgPtr();
     }
+}
+
+void MessageDispatcher::delMsgPtr(Message* msgPtr) {
+    msgPtrList.erase(msgPtrList.begin() + index);
+        delete msgPtr;
 }
 
 void MessageDispatcher::sendMessage(const int& senderId, const int& receiverId,

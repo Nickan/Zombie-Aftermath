@@ -5,6 +5,8 @@
 #include "Message.h"
 #include <vector>
 
+// For detection
+#include <iostream>
 using namespace std;
 
 class MessageDispatcher {
@@ -17,6 +19,7 @@ class MessageDispatcher {
         virtual ~MessageDispatcher();
 
         static void dischargeMessage(Message* msgPtr, const int& msgIndex);
+        static void delMsgPtr(Message* msgPtr);
 
         static vector<Message*> msgPtrList;
 };
