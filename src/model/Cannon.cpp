@@ -53,10 +53,13 @@ void Cannon::bulletUpdate(Bullet* bulPtr, const float& delta) {
     if (bulPtr->targetHit(targetX, targetY)) {
         bulPtr->updating = false;
 
-        // Creates a new vector to pass as a damage done to the zombie, as I can't find way for the pointer
-        // to convert back to its original value
-        Vector2i* atkDmgPtr = new Vector2i(attackDamage, 0);
-        MessageDispatcher::sendMessage(id, targetId, 0, MessageType::HIT_ZOMBIE, atkDmgPtr);
+        // If there is target Id set
+        if (targetId != -1) {
+            // Creates a new vector to pass as a damage done to the zombie, as I can't find way for the pointer
+            // to convert back to its original value
+            Vector2i* atkDmgPtr = new Vector2i(attackDamage, 0);
+            MessageDispatcher::sendMessage(id, targetId, 0, MessageType::HIT_ZOMBIE, atkDmgPtr);
+        }
     } else {
         bulPtr->trackTarget(targetX, targetY, delta);
     }
