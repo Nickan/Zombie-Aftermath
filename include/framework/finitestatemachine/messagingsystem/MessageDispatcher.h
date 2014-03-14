@@ -19,7 +19,7 @@ class MessageDispatcher {
         virtual ~MessageDispatcher();
 
         static void dischargeMessage(Message* msgPtr, const int& msgIndex);
-        static void delMsgPtr(Message* msgPtr);
+        static void delMsgPtr(Message* msgPtr, const int& msgIndex);
 
         static vector<Message*> msgPtrList;
 };
