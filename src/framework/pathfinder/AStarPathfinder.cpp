@@ -45,9 +45,14 @@ vector<Node*> AStarPathfinder::getPath(const unsigned int& startX, const unsigne
         processAdjNodes(currentNodePtr);
         Node* nextNode = getLowestHCostNode(adjNextNodePtrs);
 
+        if (nextNode == 0) {
+            cout << "Goal node not found, might be unwalkable, breaking operation" << endl;
+            break;
+        }
+
         // Check if the next node is the same as the goal node, then break the operation
         if (nextNode->same(goalNodePtr)) {
-            cout << "Found" << goalNodePtr->x << ": " << goalNodePtr->y << " loop count: " << loopCount << endl;
+            cout << "Found" << goalNodePtr->x << ": " << goalNodePtr->y << endl;
             break;
         }
         // Else set it as the current node and loop again
@@ -61,6 +66,7 @@ vector<Node*> AStarPathfinder::getPath(const unsigned int& startX, const unsigne
         }
     }
 
+    cout << "Loop count: " << loopCount << endl;
     traceBackNodePath(goalNodePtr);
 
     return nodePathPtrs;
@@ -120,7 +126,6 @@ void AStarPathfinder::setAdjNextNodePtrs(vector<Node*>& nodePtrs, Node* currentN
                             continue;
                         }
                     }
-
                     nodePtrs.push_back(tempNodePtr);
                 }
             }
@@ -208,9 +213,16 @@ Node* AStarPathfinder::getLowestHCostNode(vector<Node*>& nodePtrs) {
 
 
 void AStarPathfinder::traceBackNodePath(Node* goalNodePtr) {
-    nodePathPtrs.push_back(goalNodePtr);
+    Node* lastNodePtr = 0;
 
-    Node* lastNodePtr = goalNodePtr;
+    // Trying to get result from the closed list's last node
+    if (!closedNodePtrs.empty()) {
+        nodePathPtrs.push_back(closedNodePtrs.back());
+        lastNodePtr = closedNodePtrs.back();
+    } else {
+        cout << "No path list in the closed list" << endl;
+        return;
+    }
 
     // Loop until the starting node is found
     while (true) {
