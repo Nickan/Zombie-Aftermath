@@ -29,7 +29,7 @@ class GameSprite {
         void setRotation(const float&);
 
         const Vector2f& getPosition();
-        IntRect& getBounds();
+        const IntRect& getBounds();
 
         virtual ~GameSprite();
     protected:

@@ -58,4 +58,8 @@ const Vector2f& GameSprite::getPosition() {
     return sprite.getPosition();
 }
 
+const IntRect& GameSprite::getBounds() {
+    return sprite.getTextureRect();
+}
+
 GameSprite::~GameSprite() { }
