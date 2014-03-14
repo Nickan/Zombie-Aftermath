@@ -39,6 +39,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add directory="/home/nickan/SFML2/include" />
@@ -48,6 +49,11 @@
 			<Add directory="include/menuscreen" />
 			<Add directory="include/model" />
 			<Add directory="include/framework/tiledmap" />
+			<Add directory="include/framework/finitestatemachine" />
+			<Add directory="include/framework/finitestatemachine/messagingsystem" />
+			<Add directory="include/framework/pathfinder" />
+			<Add directory="include/model/cannonstate" />
+			<Add directory="include/framework/math" />
 		</Compiler>
 		<Linker>
 			<Add directory="/home/nickan/SFML2/lib" />
@@ -64,6 +70,15 @@
 		<Unit filename="include/framework/Screen.h" />
 		<Unit filename="include/framework/TextureAtlas.h" />
 		<Unit filename="include/framework/Timer.h" />
+		<Unit filename="include/framework/finitestatemachine/BaseEntity.h" />
+		<Unit filename="include/framework/finitestatemachine/EntityManager.h" />
+		<Unit filename="include/framework/finitestatemachine/State.h" />
+		<Unit filename="include/framework/finitestatemachine/StateMachine.h" />
+		<Unit filename="include/framework/finitestatemachine/messagingsystem/Message.h" />
+		<Unit filename="include/framework/finitestatemachine/messagingsystem/MessageDispatcher.h" />
+		<Unit filename="include/framework/math/Vec2.h" />
+		<Unit filename="include/framework/pathfinder/AStarPathfinder.h" />
+		<Unit filename="include/framework/pathfinder/Node.h" />
 		<Unit filename="include/framework/tiledmap/Cell.h" />
 		<Unit filename="include/framework/tiledmap/TiledMap.h" />
 		<Unit filename="include/gamescreen/GameScreen.h" />
@@ -76,7 +91,10 @@
 		<Unit filename="include/model/Bullet.h" />
 		<Unit filename="include/model/Cannon.h" />
 		<Unit filename="include/model/Entity.h" />
+		<Unit filename="include/model/ModelGCTimer.h" />
 		<Unit filename="include/model/Zombie.h" />
+		<Unit filename="include/model/cannonstate/CannonAttackState.h" />
+		<Unit filename="include/model/cannonstate/CannonIdleState.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/ScoreHandler.cpp" />
 		<Unit filename="src/Settings.cpp" />
@@ -90,6 +108,15 @@
 		<Unit filename="src/framework/Screen.cpp" />
 		<Unit filename="src/framework/TextureAtlas.cpp" />
 		<Unit filename="src/framework/Timer.cpp" />
+		<Unit filename="src/framework/finitestatemachine/BaseEntity.cpp" />
+		<Unit filename="src/framework/finitestatemachine/EntityManager.cpp" />
+		<Unit filename="src/framework/finitestatemachine/State.cpp" />
+		<Unit filename="src/framework/finitestatemachine/StateMachine.cpp" />
+		<Unit filename="src/framework/finitestatemachine/messagingsystem/Message.cpp" />
+		<Unit filename="src/framework/finitestatemachine/messagingsystem/MessageDispatcher.cpp" />
+		<Unit filename="src/framework/math/Vec2.cpp" />
+		<Unit filename="src/framework/pathfinder/AStarPathfinder.cpp" />
+		<Unit filename="src/framework/pathfinder/Node.cpp" />
 		<Unit filename="src/framework/tiledmap/Cell.cpp" />
 		<Unit filename="src/framework/tiledmap/TiledMap.cpp" />
 		<Unit filename="src/gamescreen/GameScreen.cpp" />
@@ -102,7 +129,10 @@
 		<Unit filename="src/model/Bullet.cpp" />
 		<Unit filename="src/model/Cannon.cpp" />
 		<Unit filename="src/model/Entity.cpp" />
+		<Unit filename="src/model/ModelGCTimer.cpp" />
 		<Unit filename="src/model/Zombie.cpp" />
+		<Unit filename="src/model/cannonstate/CannonAttackState.cpp" />
+		<Unit filename="src/model/cannonstate/CannonIdleState.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

@@ -50,6 +50,7 @@ void TiledMap::initializeTileMap(const float tileMap[]) {
 
 void TiledMap::initializeCells() {
     for (unsigned int i = 0; i < tileInfo.size(); ++i) {
+        // Creates a new cell row
         vector<Cell> cellRow;
 
         for (unsigned int j = 0; j < tileInfo.at(i).size(); ++j) {
@@ -57,6 +58,7 @@ void TiledMap::initializeCells() {
 
             cellRow.push_back(Cell(j * tileWidth, i * tileHeight, tileWidth, tileHeight, getRotationType(tileId)));
         }
+
         cells.push_back(cellRow);
     }
 }
