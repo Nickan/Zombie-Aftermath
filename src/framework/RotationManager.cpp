@@ -6,8 +6,8 @@ const float RotationManager::DEG_TO_RAD = MATH_PI / 180;
 
 RotationManager::RotationManager() { }
 
-const float RotationManager::getDegree(const float x, const float y) {
-    int compensationRotation = 0;
+const float RotationManager::getDegree(const float& x, const float& y) {
+    float compensationRotation = 0;
 
     float atanRotation = atan(y / x) * RAD_TO_DEG;
 
@@ -22,35 +22,37 @@ const float RotationManager::getDegree(const float x, const float y) {
         }
     }
 
-    return (atanRotation + compensationRotation);
+    return atanRotation + compensationRotation;
 }
 
 const float RotationManager::getSmoothRotation(const float& curRot, const float& tarRot, const float& incRot) {
-    float difRot = tarRot - curRot;
+    float currentRotation = curRot;
+    if (curRot < 0)  {
+        currentRotation = 360 + curRot;
+    }
+
+    float difRot = currentRotation - tarRot;
     if (abs(difRot) < incRot) {
         return tarRot;
     }
 
     // The current rotation is lower than the target rotation
-    if (curRot < tarRot) {
-
+    if (currentRotation < tarRot) {
         // The difference between is lower than 180
-        if (difRot <= 180) {
-            return curRot + incRot;
+        if (abs(difRot) <= 180) {
+            return currentRotation + incRot;
         } else {
-            // Higher
-            return curRot - incRot;
+            return currentRotation - incRot;
         }
 
     } else {
-
         // The current rotation is higher than the target rotation
         // The difference between is lower than 180
         if ( abs(difRot) <= 180) {
-            return curRot - incRot;
+            return currentRotation - incRot;
         } else {
             // Higher
-            return curRot + incRot;
+            return currentRotation + incRot;
         }
     }
 
