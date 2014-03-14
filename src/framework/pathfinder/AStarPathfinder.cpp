@@ -113,6 +113,14 @@ void AStarPathfinder::setAdjNextNodePtrs(vector<Node*>& nodePtrs, Node* currentN
                     if (isInList(closedNodePtrs, tempNodePtr) || tempNodePtr->type == NodeType::UNWALKABLE) {
                         continue;
                     }
+
+                    // If the diagonal movement is disabled
+                    if (!diagonalMoveEnable) {
+                        if (isDiagonallyPlaced(tempNodePtr, currentNodePtr)) {
+                            continue;
+                        }
+                    }
+
                     nodePtrs.push_back(tempNodePtr);
                 }
             }
@@ -139,6 +147,7 @@ void AStarPathfinder::setFreeNode(Node* freeNodePtr, Node* currentNodePtr) {
 
     // If diagonally placed, set g cost to 14, otherwise set it to 10
     int g = (isDiagonallyPlaced(freeNodePtr, currentNodePtr)) ? 14: 10;
+
     freeNodePtr->g = g + currentNodePtr->g;
     freeNodePtr->f = freeNodePtr->g + freeNodePtr->h;
 
@@ -154,29 +163,12 @@ void AStarPathfinder::setOpenNode(Node* openNodePtr, Node* currentNodePtr) {
     // adjacent open node as the current node
     if (currentNodePtr->g + g < openNodePtr->g) {
 
-        if (diagonalMoveEnable) {
-            // Set it as the parent and recalculate its g cost
-            openNodePtr->parentNodePtr = currentNodePtr;
-            openNodePtr->g = g + currentNodePtr->g;
+        // Set it as the parent and recalculate its g cost
+        openNodePtr->parentNodePtr = currentNodePtr;
+        openNodePtr->g = g + currentNodePtr->g;
 
-            // Recalculate its f cost too
-            openNodePtr->f = openNodePtr->g + openNodePtr->h;
-        } else {
-            // Not a diagonal node
-            if (g == 10) {
-                // Set it as the parent and recalculate its g cost
-                openNodePtr->parentNodePtr = currentNodePtr;
-                openNodePtr->g = g + currentNodePtr->g;
-
-                // Recalculate its f cost too
-                openNodePtr->f = openNodePtr->g + openNodePtr->h;
-
-                //...
-                cout << "Diagonal recalculated" << endl;
-            }
-        }
-
-
+        // Recalculate its f cost too
+        openNodePtr->f = openNodePtr->g + openNodePtr->h;
     }
 }
 
@@ -200,6 +192,10 @@ Node* AStarPathfinder::getLowestHCostNode(vector<Node*>& nodePtrs) {
     // Loop through all the nodes to find the node that has the lowest f cost
     for (unsigned int index = 0; index < nodePtrs.size(); ++index) {
         Node* tempNodePtr = nodePtrs.at(index);
+
+        if (!diagonalMoveEnable) {
+
+        }
 
         if (tempNodePtr->h < h) {
             lowestHCostNodePtr = tempNodePtr;
