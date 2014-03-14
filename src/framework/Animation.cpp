@@ -4,7 +4,7 @@
 const int Animation::NORMAL = 0;
 const int Animation::LOOP = 1;
 
-Animation::Animation() {}
+//Animation::Animation() {}
 
 Animation::Animation(Texture& t, const int w, const int h, const int totalCol, const int totalF, const float duration, const int playMode) {
     texture = t;
@@ -18,8 +18,6 @@ Animation::Animation(Texture& t, const int w, const int h, const int totalCol, c
 }
 
 void Animation::init() {
-//    timeDelay = (1000.0f / frameRate) / 1000.0f;
-
     currentFrame = 0;
 
     drawRect = IntRect(0, 0, width, height);
@@ -34,8 +32,9 @@ void Animation::draw(RenderWindow& win, float& stateTime) {
     updateSprite(stateTime);
 }
 
-void Animation::draw(RenderWindow& win, const float& x, const float& y, const float& delta) {
+void Animation::draw(RenderWindow& win, const float& x, const float& y, const float& rotation, const float& delta) {
     sprite.setPosition(x + drawRect.width / 2, y + drawRect.height / 2);
+    sprite.setRotation(rotation);
     win.draw(sprite);
     updateSprite(delta);
 }
@@ -65,10 +64,11 @@ void Animation::updateSprite(const float& stateTime) {
 //    cout << "Current frame: " << currentFrame << endl;
 }
 
-////////////////////////////////////////////////////////////////////
-//    My attempt to simulate the modulus operation
-//    Not accurate, I might change this to double for accuracy
-////////////////////////////////////////////////////////////////////
+//--------------------------------------------------------------
+//
+//  My attempt to simulate the modulus operation
+//  Not accurate, I might change this to double for accuracy
+//--------------------------------------------------------------
 const float Animation::getModulus(const float& firstNum, const float& secondNum) {
     float mod = 0;
     float div = firstNum / secondNum;

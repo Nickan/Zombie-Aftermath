@@ -18,13 +18,13 @@ using namespace std;
 
 class Animation {
     public:
-        Animation();
+//        Animation();
         Animation(Texture& t, const int width, const int height, const int totalColumns, const int totalFrames,
                     const float duration, const int playMode);
         void init();
 
-        void draw(RenderWindow&, float& delta);
-        void draw(RenderWindow&, const float&, const float&, const float& delta);
+        void draw(RenderWindow&, float& stateTime);
+        void draw(RenderWindow&, const float&, const float&, const float& rotation, const float& stateTime);
 
         void setPosition(const float&, const float&);
         void setRotation(const float&);
