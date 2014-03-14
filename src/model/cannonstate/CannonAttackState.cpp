@@ -27,6 +27,10 @@ void CannonAttackState::update(Cannon* canPtr, const float& delta) {
             }
         }
 
+        if (!canPtr->zombieInRange()) {
+            canPtr->setIdle();
+        }
+
     }
 }
 

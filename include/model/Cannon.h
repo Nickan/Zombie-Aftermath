@@ -34,9 +34,11 @@ class Cannon : public Entity {
         // Update for the bullet
         virtual void bulletUpdate(Bullet* bulPtr, const float& delta);
 
+        void setIdle();
+
         const bool handleMessage(Message* msgPtr);
         const bool targetLocked(const float& delta);
-
+        const bool zombieInRange();
 
         // Setter
         void setTargetId(const int& id);

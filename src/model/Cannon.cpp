@@ -59,6 +59,8 @@ void Cannon::bulletUpdate(Bullet* bulPtr, const float& delta) {
             // to convert back to its original value
             Vector2i* atkDmgPtr = new Vector2i(attackDamage, 0);
             MessageDispatcher::sendMessage(id, targetId, 0, MessageType::HIT_ZOMBIE, atkDmgPtr);
+        } else {
+            stateMachinePtr->changeState(CannonIdleState::getInstance());
         }
     } else {
         bulPtr->trackTarget(targetX, targetY, delta);
@@ -89,6 +91,10 @@ void Cannon::setTargetId(const int& targetId) {
     }
 }
 
+void Cannon::setIdle() {
+    stateMachinePtr->changeState(CannonIdleState::getInstance());
+}
+
 
 //----------------Getters---------------------
 const int& Cannon::getTargetId() {
@@ -102,6 +108,14 @@ const FloatRect* Cannon::getTargetRect() {
 const vector<Bullet*>& Cannon::getBullets() {
     return bulletPtrs;
 }
+
+const bool Cannon::zombieInRange() {
+    vec2.x = (targetRectPtr->left + (targetRectPtr->width / 2)) - (boundPtr->left + (boundPtr->width / 2));
+    vec2.y = (targetRectPtr->top + (targetRectPtr->height / 2)) - (boundPtr->top + (boundPtr->height / 2));
+
+    return (vec2.getLengthSqr() < range * range) ? true : false;
+}
+
 
 const bool Cannon::handleMessage(Message* msgPtr) {
     switch (msgPtr->msgType) {
