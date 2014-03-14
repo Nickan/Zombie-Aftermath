@@ -35,7 +35,7 @@ vector<Node*> AStarPathfinder::getPath(const unsigned int& startX, const unsigne
 
     // For detection, set a loop limit
     unsigned int loopCount = 0;
-    unsigned int loopLimit = 100;
+    unsigned int loopLimit = 200;
 
     // Non-terminated loop, will break when path is found or not
     while (true) {
@@ -45,9 +45,16 @@ vector<Node*> AStarPathfinder::getPath(const unsigned int& startX, const unsigne
         processAdjNodes(currentNodePtr);
         Node* nextNode = getLowestHCostNode(adjNextNodePtrs);
 
+        // No result from the adjacent nodes
         if (nextNode == 0) {
-            cout << "Goal node not found, might be unwalkable, breaking operation" << endl;
-            break;
+            // Try searching in open list
+            nextNode = getLowestHCostNode(openNodePtrs);
+
+            // If there is still no node, break operation
+            if (nextNode == 0) {
+                cout << "Goal node not found, might be unwalkable, breaking operation" << endl;
+                break;
+            }
         }
 
         // Check if the next node is the same as the goal node, then break the operation
@@ -193,19 +200,22 @@ const bool AStarPathfinder::isInList(vector<Node*>& nodePtrs, Node* nodePtr) {
 Node* AStarPathfinder::getLowestHCostNode(vector<Node*>& nodePtrs) {
     unsigned int h = 99999;
     Node* lowestHCostNodePtr = 0;
+    unsigned int indexNum = 0;
 
     // Loop through all the nodes to find the node that has the lowest f cost
     for (unsigned int index = 0; index < nodePtrs.size(); ++index) {
         Node* tempNodePtr = nodePtrs.at(index);
 
-        if (!diagonalMoveEnable) {
-
-        }
-
         if (tempNodePtr->h < h) {
             lowestHCostNodePtr = tempNodePtr;
             h = lowestHCostNodePtr->h;
+            indexNum = index;
         }
+    }
+
+    // Remove it in the list
+    if (lowestHCostNodePtr != 0 && !nodePtrs.empty()) {
+        nodePtrs.erase(nodePtrs.begin() + indexNum);
     }
 
     return lowestHCostNodePtr;
