@@ -17,6 +17,7 @@ void GameScreenController::leftMousePressed(const int& x, const int& y) {
 }
 
 void GameScreenController::leftMouseReleased(const int& x, const int& y) {
+
 }
 
 void GameScreenController::rightMousePressed(const int& x, const int& y) {
@@ -68,8 +69,6 @@ void GameScreenController::screenScrolling(const int& x, const int& y) {
                 mapPos.y = -scrHeight;
             }
         }
-
-        cout << mapPos.x << endl;
     }
 }
 

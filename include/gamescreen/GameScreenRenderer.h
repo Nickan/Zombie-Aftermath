@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Animation.h"
 #include "TileInfo.h"
 #include "TiledMap.h"
 #include "TextureAtlas.h"
@@ -25,13 +26,17 @@ class GameScreenRenderer {
         GameScreenRenderer(GameScreenUpdate* updatePtr);
         void render(RenderWindow& win, const float& delta);
 
-        TiledMap* tiledMapPtr;
-        GameSprite* tempSpritePtr;
-
         virtual ~GameScreenRenderer();
     protected:
     private:
+
+        Animation* aniZomPtr;
         GameScreenUpdate* updatePtr;
+        GameSprite* norCanSpritePtr;
+        GameSprite* norCanBulSpritePtr;
+        TiledMap* tiledMapPtr;
+
+        RectangleShape lifeIndicator;
 };
 
 #endif // GAMESCREENRENDERER_H
