@@ -20,10 +20,16 @@ class PurchasePanel {
         // Returns the id of the rect being touched
         const int getButtonId(const int& touchX, const int& touchY);
 
+        string canName;
+        int cursorX;
+        int cursorY;
     protected:
     private:
         TextureAtlas* textureAtlasPtr;
         array<IntRect*, 3> buttonPtrs;
+
+        // Just to prevent creating many copy (or it is just my assumption)
+        IntRect cannonRect;
 };
 
 #endif // PURCHASEPANEL_H

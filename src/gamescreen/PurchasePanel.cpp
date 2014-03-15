@@ -5,6 +5,8 @@ PurchasePanel::PurchasePanel(TextureAtlas* textureAtlasPtr)
     for (unsigned int index = 0; index < 3; ++index) {
         buttonPtrs.at(index) = new IntRect(0, 0, 32, 32);
     }
+
+    canName = "";
 }
 
 void PurchasePanel::draw(RenderWindow& win, const int& x, const int& y) {
@@ -38,26 +40,38 @@ void PurchasePanel::draw(RenderWindow& win, const int& x, const int& y) {
     boxSpritePtr->draw(win, buttonPtrs.at(1)->left, buttonPtrs.at(1)->top, 0);
     boxSpritePtr->draw(win, buttonPtrs.at(2)->left, buttonPtrs.at(2)->top, 0);
 
-    // Icon cannon to be purchased
+
+    {   // Icon cannon to be purchased
+    // Normal cannon
     GameSprite* canSpritePtr = textureAtlasPtr->getSprite("normalcannon");
     canSpritePtr->setScale(1.5f, 1.5f);
-    IntRect rect = canSpritePtr->getBounds();
-    canSpritePtr->draw(win, (buttonPtrs.at(0)->left + 16) - rect.width / 2,
-                        (buttonPtrs.at(0)->top + 16) - rect.height / 2, 0);
+    cannonRect = canSpritePtr->getBounds();
+    canSpritePtr->draw(win, (buttonPtrs.at(0)->left + 16) - cannonRect.width / 2,
+                        (buttonPtrs.at(0)->top + 16) - cannonRect.height / 2, 0);
 
+    // Splash cannon
     canSpritePtr = textureAtlasPtr->getSprite("splashcannon");
-    rect = canSpritePtr->getBounds();
-    canSpritePtr->draw(win, (buttonPtrs.at(1)->left + 16) - rect.width / 2,
-                        (buttonPtrs.at(1)->top + 16) - rect.height / 2, 0);
+    cannonRect = canSpritePtr->getBounds();
+    canSpritePtr->draw(win, (buttonPtrs.at(1)->left + 16) - cannonRect.width / 2,
+                        (buttonPtrs.at(1)->top + 16) - cannonRect.height / 2, 0);
     canSpritePtr->setScale(1.5f, 1.5f);
 
+    // Ice cannon
     canSpritePtr = textureAtlasPtr->getSprite("icecannon");
-    rect = canSpritePtr->getBounds();
-    canSpritePtr->draw(win, (buttonPtrs.at(2)->left + 16) - rect.width / 2,
-                        (buttonPtrs.at(2)->top + 16) - rect.height / 2, 0);
+    cannonRect = canSpritePtr->getBounds();
+    canSpritePtr->draw(win, (buttonPtrs.at(2)->left + 16) - cannonRect.width / 2,
+                        (buttonPtrs.at(2)->top + 16) - cannonRect.height / 2, 0);
     canSpritePtr->setScale(1.5f, 1.5f);
+    }
 
-
+    // Cursor cannon
+    if (canName != "") {
+        GameSprite* cursorCanSpritePtr = textureAtlasPtr->getSprite(canName);
+        cannonRect = cursorCanSpritePtr->getBounds();
+        cursorCanSpritePtr->setScale(1.0f, 1.0f);
+        cursorCanSpritePtr->draw(win, (cursorX + 16) - cannonRect.width / 2,
+                        (cursorY + 16) - cannonRect.height / 2, 0);
+    }
 }
 
 const int PurchasePanel::getButtonId(const int& touchX, const int& touchY) {
@@ -71,7 +85,5 @@ const int PurchasePanel::getButtonId(const int& touchX, const int& touchY) {
 }
 
 PurchasePanel::~PurchasePanel() {
-    delete firstButtonPtr;
-    delete secondButtonPtr;
-    delete thirdButtonPtr;
+
 }
