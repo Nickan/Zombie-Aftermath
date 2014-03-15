@@ -60,6 +60,9 @@ vector<Node*> AStarPathfinder::getPath(const unsigned int& startX, const unsigne
         // Check if the next node is the same as the goal node, then break the operation
         if (nextNode->same(goalNodePtr)) {
             cout << "Found" << goalNodePtr->x << ": " << goalNodePtr->y << endl;
+
+            // Add the goal node
+            nodePathPtrs.push_back(goalNodePtr);
             break;
         }
         // Else set it as the current node and loop again
