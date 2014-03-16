@@ -21,18 +21,21 @@ using namespace std;
 
 class Cannon : public Entity {
     public:
-        Cannon(FloatRect* boundPtr, int attackDamage, int range, float attackDelay, float rotation, float rotationSpeed);
+        Cannon(FloatRect* boundPtr, const int& attackDamage, const int& range, const float& attackDelay,
+                    const float& rotation, const float& rotationSpeed);
 
         void update(const float& delta);
 
         // Fires bullet when the target is locked on
         void fireBullet();
 
-        // Be called after the bullet is set to be fired, where should the bullet set its target
-        virtual void setUpBullet(Bullet* bulletPtr);
+        // Be called after the bullet is set to be fired, set the bullet's target
+        virtual void setBulletTarget(Bullet* bulletPtr);
 
         // Update for the bullet
-        virtual void bulletUpdate(Bullet* bulPtr, const float& delta);
+        void bulletUpdate(Bullet* bulPtr, const float& delta);
+
+        virtual void bulletHit();
 
         void setIdle();
 
@@ -59,12 +62,14 @@ class Cannon : public Entity {
 
         virtual ~Cannon();
     protected:
-    private:
         int targetId;
         StateMachine<Cannon>* stateMachinePtr;
         FloatRect* targetRectPtr;
         vector<Bullet*> bulletPtrs;
         static Vec2 vec2;
+    private:
+        void placeOnTurret(Bullet* bulletPtr);
+
 };
 
 #endif // CANNON_H
