@@ -4,7 +4,7 @@ Vec2 Bullet::vec2;
 
 Bullet::Bullet(FloatRect* boundPtr, float rotation)
 :boundPtr(boundPtr), rotation(rotation) {
-    updating = false;
+    fired = false;
     speed = 100.0f;
     boundAllowance = 5.0f;
 
@@ -30,6 +30,7 @@ const bool Bullet::targetHit() {
 
     if (vec2.getLengthSqr() < boundAllowance * boundAllowance) {
         targetRectPtr = NULL;
+        fired = false;
         return true;
     }
 
@@ -61,6 +62,7 @@ void Bullet::trackTarget(const float& delta) {
 }
 
 void Bullet::setAsCenter(const float& x, const float& y) {
+    fired = true;
     boundPtr->left = x - boundPtr->width / 2;
     boundPtr->top = y - boundPtr->height / 2;
 }
@@ -72,6 +74,11 @@ void Bullet::setTarget(FloatRect* targetRect) {
 void Bullet::setTarget(const float& targetX, const float& targetY) {
     this->targetX = targetX;
     this->targetY = targetY;
+}
+
+
+const bool& Bullet::isFired() {
+    return fired;
 }
 
 Bullet::~Bullet() {

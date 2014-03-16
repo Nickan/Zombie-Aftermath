@@ -23,6 +23,8 @@ class Bullet {
         // Returns whether it hits the target
         const bool targetHit();
 
+        const bool& isFired();
+
         void trackTarget(const float& delta);
 
         void setAsCenter(const float& x, const float& y);
@@ -34,12 +36,13 @@ class Bullet {
         float rotation;
         float speed;
 
-        bool updating;
         float boundAllowance;
 
     protected:
     private:
         static Vec2 vec2;
+
+        bool fired;
 
         // The target is only coordinates on the map
         float targetX;
