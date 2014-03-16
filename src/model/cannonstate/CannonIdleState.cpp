@@ -12,11 +12,10 @@ void CannonIdleState::start(Cannon* cannonPtr) {
 }
 
 void CannonIdleState::update(Cannon* canPtr, const float& delta) {
-
     // Update the remaining release bullet if there are
     const vector<Bullet*>& bullets = canPtr->getBullets();
     for (unsigned int index = 0; index < bullets.size(); ++index) {
-        if (bullets.at(index)->updating) {
+        if (bullets.at(index)->isFired()) {
             canPtr->bulletUpdate(bullets.at(index), delta);
         }
     }

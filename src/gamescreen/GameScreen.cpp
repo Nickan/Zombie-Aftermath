@@ -6,6 +6,7 @@ GameScreen::GameScreen(ZombieAftermath* gamePtr) {
 
     updatePtr = new GameScreenUpdate();
     rendererPtr = new GameScreenRenderer(updatePtr);
+    updatePtr->initializeMapInfo(rendererPtr->getTileMapInfo());
 }
 
 void GameScreen::render(RenderWindow& win, const float& delta) {

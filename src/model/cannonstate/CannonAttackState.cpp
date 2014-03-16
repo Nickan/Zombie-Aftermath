@@ -20,17 +20,18 @@ void CannonAttackState::update(Cannon* canPtr, const float& delta) {
             canPtr->fireBullet();
         }
 
-        const vector<Bullet*>& bullets = canPtr->getBullets();
-        for (unsigned int index = 0; index < bullets.size(); ++index) {
-            if (bullets.at(index)->updating) {
-                canPtr->bulletUpdate(bullets.at(index), delta);
-            }
-        }
-
         if (!canPtr->zombieInRange()) {
             canPtr->setIdle();
         }
 
+    }
+
+    // Even if the cannon has not locked on to the target yet, update the released bullet
+    const vector<Bullet*>& bullets = canPtr->getBullets();
+    for (unsigned int index = 0; index < bullets.size(); ++index) {
+        if (bullets.at(index)->isFired()) {
+            canPtr->bulletUpdate(bullets.at(index), delta);
+        }
     }
 }
 

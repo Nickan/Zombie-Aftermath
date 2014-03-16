@@ -13,10 +13,9 @@
 
 using namespace sf;
 using namespace std;
-// My attempt to make a texture atlas to ease management of textures
+// My attempt to make a texture atlas, to ease management of textures
 
-class TextureAtlas
-{
+class TextureAtlas {
     public:
         TextureAtlas(const string& texturePath, const string& filePath);
 

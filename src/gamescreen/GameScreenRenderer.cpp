@@ -23,9 +23,8 @@ GameScreenRenderer::GameScreenRenderer(GameScreenUpdate* ptr) {
     }
     */
 
-    TextureAtlas* textureAtlasPtr = new TextureAtlas("assets/images.png", "assets/images.xml");
-    norCanSpritePtr = textureAtlasPtr->getSprite("normalcannon");
-    norCanBulSpritePtr = textureAtlasPtr->getSprite("normalbullet");
+    textureAtlasPtr = new TextureAtlas("assets/images.png", "assets/images.xml");
+    purchasePanPtr = new PurchasePanel(textureAtlasPtr);
 
     texture.loadFromImage(image, IntRect(0, 192, 480, 32));
 
@@ -37,37 +36,119 @@ GameScreenRenderer::GameScreenRenderer(GameScreenUpdate* ptr) {
 
 
 void GameScreenRenderer::render(RenderWindow& win, const float& delta) {
-    tiledMapPtr->draw(win, updatePtr->mapPos.x, updatePtr->mapPos.y);
+    Vector2f& mapPos = updatePtr->mapPos;
+    tiledMapPtr->draw(win, mapPos.x, mapPos.y);
 
+    // Drawing the zombies
     vector<Zombie*> zomPtrs = updatePtr->getZombiePtrs();
     for (unsigned int index = 0; index < zomPtrs.size(); ++index) {
         Zombie* zomPtr = zomPtrs.at(index);
 
-        aniZomPtr->draw(win, zomPtr->boundPtr->left, zomPtr->boundPtr->top, zomPtr->rotation, zomPtr->stateTime);
+        aniZomPtr->draw(win, zomPtr->boundPtr->left + mapPos.x, zomPtr->boundPtr->top + mapPos.y,
+        zomPtr->rotation, zomPtr->stateTime);
     }
 
-    vector<Cannon*> norCanPtrs = updatePtr->getNorCanPtrs();
-    for (unsigned int index = 0; index < norCanPtrs.size(); ++index) {
-        Cannon* norCanPtr = norCanPtrs.at(index);
-        FloatRect* boundPtr = norCanPtr->boundPtr;
-        const IntRect& spriteBound = norCanSpritePtr->getBounds();
+    drawNormalCannons(win, updatePtr->getNorCanPtrs());
+    drawIceCannons(win, updatePtr->getIceCanPtrs());
+    drawSplashCannons(win, updatePtr->getSplCanPtrs());
 
-        norCanSpritePtr->draw(win, boundPtr->left + boundPtr->width / 2 - spriteBound.width / 2,
-                                boundPtr->top + boundPtr->height / 2 - spriteBound.height / 2, norCanPtr->rotation);
+    purchasePanPtr->draw(win, 128, 128);
+}
 
-        const vector<Bullet*> bulletPtrs = norCanPtr->getBullets();
+void GameScreenRenderer::drawNormalCannons(RenderWindow& win, const vector<Cannon*>& canPtrs) {
+    Vector2f& mapPos = updatePtr->mapPos;
+    GameSprite* canSprite = textureAtlasPtr->getSprite("normalcannon");
+    GameSprite* bulletSprite = textureAtlasPtr->getSprite("normalbullet");
+
+    for (unsigned int index = 0; index < canPtrs.size(); ++index) {
+        Cannon* canPtr = canPtrs.at(index);
+        FloatRect* boundPtr = canPtr->boundPtr;
+        const IntRect& spriteBound = canSprite->getBounds();
+
+        canSprite->setScale(1.0f, 1.0f);
+        canSprite->draw(win, (boundPtr->left + boundPtr->width / 2 - spriteBound.width / 2) + mapPos.x,
+                                (boundPtr->top + boundPtr->height / 2 - spriteBound.height / 2) + mapPos.y, canPtr->rotation);
+
+        const vector<Bullet*> bulletPtrs = canPtr->getBullets();
 
         for (unsigned int bulIndex = 0; bulIndex < bulletPtrs.size(); ++bulIndex) {
             Bullet* bulPtr = bulletPtrs.at(bulIndex);
-            if (bulPtr->updating) {
-                const IntRect& sprBound = norCanBulSpritePtr->getBounds();
-                norCanBulSpritePtr->draw(win, bulPtr->boundPtr->left - (sprBound.width / 2),
-                                            bulPtr->boundPtr->top - (sprBound.height / 2), bulPtr->rotation);
+            const IntRect& rect = bulletSprite->getBounds();
+            boundPtr = bulPtr->boundPtr;
+            if (bulPtr->isFired()) {
+                const IntRect& sprBound = bulletSprite->getBounds();
+                bulletSprite->draw(win, (boundPtr->left + (boundPtr->width / 2)) - (rect.width / 2) + mapPos.x,
+                                    (boundPtr->top + (boundPtr->height / 2)) - (rect.height / 2) + mapPos.y, bulPtr->rotation);
             }
         }
     }
 }
 
+void GameScreenRenderer::drawIceCannons(RenderWindow& win, const vector<IceCannon*>& canPtrs) {
+    Vector2f& mapPos = updatePtr->mapPos;
+    GameSprite* canSprite = textureAtlasPtr->getSprite("icecannon");
+    GameSprite* bulletSprite = textureAtlasPtr->getSprite("icebullet");
+
+    for (unsigned int index = 0; index < canPtrs.size(); ++index) {
+        Cannon* canPtr = canPtrs.at(index);
+        FloatRect* boundPtr = canPtr->boundPtr;
+        const IntRect& spriteBound = canSprite->getBounds();
+
+        canSprite->setScale(1.0f, 1.0f);
+        canSprite->draw(win, (boundPtr->left + boundPtr->width / 2 - spriteBound.width / 2) + mapPos.x,
+                                (boundPtr->top + boundPtr->height / 2 - spriteBound.height / 2) + mapPos.y, canPtr->rotation);
+
+        const vector<Bullet*> bulletPtrs = canPtr->getBullets();
+
+        for (unsigned int bulIndex = 0; bulIndex < bulletPtrs.size(); ++bulIndex) {
+            Bullet* bulPtr = bulletPtrs.at(bulIndex);
+            const IntRect& rect = bulletSprite->getBounds();
+            boundPtr = bulPtr->boundPtr;
+            if (bulPtr->isFired()) {
+                const IntRect& sprBound = bulletSprite->getBounds();
+                bulletSprite->draw(win, (boundPtr->left + (boundPtr->width / 2)) - (rect.width / 2) + mapPos.x,
+                                    (boundPtr->top + (boundPtr->height / 2)) - (rect.height / 2) + mapPos.y, bulPtr->rotation);
+            }
+        }
+    }
+}
+
+void GameScreenRenderer::drawSplashCannons(RenderWindow& win, const vector<SplashCannon*>& canPtrs) {
+    Vector2f& mapPos = updatePtr->mapPos;
+    GameSprite* canSprite = textureAtlasPtr->getSprite("splashcannon");
+    GameSprite* bulletSprite = textureAtlasPtr->getSprite("splashbullet");
+
+    for (unsigned int index = 0; index < canPtrs.size(); ++index) {
+        Cannon* canPtr = canPtrs.at(index);
+        FloatRect* boundPtr = canPtr->boundPtr;
+        const IntRect& spriteBound = canSprite->getBounds();
+
+        canSprite->setScale(1.0f, 1.0f);
+        canSprite->draw(win, (boundPtr->left + boundPtr->width / 2 - spriteBound.width / 2) + mapPos.x,
+                                (boundPtr->top + boundPtr->height / 2 - spriteBound.height / 2) + mapPos.y, canPtr->rotation);
+
+        const vector<Bullet*> bulletPtrs = canPtr->getBullets();
+
+        for (unsigned int bulIndex = 0; bulIndex < bulletPtrs.size(); ++bulIndex) {
+            Bullet* bulPtr = bulletPtrs.at(bulIndex);
+            const IntRect& rect = bulletSprite->getBounds();
+            boundPtr = bulPtr->boundPtr;
+            if (bulPtr->isFired()) {
+                const IntRect& sprBound = bulletSprite->getBounds();
+                bulletSprite->draw(win, (boundPtr->left + (boundPtr->width / 2)) - (rect.width / 2) + mapPos.x,
+                                    (boundPtr->top + (boundPtr->height / 2)) - (rect.height / 2) + mapPos.y, bulPtr->rotation);
+            }
+        }
+    }
+}
+
+
+const vector<vector<float> >& GameScreenRenderer::getTileMapInfo() {
+    return tiledMapPtr->tileInfo;
+}
+
 GameScreenRenderer::~GameScreenRenderer() {
+    delete textureAtlasPtr;
     delete tiledMapPtr;
+    delete purchasePanPtr;
 }

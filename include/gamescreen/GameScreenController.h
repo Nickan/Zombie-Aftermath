@@ -6,6 +6,8 @@
 
 #include "GameScreen.h"
 
+#include <cmath>
+
 using namespace sf;
 
 // For debugging
@@ -14,8 +16,7 @@ using namespace std;
 
 class GameScreen;
 
-class GameScreenController : public Input
-{
+class GameScreenController : public Input {
     public:
         GameScreenController(GameScreen* gameScreenPtr);
 
@@ -34,10 +35,18 @@ class GameScreenController : public Input
     private:
         void screenScrolling(const int& x, const int& y);
 
+        // Cancels cannon planting, bring back the money from purchasing
+        void cancelCannonPlanting();
+
+        const bool panelButtonPressed(const int& x, const int& y);
+
+        // Returns the tile number of the game
+        const Vector2i& getTileNumber(const int& screenX, const int& screenY);
 
         GameScreen* gameScreenPtr;
         bool scrollScreen;
         Vector2i mousePrevPos;
+        Vector2i tileNumber;
 };
 
 #endif // GAMESCREENCONTROLLER_H
