@@ -10,10 +10,11 @@ void MessageDispatcher::update(const float& delta) {
         Message* msgPtr = msgPtrList.at(index);
         msgPtr->dispatchTime -= delta;
 
-        // Later, optimize and dispatch other messages that should be, make it run for now
         if (msgPtr->dispatchTime <= 0) {
             dischargeMessage(msgPtr, index);
-            break;
+
+            // Bring the counter back to its current index, as it will delete the current index
+            --index;
         }
     }
 
