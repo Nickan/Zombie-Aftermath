@@ -2,6 +2,9 @@
 #define SPLASHCANNON_H
 
 #include "Cannon.h"
+#include <SFML/System/Vector2.hpp>
+
+using namespace sf;
 
 class SplashCannon : public Cannon {
     public:
@@ -14,9 +17,14 @@ class SplashCannon : public Cannon {
 
         virtual void bulletHit(Bullet* bulPtr);
 
+        const bool hasHitTheGround();
+        const Vector2i& getBulletBlastPos();
+
         int blastRadius;
     protected:
+        Vector2i bulletBlastPos;
     private:
+        bool groundHit;
 };
 
 #endif // SPLASHCANNON_H
