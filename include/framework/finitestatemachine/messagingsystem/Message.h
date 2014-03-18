@@ -2,8 +2,9 @@
 #define MESSAGE_H
 
 enum MessageType {
-    TARGET_ZOMBIE, HIT_ZOMBIE,      // Cannon's Message
-    TARGET_RESPONSE, KILLED // Zombie's Message
+    TARGET_ZOMBIE, HIT_ZOMBIE, // Cannon's Message
+    TARGET_RESPONSE, KILLED,  // Zombie's Message
+    FROZEN,                  // Ice cannon's Message
 };
 
 class Message
