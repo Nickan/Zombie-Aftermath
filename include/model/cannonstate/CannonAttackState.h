@@ -3,6 +3,7 @@
 
 #include "State.h"
 #include "Cannon.h"
+#include "Zombie.h"
 
 //... For detection
 #include <iostream>

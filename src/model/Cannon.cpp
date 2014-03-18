@@ -22,17 +22,18 @@ void Cannon::update(const float& delta) {
     stateMachinePtr->update(delta);
 }
 
-void Cannon::fireBullet() {
+Bullet* Cannon::getAvailableBullet() {
     for (unsigned int index = 0; index < bulletPtrs.size(); ++index) {
         Bullet* bulletPtr = bulletPtrs.at(index);
         if (!bulletPtr->isFired()) {
-
+            return bulletPtr;
             placeOnTurret(bulletPtr);
             setBulletTarget(bulletPtr);
             // Only one bullet will be fired at a time
             break;
         }
     }
+    return NULL;
 }
 
 void Cannon::placeOnTurret(Bullet* bulletPtr) {
@@ -59,23 +60,10 @@ void Cannon::setBulletTarget(Bullet* bulletPtr) {
     bulletPtr->targetId = targetId;
 }
 
-void Cannon::bulletUpdate(Bullet* bulPtr, const float& delta) {
-    if (bulPtr->targetHit()) {
-        bulletHit(bulPtr);
-    } else {
-        bulPtr->trackTarget(delta);
-    }
-}
-
 void Cannon::bulletHit(Bullet* bulPtr) {
     // Attack damage container
     Vector2i* atkDmgContainer = new Vector2i(attackDamage, 0);
     MessageDispatcher::sendMessage(id, bulPtr->targetId, 0, MessageType::HIT_ZOMBIE, atkDmgContainer);
-
-    // If there is target Id set
-    if (targetId == -1) {
-        stateMachinePtr->changeState(CannonIdleState::getInstance());
-    }
 }
 
 const bool Cannon::targetLocked(const float& delta) {

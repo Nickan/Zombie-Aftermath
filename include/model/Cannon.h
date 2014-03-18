@@ -26,17 +26,16 @@ class Cannon : public Entity {
 
         void update(const float& delta);
 
-        // Fires bullet when the target is locked on
-        void fireBullet();
-
         // Be called after the bullet is set to be fired, set the bullet's target
         virtual void setBulletTarget(Bullet* bulletPtr);
 
-        // Update for the bullet
-        void bulletUpdate(Bullet* bulPtr, const float& delta);
-
+        // When the bullet hits its target
         virtual void bulletHit(Bullet* bulPtr);
 
+        // Fires bullet when the target is locked on
+        Bullet* getAvailableBullet();
+
+        void placeOnTurret(Bullet* bulletPtr);
         void setIdle();
 
         const bool handleMessage(Message* msgPtr);
@@ -53,22 +52,19 @@ class Cannon : public Entity {
 
         int attackDamage;
         int range;
-
         float attackTimer;
-
         float attackDelay;
         float rotationSpeed;
-
 
         virtual ~Cannon();
     protected:
         int targetId;
-        StateMachine<Cannon>* stateMachinePtr;
+
         FloatRect* targetRectPtr;
+        StateMachine<Cannon>* stateMachinePtr;
         vector<Bullet*> bulletPtrs;
         static Vec2 vec2;
     private:
-        void placeOnTurret(Bullet* bulletPtr);
 
 };
 
