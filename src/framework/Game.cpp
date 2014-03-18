@@ -1,5 +1,8 @@
 #include "Game.h"
 
+float Game::width;
+float Game::height;
+
 Game::Game(const float width, const float height, const string gameName) {
     this->width = width;
     this->height = height;
@@ -50,13 +53,12 @@ void Game::setScreen(Screen* scrPtr) {
     this->scrPtr = scrPtr;
 }
 
-
-void Game::setScreenSize(const Vector2i& scrSize) {
-    screenSize = scrSize;
+const float& Game::getWidth() {
+    return width;
 }
 
-const Vector2i& Game::getScreenSize() {
-    return screenSize;
+const float& Game::getHeight() {
+    return height;
 }
 
 void Game::exit() {

@@ -20,15 +20,16 @@ class Game {
 
         void setScreen(Screen* scr);
         void startLooping();
-
-        void setScreenSize(const Vector2i& scrSize);
-        const Vector2i& getScreenSize();
         void exit();
 
-        float width;
-        float height;
+        static const float& getWidth();
+        static const float& getHeight();
+
         virtual ~Game();
     protected:
+        static float width;
+        static float height;
+
         // Variables to set the mouse update speed
         float updateTime;
         float cumulativeTime;
