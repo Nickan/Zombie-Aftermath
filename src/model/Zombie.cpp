@@ -5,9 +5,14 @@ Zombie::Zombie(FloatRect* boundPtr, const int& life, const float& rotation, cons
     worldUnit = 32;
     rotationSpeed = 100.0f;
     fullLife = life;
+    fullSpeed = speed;
 
     goalNodePtr = NULL;
     goalReached = false;
+    frozen = false;
+
+    slowEffectDuration = 5.0f; //-> Five seconds frozen
+    slowEffectTimer = 0;
 }
 
 void Zombie::update(const float& delta) {
@@ -51,6 +56,11 @@ void Zombie::update(const float& delta) {
         rotation = RotationManager::getSmoothRotation(rotation, targetRotation, delta * rotationSpeed);
     }
 
+
+
+    if (frozen) {
+        updateSlowEffect(delta);
+    }
 }
 
 void Zombie::setMovement() {
@@ -64,6 +74,17 @@ void Zombie::setMovement() {
     // Determine the vector to go to the next node
     velocity.x = nextNodePtr->x - (int) (boundPtr->left / worldUnit);
     velocity.y = nextNodePtr->y - (int) (boundPtr->top / worldUnit);
+}
+
+
+void Zombie::updateSlowEffect(const float& delta) {
+    slowEffectTimer += delta;
+
+    if (slowEffectTimer >= slowEffectDuration) {
+        slowEffectTimer = 0;
+        frozen = false;
+        speed = fullSpeed;
+    }
 }
 
 const bool Zombie::handleMessage(Message* msgPtr) {
@@ -85,10 +106,35 @@ const bool Zombie::handleMessage(Message* msgPtr) {
             if (life <= 0) {
                 // Add money based on the full life
                 Settings::cash += (int) (fullLife / 50);
+            }
+        } else {
+            MessageDispatcher::sendMessage(id, msgPtr->senderId, 0, MessageType::KILLED, NULL);
+        }
+
+
+        return true;
+    case MessageType::FROZEN:
+        // Check if still alive
+        if (life > 0) {
+            frozen = true;
+
+            // Container for the attack damage
+            Vector2i* atkDmgAndSlowPtr = (Vector2i*) msgPtr->extraInfo;
+            life -= atkDmgAndSlowPtr->x;
+
+            // Slow effect
+            speed = fullSpeed * (atkDmgAndSlowPtr->y / 100.0f);
+
+            // Delete the container
+            delete atkDmgAndSlowPtr;
+
+            // If killed by the attack
+            if (life <= 0) {
+                // Add money based on the full life
+                Settings::cash += (int) (fullLife / 50);
                 MessageDispatcher::sendMessage(id, msgPtr->senderId, 0, MessageType::KILLED, NULL);
             }
         }
-
         return true;
     default:
         return false;
@@ -111,6 +157,10 @@ const float& Zombie::getFullLife() {
 
 const bool& Zombie::goalIsReached() {
     return goalReached;
+}
+
+const bool& Zombie::isFrozen() {
+    return frozen;
 }
 
 Zombie::~Zombie() {

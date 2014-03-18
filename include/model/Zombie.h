@@ -28,6 +28,8 @@ class Zombie : public Entity {
 
         void update(const float& delta);
 
+        void updateSlowEffect(const float& delta);
+
         void setPath(const vector<Node*>& pathPtrs);
         const bool handleMessage(Message* msgPtr);
 
@@ -35,6 +37,7 @@ class Zombie : public Entity {
         const float& getFullLife();
 
         const bool& goalIsReached();
+        const bool& isFrozen();
 
         Node* goalNodePtr;
 
@@ -48,6 +51,7 @@ class Zombie : public Entity {
 
         unsigned int worldUnit;
         float speed;
+        float fullSpeed;
         float rotationSpeed;
         float life;
         float fullLife;
@@ -56,6 +60,10 @@ class Zombie : public Entity {
         vector<Node* > pathPtrs;
 
         bool goalReached;
+        bool frozen;
+
+        float slowEffectTimer;
+        float slowEffectDuration;
 };
 
 #endif // ZOMBIE_H
