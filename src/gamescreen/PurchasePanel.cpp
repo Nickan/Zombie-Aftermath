@@ -7,9 +7,15 @@ PurchasePanel::PurchasePanel(TextureAtlas* textureAtlasPtr)
     }
 
     canName = "";
+
+    panelRect.width = 128;
+    panelRect.height = 96;
 }
 
 void PurchasePanel::draw(RenderWindow& win, const int& x, const int& y) {
+    panelRect.left = x;
+    panelRect.top = y;
+
     // Pane background
     textureAtlasPtr->getSprite("panelcorner")->draw(win, x, y, 0.0);
     textureAtlasPtr->getSprite("panelside")->draw(win, x + 32, y, 0.0);
@@ -82,6 +88,10 @@ const int PurchasePanel::getButtonId(const int& touchX, const int& touchY) {
     }
 
     return -1;
+}
+
+const bool PurchasePanel::isClicked(const int& x, const int& y) {
+    return panelRect.contains(x, y);
 }
 
 PurchasePanel::~PurchasePanel() {
