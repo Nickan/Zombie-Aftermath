@@ -10,11 +10,6 @@ class IceCannon : public SplashCannon {
                     const float& slowEffectPercentage);
         virtual ~IceCannon();
 
-        // Be called after the bullet is set to be fired, where should the bullet set its target
-        virtual void setBulletTarget(Bullet* bulletPtr);
-
-        virtual void bulletHit(Bullet* bulPtr);
-
         float slowEffectPercentage;
     protected:
     private:
