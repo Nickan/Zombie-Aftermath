@@ -1,11 +1,13 @@
 #include "Zombie.h"
 
-Zombie::Zombie(FloatRect* boundPtr, const float& rotation, const float& speed)
-: Entity(boundPtr, rotation), speed(speed) {
+Zombie::Zombie(FloatRect* boundPtr, const int& life, const float& rotation, const float& speed)
+: Entity(boundPtr, rotation), life(life), speed(speed) {
     worldUnit = 32;
     rotationSpeed = 100.0f;
-    life = 100;
-    fullLife = 100;
+    fullLife = life;
+
+    goalNodePtr = NULL;
+    goalReached = false;
 }
 
 void Zombie::update(const float& delta) {
@@ -33,6 +35,15 @@ void Zombie::update(const float& delta) {
         // Check if there is path given
         if (!pathPtrs.empty()) {
             setMovement();
+        } else {
+
+            // Detects if the zombie has reached its goal
+            if (goalNodePtr != NULL) {
+                if (goalNodePtr->x == (int) (boundPtr->left / worldUnit) &&
+                    goalNodePtr->y == (int) (boundPtr->top / worldUnit) ) {
+                    goalReached = true;
+                }
+            }
         }
     } else {
         // Moving, set the rotation
@@ -47,6 +58,7 @@ void Zombie::setMovement() {
     previousPos.y = boundPtr->top;
 
     Node* nextNodePtr = pathPtrs.back();
+    // Remove the path from the path list
     pathPtrs.pop_back();
 
     // Determine the vector to go to the next node
@@ -61,23 +73,22 @@ const bool Zombie::handleMessage(Message* msgPtr) {
         return true;
     case MessageType::HIT_ZOMBIE:
         // Check if still alive
-        if (life >= 0) {
+        if (life > 0) {
             // Container for the attack damage
             Vector2i* atkDmgPtr = (Vector2i*) msgPtr->extraInfo;
             life -= atkDmgPtr->x;
 
+            // Delete the container
+            delete atkDmgPtr;
+
             // If killed by the attack
             if (life <= 0) {
-
+                // Add money based on the full life
+                Settings::cash += (int) (fullLife / 50);
+                MessageDispatcher::sendMessage(id, msgPtr->senderId, 0, MessageType::KILLED, NULL);
             }
         }
 
-        // Still don't know why I am getting "jump to case label [-fpermissive]" and "crosses initialization"
-        // whenever I remove the parentheses
-        {
-            Vector2i* lifePtr = new Vector2i(life, 0);
-            MessageDispatcher::sendMessage(id, msgPtr->senderId, 0, MessageType::HIT_RESPONSE, lifePtr);
-        }
         return true;
     default:
         return false;
@@ -96,6 +107,10 @@ const float& Zombie::getLife() {
 
 const float& Zombie::getFullLife() {
     return fullLife;
+}
+
+const bool& Zombie::goalIsReached() {
+    return goalReached;
 }
 
 Zombie::~Zombie() {

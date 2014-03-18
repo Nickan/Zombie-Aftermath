@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "MessageDispatcher.h"
 #include "Node.h"
+#include "Settings.h"
 
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
@@ -23,7 +24,7 @@ using namespace std;
 
 class Zombie : public Entity {
     public:
-        Zombie(FloatRect* boundPtr, const float& rotation, const float& speed);
+        Zombie(FloatRect* boundPtr, const int& life, const float& rotation, const float& speed);
 
         void update(const float& delta);
 
@@ -32,6 +33,10 @@ class Zombie : public Entity {
 
         const float& getLife();
         const float& getFullLife();
+
+        const bool& goalIsReached();
+
+        Node* goalNodePtr;
 
         float stateTime;
         virtual ~Zombie();
@@ -49,6 +54,8 @@ class Zombie : public Entity {
         Vector2i velocity;
         Vector2f previousPos;
         vector<Node* > pathPtrs;
+
+        bool goalReached;
 };
 
 #endif // ZOMBIE_H
