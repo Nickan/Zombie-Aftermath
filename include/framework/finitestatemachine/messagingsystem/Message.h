@@ -3,7 +3,7 @@
 
 enum MessageType {
     TARGET_ZOMBIE, HIT_ZOMBIE,      // Cannon's Message
-    TARGET_RESPONSE, HIT_RESPONSE, // Zombie's Message
+    TARGET_RESPONSE, KILLED // Zombie's Message
 };
 
 class Message
