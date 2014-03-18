@@ -38,6 +38,8 @@ class Bullet {
 
         float boundAllowance;
 
+        int targetId;
+
     protected:
     private:
         static Vec2 vec2;
