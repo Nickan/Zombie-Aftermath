@@ -11,6 +11,7 @@
 #include "MessageDispatcher.h"
 #include "ModelGCTimer.h"
 #include "ZombieSpawnManager.h"
+#include "Settings.h"
 
 #include <vector>
 
@@ -32,6 +33,10 @@ class GameScreenUpdate {
         void initializeMapInfo(const vector<vector<float> >& tileMapInfo);
 
         void createCannon(const string& canName, const int& x, const int& y);
+
+        void restartGame();
+
+        const bool& isGameOver();
 
         const vector<Zombie*>& getZombiePtrs();
         const vector<Cannon*>& getNorCanPtrs();
@@ -84,6 +89,7 @@ class GameScreenUpdate {
 		vector<Node*> path49_23;
 
         ZombieSpawnManager* zomSpawnManagerPtr;
+        bool gameOver;
 };
 
 #endif // GAMESCREENUPDATE_H

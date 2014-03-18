@@ -25,34 +25,79 @@ GameScreenRenderer::GameScreenRenderer(GameScreenUpdate* ptr) {
 
     textureAtlasPtr = new TextureAtlas("assets/images.png", "assets/images.xml");
     purchasePanPtr = new PurchasePanel(textureAtlasPtr);
+    hudPtr = new HeadsUpDisplay(textureAtlasPtr);
+    hudPtr->setMiniMapViewRect(updatePtr->mapPos.x, updatePtr->mapPos.y);
 
     texture.loadFromImage(image, IntRect(0, 192, 480, 32));
 
     aniZomPtr = new Animation(texture, 32, 32, 15, 15, 1, Animation::LOOP);
 
+    lifeSize.x = 32;
+    lifeSize.y = 6;
     lifeIndicator.setFillColor(Color::Yellow);
-    lifeIndicator.setSize(Vector2f(32, 8));
+    lifeIndicator.setSize(lifeSize);
+
+    hasBgImage = false;
+
+    fullBgImage.create(1600, 1200, Color::White);
 }
 
 
 void GameScreenRenderer::render(RenderWindow& win, const float& delta) {
+    win.clear(Color::Black);
     Vector2f& mapPos = updatePtr->mapPos;
     tiledMapPtr->draw(win, mapPos.x, mapPos.y);
 
-    // Drawing the zombies
-    vector<Zombie*> zomPtrs = updatePtr->getZombiePtrs();
-    for (unsigned int index = 0; index < zomPtrs.size(); ++index) {
-        Zombie* zomPtr = zomPtrs.at(index);
-
-        aniZomPtr->draw(win, zomPtr->boundPtr->left + mapPos.x, zomPtr->boundPtr->top + mapPos.y,
-        zomPtr->rotation, zomPtr->stateTime);
+    // Get a background image of full map
+    if (!hasBgImage) {
+        hasBgImage = true;
+        captureBackground(win);
     }
 
     drawNormalCannons(win, updatePtr->getNorCanPtrs());
     drawIceCannons(win, updatePtr->getIceCanPtrs());
     drawSplashCannons(win, updatePtr->getSplCanPtrs());
 
-    purchasePanPtr->draw(win, 128, 128);
+    drawZombies(win);
+
+    // HUD
+    hudPtr->draw(win);
+    hudPtr->drawMinimap(win, updatePtr->getZombiePtrs(), updatePtr->getNorCanPtrs(),
+        updatePtr->getSplCanPtrs(), updatePtr->getIceCanPtrs());
+
+    if (updatePtr->isGameOver()) {
+        hudPtr->drawGameOver(win);
+    }
+
+    // Purchase panel
+    purchasePanPtr->draw(win, 32 * 14, 32 * 14);
+}
+
+void GameScreenRenderer::drawZombies(RenderWindow& win) {
+    Vector2f& mapPos = updatePtr->mapPos;
+    // Drawing the zombies
+    vector<Zombie*> zomPtrs = updatePtr->getZombiePtrs();
+    for (unsigned int index = 0; index < zomPtrs.size(); ++index) {
+        Zombie* zomPtr = zomPtrs.at(index);
+
+        float zomX = zomPtr->boundPtr->left + mapPos.x;
+        float zomY = zomPtr->boundPtr->top + mapPos.y;
+        aniZomPtr->draw(win, zomX, zomY, zomPtr->rotation, zomPtr->stateTime);
+    }
+
+    // Drawing there life bars. I needed to separate it, as it should not be overdrawn by zombies
+    for (unsigned int index = 0; index < zomPtrs.size(); ++index) {
+        Zombie* zomPtr = zomPtrs.at(index);
+        float zomX = zomPtr->boundPtr->left + mapPos.x;
+        float zomY = zomPtr->boundPtr->top + mapPos.y;
+
+        // Setting up the zombie's life indicator
+        float lifePercentage = zomPtr->getLife() / zomPtr->getFullLife();
+        lifeSize.x = lifePercentage * 32;
+        lifeIndicator.setSize(lifeSize);
+        lifeIndicator.setPosition(zomX, zomY - 8);
+        win.draw(lifeIndicator);
+    }
 }
 
 void GameScreenRenderer::drawNormalCannons(RenderWindow& win, const vector<Cannon*>& canPtrs) {
@@ -145,6 +190,32 @@ void GameScreenRenderer::drawSplashCannons(RenderWindow& win, const vector<Splas
 
 const vector<vector<float> >& GameScreenRenderer::getTileMapInfo() {
     return tiledMapPtr->tileInfo;
+}
+
+void GameScreenRenderer::captureBackground(RenderWindow& win) {
+    // Upper left image
+    Image upperLeftImage = win.capture();
+    fullBgImage.copy(upperLeftImage, 0, 0, IntRect(0, 0, 800, 600), true);
+
+    // Upper right image
+    tiledMapPtr->draw(win, -800, 0);
+    Image upperRightImage = win.capture();
+    fullBgImage.copy(upperRightImage, 800, 0, IntRect(0, 0, 800, 600), true);
+
+    // Lower left image
+    tiledMapPtr->draw(win, 0, -600);
+    Image lowerLeftImage = win.capture();
+    fullBgImage.copy(lowerLeftImage, 0, 600, IntRect(0, 0, 800, 600), true);
+
+    // Lower right image
+    tiledMapPtr->draw(win, -800, -600);
+    Image lowerRightImage = win.capture();
+    fullBgImage.copy(lowerRightImage, 800, 600, IntRect(0, 0, 800, 600), true);
+
+    hudPtr->setMiniMapBgImage(fullBgImage);
+
+    //...
+    cout << "Size: " << fullBgImage.getSize().x << ": " << fullBgImage.getSize().y << endl;
 }
 
 GameScreenRenderer::~GameScreenRenderer() {

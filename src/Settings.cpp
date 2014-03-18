@@ -1,7 +1,7 @@
 #include "Settings.h"
-int Settings::score;
-int Settings::cash;
-int Settings::life;
+int Settings::score = 0;
+int Settings::cash = 200;
+int Settings::life = 50;
 int Settings::zombieKills;
 
 bool Settings::soundEnable;
@@ -51,7 +51,7 @@ void Settings::initialize() {
 
 void Settings::reset() {
     cash = 200;
-    life = 50;
+    life = 10;
     score = 0;
     zombieKills = 0;
 }

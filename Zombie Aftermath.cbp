@@ -65,11 +65,13 @@
 		<Unit filename="include/framework/Game.h" />
 		<Unit filename="include/framework/GameAudio.h" />
 		<Unit filename="include/framework/GameSprite.h" />
+		<Unit filename="include/framework/GameText.h" />
 		<Unit filename="include/framework/Input.h" />
 		<Unit filename="include/framework/RotationManager.h" />
 		<Unit filename="include/framework/Screen.h" />
 		<Unit filename="include/framework/TextureAtlas.h" />
 		<Unit filename="include/framework/Timer.h" />
+		<Unit filename="include/framework/ToString.h" />
 		<Unit filename="include/framework/finitestatemachine/BaseEntity.h" />
 		<Unit filename="include/framework/finitestatemachine/EntityManager.h" />
 		<Unit filename="include/framework/finitestatemachine/State.h" />
@@ -85,6 +87,8 @@
 		<Unit filename="include/gamescreen/GameScreenController.h" />
 		<Unit filename="include/gamescreen/GameScreenRenderer.h" />
 		<Unit filename="include/gamescreen/GameScreenUpdate.h" />
+		<Unit filename="include/gamescreen/HeadsUpDisplay.h" />
+		<Unit filename="include/gamescreen/MiniMap.h" />
 		<Unit filename="include/gamescreen/PurchasePanel.h" />
 		<Unit filename="include/gamescreen/TileInfo.h" />
 		<Unit filename="include/gamescreen/ZombieSpawnManager.h" />
@@ -107,11 +111,13 @@
 		<Unit filename="src/framework/Game.cpp" />
 		<Unit filename="src/framework/GameAudio.cpp" />
 		<Unit filename="src/framework/GameSprite.cpp" />
+		<Unit filename="src/framework/GameText.cpp" />
 		<Unit filename="src/framework/Input.cpp" />
 		<Unit filename="src/framework/RotationManager.cpp" />
 		<Unit filename="src/framework/Screen.cpp" />
 		<Unit filename="src/framework/TextureAtlas.cpp" />
 		<Unit filename="src/framework/Timer.cpp" />
+		<Unit filename="src/framework/ToString.cpp" />
 		<Unit filename="src/framework/finitestatemachine/BaseEntity.cpp" />
 		<Unit filename="src/framework/finitestatemachine/EntityManager.cpp" />
 		<Unit filename="src/framework/finitestatemachine/State.cpp" />
@@ -127,6 +133,8 @@
 		<Unit filename="src/gamescreen/GameScreenController.cpp" />
 		<Unit filename="src/gamescreen/GameScreenRenderer.cpp" />
 		<Unit filename="src/gamescreen/GameScreenUpdate.cpp" />
+		<Unit filename="src/gamescreen/HeadsUpDisplay.cpp" />
+		<Unit filename="src/gamescreen/MiniMap.cpp" />
 		<Unit filename="src/gamescreen/PurchasePanel.cpp" />
 		<Unit filename="src/gamescreen/TileInfo.cpp" />
 		<Unit filename="src/gamescreen/ZombieSpawnManager.cpp" />

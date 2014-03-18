@@ -14,6 +14,21 @@ void GameScreenController::keyReleased(const int& keycode) {
 
 //------------------------ Left Mouse Pressed -----------------------------
 void GameScreenController::leftMousePressed(const int& x, const int& y) {
+    // If game over, only the HUD buttons is detected
+    if (gameScreenPtr->updatePtr->isGameOver()) {
+        HeadsUpDisplay* hudPtr = gameScreenPtr->rendererPtr->hudPtr;
+
+        if (hudPtr->isOverRestartButton(x, y)) {
+            gameScreenPtr->updatePtr->restartGame();
+        }
+
+        if (hudPtr->isOverMenuButton(x, y)) {
+            gameScreenPtr->gamePtr->setScreen(new MenuScreen(gameScreenPtr->gamePtr));
+        }
+
+        return;
+    }
+
     // Don't process any button if the panel button is pressed
     if (panelButtonPressed(x, y)) {
         return;
@@ -27,11 +42,34 @@ const bool GameScreenController::panelButtonPressed(const int& x, const int& y) 
 
     int buttonId = purPanPtr->getButtonId(x, y);
     switch (buttonId) {
-    case 0: purPanPtr->canName = "normalcannon";
+    case 0:
+        {   // Check if there is enough money
+            int normalCannonPrice = 10;
+            if (Settings::cash >= normalCannonPrice) {
+                Settings::cash -= normalCannonPrice;
+                purPanPtr->canName = "normalcannon";
+            }
+        }
         return true;
-    case 1: purPanPtr->canName = "splashcannon";
+    case 1:
+        {   // Check if there is enough money
+            int splashCannonPrice = 30;
+            if (Settings::cash >= splashCannonPrice) {
+                Settings::cash -= splashCannonPrice;
+                purPanPtr->canName = "splashcannon";
+            }
+
+        }
         return true;
-    case 2: purPanPtr->canName = "icecannon";
+    case 2:
+        {   // Check if there is enough money
+            int iceCannonPrice = 40;
+            if (Settings::cash >= iceCannonPrice) {
+                Settings::cash -= iceCannonPrice;
+                purPanPtr->canName = "icecannon";
+            }
+
+        }
         return true;
     default:
         return false;
@@ -44,8 +82,8 @@ void GameScreenController::leftMouseReleased(const int& x, const int& y) {
     PurchasePanel* purPanPtr = gameScreenPtr->rendererPtr->purchasePanPtr;
     GameScreenUpdate* gameUpdater = gameScreenPtr->updatePtr;
 
-    // If there is cannon name purchased
-    if (purPanPtr->canName != "") {
+    // If there is cannon name purchased and the purchased panel is not clicked
+    if (purPanPtr->canName != "" && !purPanPtr->isClicked(x, y)) {
         const Vector2i& tileNumber = getTileNumber(x, y);
 
         // Tile is available to be planted
@@ -105,29 +143,57 @@ void GameScreenController::screenScrolling(const int& x, const int& y) {
                 mapPos.x = 0;
             }
 
-            float& scrWidth = gameScreenPtr->gamePtr->width;
+            const float& scrWidth = Game::getWidth();
             if (mapPos.x < -scrWidth) {
                 mapPos.x = -scrWidth;
             }
         }
 
-        if (mapPos.y <= 0) {
+        float upperLimit = 32;
+        if (mapPos.y <= upperLimit) {
             mapPos.y += scrollAmountY;
-            if (mapPos.y > 0) {
-                mapPos.y = 0;
+
+            // Upper scrolling limitation
+            if (mapPos.y > upperLimit) {
+                mapPos.y = upperLimit;
             }
 
-            float& scrHeight = gameScreenPtr->gamePtr->height;
+            // Bottom limitation
+            const float& scrHeight = Game::getHeight() + (32 * 5) + 8;
             if (mapPos.y < -scrHeight) {
                 mapPos.y = -scrHeight;
             }
         }
+
+        // Setting up the minimap
+        HeadsUpDisplay* hudPtr = gameScreenPtr->rendererPtr->hudPtr;
+        hudPtr->setMiniMapViewRect(mapPos.x, mapPos.y);
     }
+
+
 }
 
 
 //------------------------ Mouse Motion -----------------------------------
 void GameScreenController::mouseMotion(const int& x, const int& y) {
+    if (gameScreenPtr->updatePtr->isGameOver()) {
+        HeadsUpDisplay* hudPtr = gameScreenPtr->rendererPtr->hudPtr;
+
+        if (hudPtr->isOverRestartButton(x, y)) {
+            hudPtr->setRestartButtonOpaque(true);
+        } else {
+            hudPtr->setRestartButtonOpaque(false);
+        }
+
+        if (hudPtr->isOverMenuButton(x, y)) {
+            hudPtr->setMenuButtonOpaque(true);
+        } else {
+            hudPtr->setMenuButtonOpaque(false);
+        }
+
+        return;
+    }
+
     PurchasePanel* purPanPtr = gameScreenPtr->rendererPtr->purchasePanPtr;
     Vector2f& mapPos = gameScreenPtr->updatePtr->mapPos;
 

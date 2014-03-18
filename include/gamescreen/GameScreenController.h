@@ -5,6 +5,7 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "GameScreen.h"
+#include "MenuScreen.h"
 
 #include <cmath>
 

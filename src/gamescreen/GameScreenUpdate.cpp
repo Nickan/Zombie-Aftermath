@@ -5,11 +5,7 @@ GameScreenUpdate::GameScreenUpdate() {
     mapPos.y = 0;
 
     zomSpawnManagerPtr = NULL;
-
-    float width = 32;
-    float height = 32;
-    float rotation = 0;
-    float speed = 0;
+    gameOver = false;
 }
 
 void GameScreenUpdate::initializeMapInfo(const vector<vector<float> >& tileMapInfo) {
@@ -54,6 +50,16 @@ void GameScreenUpdate::initializeZombieVariables() {
 }
 
 void GameScreenUpdate::update(const float& delta) {
+    // Don't process anything if game over
+    if (gameOver) {
+        return;
+    }
+
+    // If the player depletes its life to zero, set to game over
+    if (Settings::life < 1) {
+        gameOver = true;
+    }
+
     if (zomSpawnManagerPtr != NULL) {
         if (zomSpawnManagerPtr->spawnZombie(delta)) {
             spawnZombie(zomSpawnManagerPtr->totalSpawn);
@@ -61,6 +67,7 @@ void GameScreenUpdate::update(const float& delta) {
     }
 
     for (unsigned int index = 0; index < zomPtrs.size(); ++index) {
+        // Update if there is life left
         if (zomPtrs.at(index)->getLife() > 0) {
             zomPtrs.at(index)->update(delta);
         }
@@ -157,7 +164,6 @@ void GameScreenUpdate::updateSplashCannon(const float& delta) {
 }
 
 
-
 void GameScreenUpdate::updateModelGcTimer(const float& delta) {
     for (unsigned int index = 0; index < modelGcTimerPtrs.size(); ++index) {
         ModelGCTimer* timer = modelGcTimerPtrs.at(index);
@@ -178,12 +184,26 @@ void GameScreenUpdate::updateModelGcTimer(const float& delta) {
 void GameScreenUpdate::zombieDeletionManager() {
     float timeDeletion = 5.0f;
     for (unsigned int index = 0; index < zomPtrs.size(); ++index) {
+        // Delete when the goal is reached
         if (zomPtrs.at(index)->getLife() <= 0) {
+            // Add to the zombie to be deleted
             modelGcTimerPtrs.push_back(new ModelGCTimer(zomPtrs.at(index)->getId(), timeDeletion));
-            zomPtrs.erase(zomPtrs.begin() + index);
 
-            cout << "Set to be deleted zombie index: " << index << endl;
+            // Removed it from the zombies' list
+            zomPtrs.erase(zomPtrs.begin() + index);
             break;
+        }
+
+        // When the zombie reached its goal destination
+        if (zomPtrs.at(index)->goalIsReached()) {
+            // Reduce the life of the player
+            Settings::life -= 1;
+
+            // Add to the zombie to be deleted
+            modelGcTimerPtrs.push_back(new ModelGCTimer(zomPtrs.at(index)->getId(), timeDeletion));
+
+            // Removed it from the zombies' list
+            zomPtrs.erase(zomPtrs.begin() + index);
         }
     }
 }
@@ -210,46 +230,66 @@ const bool GameScreenUpdate::isInRange(const float& x1, const float& y1, const f
 }
 
 void GameScreenUpdate::spawnZombie(const int& spawnAreaNumber) {
+    int fullLife = zomSpawnManagerPtr->getStageNumber() * 100;
     Zombie* newZom;
-    float speed = 16;
+    float speed = 64;
     float rotation = 0;
     float width = 32;
     float height = 32;
     switch (spawnAreaNumber % 10) {
-    case 0: newZom = new Zombie(new FloatRect(32 * 6, 0, width, height), rotation, speed);
+    case 0: newZom = new Zombie(new FloatRect(32 * 6, 0, width, height), fullLife, rotation, speed);
             newZom->setPath(path6_0);
         break;
-    case 1: newZom = new Zombie(new FloatRect(32 * 14, 0, width, height), rotation, speed);
+    case 1: newZom = new Zombie(new FloatRect(32 * 14, 0, width, height), fullLife, rotation, speed);
             newZom->setPath(path14_0);
         break;
-    case 2: newZom = new Zombie(new FloatRect(32 * 21, 0, width, height), rotation, speed);
+    case 2: newZom = new Zombie(new FloatRect(32 * 21, 0, width, height), fullLife, rotation, speed);
             newZom->setPath(path21_0);
         break;
-    case 3: newZom = new Zombie(new FloatRect(32 * 29, 0, width, height), rotation, speed);
+    case 3: newZom = new Zombie(new FloatRect(32 * 29, 0, width, height), fullLife, rotation, speed);
             newZom->setPath(path29_0);
         break;
-    case 4: newZom = new Zombie(new FloatRect(32 * 36, 0, width, height), rotation, speed);
+    case 4: newZom = new Zombie(new FloatRect(32 * 36, 0, width, height), fullLife, rotation, speed);
             newZom->setPath(path36_0);
         break;
-    case 5: newZom = new Zombie(new FloatRect(32 * 44, 0, width, height), rotation, speed);
+    case 5: newZom = new Zombie(new FloatRect(32 * 44, 0, width, height), fullLife, rotation, speed);
             newZom->setPath(path44_0);
         break;
-    case 6: newZom = new Zombie(new FloatRect(32 * 49, 32 * 8, width, height), rotation, speed);
+    case 6: newZom = new Zombie(new FloatRect(32 * 49, 32 * 8, width, height), fullLife, rotation, speed);
             newZom->setPath(path49_8);
         break;
-    case 7: newZom = new Zombie(new FloatRect(32 * 0, 32 * 8, width, height), rotation, speed);
+    case 7: newZom = new Zombie(new FloatRect(32 * 0, 32 * 8, width, height), fullLife, rotation, speed);
             newZom->setPath(path0_8);
         break;
-    case 8: newZom = new Zombie(new FloatRect(32 * 0, 32 * 23, width, height), rotation, speed);
+    case 8: newZom = new Zombie(new FloatRect(32 * 0, 32 * 23, width, height), fullLife, rotation, speed);
             newZom->setPath(path0_23);
         break;
-    case 9: newZom = new Zombie(new FloatRect(32 * 49, 32 * 23, width, height), rotation, speed);
+    case 9: newZom = new Zombie(new FloatRect(32 * 49, 32 * 23, width, height), fullLife, rotation, speed);
             newZom->setPath(path49_23);
         break;
     default:
         break;
     }
+    // Set the goal node, to be changed if needed
+    newZom->goalNodePtr = path0_23.front();
     zomPtrs.push_back(newZom);
+}
+
+void GameScreenUpdate::restartGame() {
+    gameOver = false;
+    Settings::reset();
+    zomSpawnManagerPtr->reset();
+
+    for (unsigned int index = 0; index < zomPtrs.size(); ++index) {
+        delete zomPtrs.at(index);
+    }
+    zomPtrs.clear();
+
+    // Delete the timer
+    for (unsigned int index = 0; index < modelGcTimerPtrs.size(); ++index) {
+        delete modelGcTimerPtrs.at(index);
+    }
+    modelGcTimerPtrs.clear();
 }
 
 
@@ -259,7 +299,7 @@ void GameScreenUpdate::createCannon(const string& canName, const int& tileX, con
     int range = 96;
     float attackDelay = 1.0f;
     float rotation = 0;
-    float rotationSpeed = 50.0f;
+    float rotationSpeed = 100.0f;
 
     if (canName == "normalcannon") {
         norCanPtrs.push_back(new Cannon(new FloatRect(tileX * 32, tileY * 32, 32, 32), attackDamage,
@@ -281,6 +321,10 @@ void GameScreenUpdate::createCannon(const string& canName, const int& tileX, con
 
 
 //--------------------- Getters --------------------------
+const bool& GameScreenUpdate::isGameOver() {
+    return gameOver;
+}
+
 const vector<Zombie*>& GameScreenUpdate::getZombiePtrs() {
     return zomPtrs;
 }
@@ -304,5 +348,10 @@ GameScreenUpdate::~GameScreenUpdate() {
 
     for (unsigned int index = 0; index < zomPtrs.size(); ++index) {
         delete zomPtrs.at(index);
+    }
+
+    // Delete the timer
+    for (unsigned int index = 0; index < modelGcTimerPtrs.size(); ++index) {
+        delete modelGcTimerPtrs.at(index);
     }
 }
