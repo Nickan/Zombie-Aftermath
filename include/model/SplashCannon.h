@@ -12,7 +12,7 @@ class SplashCannon : public Cannon {
         // Be called after the bullet is set to be fired, where should the bullet set its target
         virtual void setBulletTarget(Bullet* bulletPtr);
 
-        virtual void bulletHit();
+        virtual void bulletHit(Bullet* bulPtr);
 
         int blastRadius;
     protected:

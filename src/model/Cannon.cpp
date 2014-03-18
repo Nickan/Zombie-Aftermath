@@ -55,24 +55,27 @@ void Cannon::placeOnTurret(Bullet* bulletPtr) {
 void Cannon::setBulletTarget(Bullet* bulletPtr) {
     // Passed the pointer of the target, a tracer bullet
     bulletPtr->setTarget(targetRectPtr);
+    // Set the target Id
+    bulletPtr->targetId = targetId;
 }
 
 void Cannon::bulletUpdate(Bullet* bulPtr, const float& delta) {
     if (bulPtr->targetHit()) {
-
-        // If there is target Id set
-        if (targetId != -1) {
-            bulletHit();
-        } else {
-            stateMachinePtr->changeState(CannonIdleState::getInstance());
-        }
+        bulletHit(bulPtr);
     } else {
         bulPtr->trackTarget(delta);
     }
 }
 
-void Cannon::bulletHit() {
+void Cannon::bulletHit(Bullet* bulPtr) {
+    // Attack damage container
+    Vector2i* atkDmgContainer = new Vector2i(attackDamage, 0);
+    MessageDispatcher::sendMessage(id, bulPtr->targetId, 0, MessageType::HIT_ZOMBIE, atkDmgContainer);
 
+    // If there is target Id set
+    if (targetId == -1) {
+        stateMachinePtr->changeState(CannonIdleState::getInstance());
+    }
 }
 
 const bool Cannon::targetLocked(const float& delta) {
@@ -130,17 +133,8 @@ const bool Cannon::handleMessage(Message* msgPtr) {
         stateMachinePtr->changeState(CannonAttackState::getInstance());
         targetRectPtr = (FloatRect*) msgPtr->extraInfo;
         return true;
-    case MessageType::HIT_RESPONSE:
-        // Still don't know why I am getting "jump to case label [-fpermissive]" and "crosses initialization"
-        // whenever I remove the parentheses
-        {
-            Vector2i* lifePtr = (Vector2i*) msgPtr->extraInfo;
-            // If zombie is dead
-            if (lifePtr->x <= 0) {
-                stateMachinePtr->changeState(CannonIdleState::getInstance());
-            }
-        }
-
+    case MessageType::KILLED:
+        stateMachinePtr->changeState(CannonIdleState::getInstance());
         return true;
     default:
         return false;

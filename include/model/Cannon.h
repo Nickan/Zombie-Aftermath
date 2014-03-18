@@ -35,7 +35,7 @@ class Cannon : public Entity {
         // Update for the bullet
         void bulletUpdate(Bullet* bulPtr, const float& delta);
 
-        virtual void bulletHit();
+        virtual void bulletHit(Bullet* bulPtr);
 
         void setIdle();
 

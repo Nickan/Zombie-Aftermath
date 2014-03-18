@@ -10,7 +10,7 @@ void SplashCannon::setBulletTarget(Bullet* bulletPtr) {
     bulletPtr->setTarget(targetRectPtr->left + (targetRectPtr->width / 2), targetRectPtr->top + (targetRectPtr->height / 2));
 }
 
-void SplashCannon::bulletHit() {
+void SplashCannon::bulletHit(Bullet* bulPtr) {
 
 }
 
