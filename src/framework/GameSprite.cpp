@@ -42,6 +42,10 @@ void GameSprite::setTexture(Texture& t) {
     initialize();
 }
 
+void GameSprite::setColor(const Color& color) {
+    sprite.setColor(color);
+}
+
 void GameSprite::setPosition(const int& x, const int& y) {
     sprite.setPosition(x + bounds.width / 2, y + bounds.height / 2);
 }

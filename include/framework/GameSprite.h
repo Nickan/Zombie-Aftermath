@@ -20,13 +20,14 @@ class GameSprite {
         GameSprite(const string& filePath);
         GameSprite(Texture&, const int x, const int y);
 
-        void loadFromFile(const string&);
-        void setTexture(Texture&);
-        void draw(RenderWindow&);
-        void draw(RenderWindow&, const int&, const int&, const float& rotation);
-        void setPosition(const int&, const int&);
-        void setScale(const float&, const float&);
-        void setRotation(const float&);
+        void loadFromFile(const string& filePath);
+        void setTexture(Texture& texture);
+        void draw(RenderWindow& win);
+        void draw(RenderWindow&, const int& x, const int& y, const float& rotation);
+        void setColor(const Color& color);
+        void setPosition(const int& x, const int& y);
+        void setScale(const float& scaleX, const float& scaleY);
+        void setRotation(const float& rotation);
 
         const Vector2f& getPosition();
         const IntRect& getBounds();
