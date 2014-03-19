@@ -45,12 +45,15 @@ void MenuScreenInput::rightMouseReleased(const int& mouseX, const int& mouseY) {
 }
 
 void MenuScreenInput::mouseMoved(const int& mouseX, const int& mouseY) {
+
+}
+
+void MenuScreenInput::mouseMotion(const int& mouseX, const int& mouseY) {
     if ( playRect.contains(mouseX, mouseY) ) {
         screenPtr->setCursorOnStart();
 
         if (selected) {
             Settings::playSelect();
-            cout << "Select" << endl;
         }
         selected = false;
     } else if ( exitRect.contains(mouseX, mouseY) ) {
@@ -64,10 +67,6 @@ void MenuScreenInput::mouseMoved(const int& mouseX, const int& mouseY) {
     }
 
     screenPtr->setDrawCursor(!selected);
-}
-
-void MenuScreenInput::mouseMotion(const int& mouseX, const int& mouseY) {
-
 }
 
 void MenuScreenInput::keyPressed(const int& keyCode) {
