@@ -15,7 +15,9 @@ textureAtlasPtr(textureAtlasPtr) {
     restartRect = IntRect(32 * 10, 32 * 10, 64, 32);
     menuRect = IntRect( (32 * 12) + 10, 32 * 10, 64, 32);
 
-    miniMapPtr =  new MiniMap();
+    miniMapPtr = new MiniMap();
+
+    showCannonSpecs = CannonType::NONE;
 }
 
 
@@ -51,6 +53,28 @@ void HeadsUpDisplay::draw(RenderWindow& win) {
     gameTextPtr->draw(win, ToString::getString(Settings::cash), (4 * 32) + 20, 2, Color::White);
     gameTextPtr->draw(win, ToString::getString(Settings::life), (12 * 32) + 20, 2, Color::White);
     gameTextPtr->draw(win, ToString::getString(Settings::score), (20 * 32) + 20, 2, Color::White);
+
+    gameTextPtr->setCharSize(10);
+    // For showing cannon specification for player to see the prize and the attack damage of the cannon
+    switch (showCannonSpecs) {
+    case CannonType::NORMAL_CANNON:
+        gameTextPtr->draw(win, "Price: 10", (19 * 32), (32 * 14.5f), Color::White);
+        gameTextPtr->draw(win, "Normal Cannon", (19 * 32), (32 * 15), Color::Yellow);
+        gameTextPtr->draw(win, "Single show but powerful", (19 * 32), (32 * 15.5), Color::Yellow);
+        break;
+    case CannonType::ICE_CANNON:
+        gameTextPtr->draw(win, "Price: 40", (19 * 32), (32 * 14.5f), Color::White);
+        gameTextPtr->draw(win, "Ice Cannon", (19 * 32), (32 * 15), Color::Yellow);
+        gameTextPtr->draw(win, "AoE, slows down zombie's movement", (19 * 32), (32 * 15.5), Color::Yellow);
+        break;
+    case CannonType::SPLASH_CANNON:
+        gameTextPtr->draw(win, "Price: 30", (19 * 32), (32 * 14.5f), Color::White);
+        gameTextPtr->draw(win, "Splash Cannon", (19 * 32), (32 * 15), Color::Yellow);
+        gameTextPtr->draw(win, "AoE, powerful but slow", (19 * 32), (32 * 15.5), Color::Yellow);
+        break;
+    default:
+        break;
+    }
 }
 
 void HeadsUpDisplay::drawGameOver(RenderWindow& win) {
@@ -95,6 +119,10 @@ void HeadsUpDisplay::drawZomSpawnManager(RenderWindow& win, ZombieSpawnManager* 
     }
 }
 
+
+void HeadsUpDisplay::setCannonSpecs(const CannonType& cannonType) {
+    showCannonSpecs = cannonType;
+}
 
 void HeadsUpDisplay::setMiniMapBgImage(const Image& image) {
     miniMapPtr->setImage(image);

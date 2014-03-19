@@ -10,6 +10,10 @@
 #include "ToString.h"
 #include "ZombieSpawnManager.h"
 
+enum CannonType {
+    NORMAL_CANNON, ICE_CANNON, SPLASH_CANNON, NONE,
+};
+
 class HeadsUpDisplay {
     public:
         HeadsUpDisplay(TextureAtlas* textureAtlasPtr);
@@ -22,6 +26,7 @@ class HeadsUpDisplay {
 
         void drawZomSpawnManager(RenderWindow& win, ZombieSpawnManager* zomSpawnManagerPtr);
 
+        void setCannonSpecs(const CannonType& cannonType);
         void setRestartButtonOpaque(const bool&);
         void setMenuButtonOpaque(const bool&);
 
@@ -44,6 +49,9 @@ class HeadsUpDisplay {
         IntRect menuRect;
 
         MiniMap* miniMapPtr;
+
+        // For showing the specs of the cannon
+        CannonType showCannonSpecs;
 };
 
 #endif // HEADSUPDISPLAY_H
