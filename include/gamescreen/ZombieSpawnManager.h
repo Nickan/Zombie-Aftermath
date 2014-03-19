@@ -2,28 +2,40 @@
 #define ZOMBIESPAWNMANAGER_H
 
 
+#include <iostream>
+using namespace std;
+
 class ZombieSpawnManager {
     public:
         ZombieSpawnManager();
         virtual ~ZombieSpawnManager();
 
-        const bool spawnZombie(const float& delta);
+        void update(const float& delta);
+
+        const bool spawnZombie();
+        const bool stoppedSpawning();
+
+        const float& getSpawnCountDown();
 
         // Reset to stage one
         void reset();
 
         // Increase the stage
-        void stageUp();
+        void incrementStage();
 
         const int& getStageNumber();
-
-        int totalSpawn;
+        const int& getTotalSpawn();
     protected:
     private:
+        int currentSpawnedZombies;
         int stage;
         int spawnLimit;
+        int totalSpawnedZombies;
+        float spawnCountDown;
         float spawnTimer;
         float spawnInterval;
+
+        bool spawn;
 };
 
 #endif // ZOMBIESPAWNMANAGER_H
