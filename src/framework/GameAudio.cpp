@@ -1,29 +1,28 @@
 #include "GameAudio.h"
 
-SoundBuffer GameAudio::buffer;
 vector<Music*>* GameAudio::vecMusicPtr = new vector<Music*>();
-vector<Sound*>* GameAudio::vecSoundPtr = new vector<Sound*>();
+vector<GameSound*>* GameAudio::vecSoundPtr = new vector<GameSound*>();
 
 GameAudio::GameAudio() { }
 
 Music* GameAudio::newMusic(const string& file) {
     Music* music = new Music();
-    if (!music->openFromFile(file))
+    if (!music->openFromFile(file)) {
         cout << "Error opening music file: " << file << endl;
+        return NULL;
+    }
 
     vecMusicPtr->push_back(music);
     return music;
 }
 
-Sound* GameAudio::newSound(const string& file) {
-    if (!buffer.loadFromFile(file))
-        cout << "Error opening sound file: " << file << endl;
-
-    Sound* sound = new Sound();
-    sound->setBuffer(buffer);
-
-    vecSoundPtr->push_back(sound);
-    return sound;
+GameSound* GameAudio::newSound(const string& filePath) {
+    GameSound* sound = new GameSound();
+    if (sound->loadFromFile(filePath)) {
+        vecSoundPtr->push_back(sound);
+        return sound;
+    }
+    return NULL;
 }
 
 void GameAudio::dispose() {

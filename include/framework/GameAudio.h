@@ -2,10 +2,10 @@
 #define GAMEAUDIO_H
 
 #include <SFML/Audio/Music.hpp>
-#include <SFML/Audio/Sound.hpp>
-#include <SFML/Audio/SoundBuffer.hpp>
 #include <iostream>
 #include <vector>
+
+#include "GameSound.h"
 
 using namespace std;
 using namespace sf;
@@ -16,14 +16,15 @@ class GameAudio {
     public:
         GameAudio();
         static Music* newMusic(const string&);
-        static Sound* newSound(const string&);
+        static GameSound* newSound(const string&);
         static void dispose();
         virtual ~GameAudio();
     protected:
     private:
-        static SoundBuffer buffer;
         static vector<Music*>* vecMusicPtr;
-        static vector<Sound*>* vecSoundPtr;
+        static vector<GameSound*>* vecSoundPtr;
+
+        static vector<SoundBuffer> buffers;
 };
 
 #endif // GAMEAUDIO_H
