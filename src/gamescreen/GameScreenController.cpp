@@ -2,6 +2,7 @@
 
 GameScreenController::GameScreenController(GameScreen* gameScreenPtr) {
     this->gameScreenPtr = gameScreenPtr;
+    scrollScreen = false;
 }
 
 void GameScreenController::keyPressed(const int& keycode) {
@@ -82,28 +83,34 @@ void GameScreenController::leftMouseReleased(const int& x, const int& y) {
     PurchasePanel* purPanPtr = gameScreenPtr->rendererPtr->purchasePanPtr;
     GameScreenUpdate* gameUpdater = gameScreenPtr->updatePtr;
 
-    // If there is cannon name purchased and the purchased panel is not clicked
-    if (purPanPtr->canName != "" && !purPanPtr->isClicked(x, y)) {
+    // If there is cannon being purchased and waiting to be planted
+    if (purPanPtr->canName != "") {
         const Vector2i& tileNumber = getTileNumber(x, y);
 
-        // Tile is available to be planted
-        if (gameUpdater->tileStatus.at(tileNumber.y).at(tileNumber.x) == 0) {
+        // Should fulfull two conditions that the used doesn't released the touch in the HUD and
+        // the tile chosen is available
+        if ( (y >= 32 && y <= 32 * 14)  && (gameUpdater->tileStatus.at(tileNumber.y).at(tileNumber.x) == 0)) {
             gameUpdater->createCannon(purPanPtr->canName, tileNumber.x, tileNumber.y);
 
             // Set value that indicates it has cannon
             gameUpdater->tileStatus.at(tileNumber.y).at(tileNumber.x) = 1;
             purPanPtr->canName = "";
+        } else {
+
+            // Not both conditions are met, so bring the money back
+            if (purPanPtr->canName == "normalcannon") {
+                Settings::cash += 10;
+            } else if (purPanPtr->canName == "splashCannon") {
+                Settings::cash += 30;
+            } else if (purPanPtr->canName == "icecannon") {
+                Settings::cash += 40;
+            }
+
+            // Set to no cannon
+            purPanPtr->canName = "";
         }
 
     }
-    cancelCannonPlanting();
-}
-
-void GameScreenController::cancelCannonPlanting() {
-    PurchasePanel* purPanPtr = gameScreenPtr->rendererPtr->purchasePanPtr;
-
-    // Cancel the cursor and the cannon deployment
-    purPanPtr->canName = "";
 }
 
 
@@ -199,17 +206,9 @@ void GameScreenController::mouseMotion(const int& x, const int& y) {
 
     // Place the cursor cannon in the area where it will be planted if the tile is available
     if (purPanPtr->canName != "") {
-        // The value will be negative, I need positive value to ease the positioning
-        int mapCorrectionX = abs( ((int) mapPos.x) % 32);
-        int mapCorrectionY = abs( ((int) mapPos.y) % 32);
-
-        // Corrects the tile coordinates in the current screen view where mouse cursor is currently at
-        int tileX = (x + mapCorrectionX) / 32;
-        int tileY = (y + mapCorrectionY) / 32;
-
-        // Visual sprite cursor position correction
-        purPanPtr->cursorX = (tileX * 32) - mapCorrectionX;
-        purPanPtr->cursorY = (tileY * 32) - mapCorrectionY;
+        const Vector2i& tileNum = getTileNumber(x, y);
+        purPanPtr->cursorX = (tileNum.x * 32) + mapPos.x;
+        purPanPtr->cursorY = (tileNum.y * 32) + mapPos.y;
     }
 }
 
@@ -219,8 +218,11 @@ const Vector2i& GameScreenController::getTileNumber(const int& screenX, const in
     Vector2f& mapPos = gameScreenPtr->updatePtr->mapPos;
 
     // Corrects the tile coordinates where mouse cursor at
-    tileNumber.x = (abs( (int) mapPos.x ) + screenX) / 32;
-    tileNumber.y = (abs( (int) mapPos.y ) + screenY) / 32;
+    tileNumber.x = ( (int) (mapPos.x - screenX) ) / 32;
+    tileNumber.y = ( (int) (mapPos.y - screenY) ) / 32;
+
+    tileNumber.x = abs(tileNumber.x);
+    tileNumber.y = abs(tileNumber.y);
 
     return tileNumber;
 }

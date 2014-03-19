@@ -7,8 +7,6 @@
 #include "GameScreen.h"
 #include "MenuScreen.h"
 
-#include <cmath>
-
 using namespace sf;
 
 // For debugging
@@ -35,9 +33,6 @@ class GameScreenController : public Input {
     protected:
     private:
         void screenScrolling(const int& x, const int& y);
-
-        // Cancels cannon planting, bring back the money from purchasing
-        void cancelCannonPlanting();
 
         const bool panelButtonPressed(const int& x, const int& y);
 
