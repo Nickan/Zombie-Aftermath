@@ -60,14 +60,13 @@ void CannonAttackState::update(Cannon* canPtr, const float& delta) {
         // Bullet is set to be fired
         if (bulPtr->isFired()) {
 
-            // Track the set target
-            bulPtr->trackTarget(delta);
+            // Only update the bullet when set to fire
+            bulPtr->update(delta);
 
             // Check if the target is hit, it automatically set the fire to false if already hit the target
-            if (bulPtr->targetHit()) {
+            if (bulPtr->isTargetHit()) {
                 canPtr->bulletHit(bulPtr);
             }
-
         }
     }
 
