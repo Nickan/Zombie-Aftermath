@@ -27,8 +27,6 @@ Bullet* Cannon::getAvailableBullet() {
         Bullet* bulletPtr = bulletPtrs.at(index);
         if (!bulletPtr->isFired()) {
             return bulletPtr;
-            placeOnTurret(bulletPtr);
-            setBulletTarget(bulletPtr);
             // Only one bullet will be fired at a time
             break;
         }
@@ -58,6 +56,8 @@ void Cannon::setBulletTarget(Bullet* bulletPtr) {
     bulletPtr->setTarget(targetRectPtr);
     // Set the target Id
     bulletPtr->targetId = targetId;
+
+    Settings::playFireNormalCannon();
 }
 
 void Cannon::bulletHit(Bullet* bulPtr) {

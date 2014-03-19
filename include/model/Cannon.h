@@ -10,6 +10,7 @@
 #include "CannonIdleState.h"
 #include "CannonAttackState.h"
 #include "MessageDispatcher.h"
+#include "Settings.h"
 #include "Vec2.h"
 
 #include <SFML/System/Vector2.hpp>

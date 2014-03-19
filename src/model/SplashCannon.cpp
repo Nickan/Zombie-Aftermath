@@ -8,6 +8,8 @@ Cannon(boundPtr, attackDamage, range, attackDelay, rotation, rotationSpeed), bla
 
 void SplashCannon::setBulletTarget(Bullet* bulletPtr) {
     bulletPtr->setTarget(targetRectPtr->left + (targetRectPtr->width / 2), targetRectPtr->top + (targetRectPtr->height / 2));
+
+    Settings::playFireSplashCannon();
 }
 
 void SplashCannon::bulletHit(Bullet* bulPtr) {

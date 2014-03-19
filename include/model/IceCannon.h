@@ -10,6 +10,8 @@ class IceCannon : public SplashCannon {
                     const float& slowEffectPercentage);
         virtual ~IceCannon();
 
+        void setBulletTarget(Bullet* bulletPtr);
+
         float slowEffectPercentage;
     protected:
     private:

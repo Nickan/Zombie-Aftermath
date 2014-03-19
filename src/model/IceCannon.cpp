@@ -7,6 +7,12 @@ SplashCannon(boundPtr, attackDamage, range, attackDelay, rotation, rotationSpeed
     //ctor
 }
 
+void IceCannon::setBulletTarget(Bullet* bulletPtr) {
+    bulletPtr->setTarget(targetRectPtr->left + (targetRectPtr->width / 2), targetRectPtr->top + (targetRectPtr->height / 2));
+
+    Settings::playFireIceCannon();
+}
+
 IceCannon::~IceCannon() {
     //dtor
 }
