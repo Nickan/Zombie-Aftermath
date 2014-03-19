@@ -49,10 +49,10 @@ class Settings {
         static Music* mainBgmPtr;
         static Music* gameBgmPtr;
 
-        static Sound* selectPtr;
-        static Sound* fireNormalCannonPtr;
-        static Sound* fireSplashCannonPtr;
-        static Sound* fireIceCannonPtr;
+        static GameSound* selectPtr;
+        static GameSound* fireNormalCannonPtr;
+        static GameSound* fireSplashCannonPtr;
+        static GameSound* fireIceCannonPtr;
 
         static string scoreFile;
         static ScoreHandler scoreHandler;

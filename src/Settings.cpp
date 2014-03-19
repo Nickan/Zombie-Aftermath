@@ -14,10 +14,10 @@ ifstream Settings::fileSettingsReader;
 Music* Settings::mainBgmPtr;
 Music* Settings::gameBgmPtr;
 
-Sound* Settings::fireNormalCannonPtr;
-Sound* Settings::fireSplashCannonPtr;
-Sound* Settings::fireIceCannonPtr;
-Sound* Settings::selectPtr;
+GameSound* Settings::fireNormalCannonPtr;
+GameSound* Settings::fireSplashCannonPtr;
+GameSound* Settings::fireIceCannonPtr;
+GameSound* Settings::selectPtr;
 
 ScoreHandler Settings::scoreHandler;
 
@@ -47,11 +47,12 @@ void Settings::initialize() {
 
     loadSettings();
     reset();
+
 }
 
 void Settings::reset() {
     cash = 200;
-    life = 10;
+    life = 50;
     score = 0;
     zombieKills = 0;
 }
@@ -106,11 +107,15 @@ void Settings::playGameBgm() {
 }
 
 void Settings::stopMainBgm() {
-    mainBgmPtr->stop();
+    if (soundEnable) {
+        mainBgmPtr->stop();
+    }
 }
 
 void Settings::stopGameBgm() {
-    gameBgmPtr->stop();
+    if (soundEnable) {
+        gameBgmPtr->stop();
+    }
 }
 
 void Settings::playSelect() {
