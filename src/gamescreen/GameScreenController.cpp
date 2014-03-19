@@ -183,8 +183,8 @@ void GameScreenController::screenScrolling(const int& x, const int& y) {
 
 //------------------------ Mouse Motion -----------------------------------
 void GameScreenController::mouseMotion(const int& x, const int& y) {
+    HeadsUpDisplay* hudPtr = gameScreenPtr->rendererPtr->hudPtr;
     if (gameScreenPtr->updatePtr->isGameOver()) {
-        HeadsUpDisplay* hudPtr = gameScreenPtr->rendererPtr->hudPtr;
 
         if (hudPtr->isOverRestartButton(x, y)) {
             hudPtr->setRestartButtonOpaque(true);
@@ -209,6 +209,19 @@ void GameScreenController::mouseMotion(const int& x, const int& y) {
         const Vector2i& tileNum = getTileNumber(x, y);
         purPanPtr->cursorX = (tileNum.x * 32) + mapPos.x;
         purPanPtr->cursorY = (tileNum.y * 32) + mapPos.y;
+    }
+
+    // For showing cannon specifications
+    int buttonId = purPanPtr->getButtonId(x, y);
+    switch (buttonId) {
+    case 0: hudPtr->setCannonSpecs(CannonType::NORMAL_CANNON);
+        break;
+    case 1: hudPtr->setCannonSpecs(CannonType::SPLASH_CANNON);
+        break;
+    case 2: hudPtr->setCannonSpecs(CannonType::ICE_CANNON);
+        break;
+    default: hudPtr->setCannonSpecs(CannonType::NONE);
+        break;
     }
 }
 
