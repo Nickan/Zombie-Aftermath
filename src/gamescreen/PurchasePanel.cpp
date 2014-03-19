@@ -90,9 +90,6 @@ const int PurchasePanel::getButtonId(const int& touchX, const int& touchY) {
     return -1;
 }
 
-const bool PurchasePanel::isClicked(const int& x, const int& y) {
-    return panelRect.contains(x, y);
-}
 
 PurchasePanel::~PurchasePanel() {
 

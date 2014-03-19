@@ -20,9 +20,6 @@ class PurchasePanel {
         // Returns the id of the rect being touched
         const int getButtonId(const int& touchX, const int& touchY);
 
-        // Returns if the panel is clicked
-        const bool isClicked(const int& x, const int& y);
-
         string canName;
         int cursorX;
         int cursorY;
