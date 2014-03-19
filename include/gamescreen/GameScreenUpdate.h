@@ -3,6 +3,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "AnimationExplosionTimer.h"
 #include "AStarPathfinder.h"
 #include "Cannon.h"
 #include "IceCannon.h"
@@ -47,14 +48,25 @@ class GameScreenUpdate {
 
         vector<vector<float> > tileStatus;
 
+        ZombieSpawnManager* zomSpawnManagerPtr;
+
+        vector<AnimationExplosionTimer*> aniExpTimerPtrs;
+
         virtual ~GameScreenUpdate();
     protected:
     private:
         void initializeZombieVariables();
 
+        void updateZombies(const float& delta);
+
         void updateNormalCannon(const float& delta);
-        void updateSplashCannon(const float& delta);
         void updateIceCannon(const float& delta);
+        void updateSplashCannon(const float& delta);
+
+        void handleIceBulletBlast(IceCannon* iceCanPtr);
+        void handleSplashBulletBlast(SplashCannon* splCanPtr);
+
+        void updateBulletExplosions(const float& delta);
 
         // Updates the deletion timer of registered to be deleted entity
         void updateModelGcTimer(const float& delta);
@@ -62,6 +74,7 @@ class GameScreenUpdate {
 
         // Spawns zombie based on the area number
         void spawnZombie(const int& spawnAreaNumber);
+
 
         const bool zombieInRange(const FloatRect* canRect, const FloatRect* zomRect, const float& range);
         const bool isInRange(const float& x1, const float& y1, const float& x2, const float& y2, const float& range);
@@ -88,7 +101,6 @@ class GameScreenUpdate {
 		vector<Node*> path0_23;
 		vector<Node*> path49_23;
 
-        ZombieSpawnManager* zomSpawnManagerPtr;
         bool gameOver;
 };
 

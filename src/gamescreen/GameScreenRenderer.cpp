@@ -28,9 +28,25 @@ GameScreenRenderer::GameScreenRenderer(GameScreenUpdate* ptr) {
     hudPtr = new HeadsUpDisplay(textureAtlasPtr);
     hudPtr->setMiniMapViewRect(updatePtr->mapPos.x, updatePtr->mapPos.y);
 
+    // Normal zombie animation
     texture.loadFromImage(image, IntRect(0, 192, 480, 32));
-
     aniZomPtr = new Animation(texture, 32, 32, 15, 15, 1, Animation::LOOP);
+
+    // Frozen zombie animation
+    texture.loadFromImage(image, IntRect(0, 224, 480, 32));
+    aniFrozenZomPtr = new Animation(texture, 32, 32, 15, 15, 1, Animation::LOOP);
+
+    // Normal explosion animation
+    texture.loadFromImage(image, IntRect(352, 0, 96, 32));
+    aniNorCanExplosionPtr = new Animation(texture, 32, 32, 3, 3, 0.3f, Animation::LOOP);
+
+    // Splash explosion animation
+    texture.loadFromImage(image, IntRect(0, 64, 448, 64));
+    aniSplCanExplosionPtr = new Animation(texture, 64, 64, 7, 7, 0.5f, Animation::LOOP);
+
+    // Ice explosion animation
+    texture.loadFromImage(image, IntRect(0, 128, 448, 64));
+    aniIceCanExplosionPtr = new Animation(texture, 64, 64, 7, 7, 0.5f, Animation::LOOP);
 
     lifeSize.x = 32;
     lifeSize.y = 6;
@@ -67,10 +83,14 @@ void GameScreenRenderer::render(RenderWindow& win, const float& delta) {
 
     if (updatePtr->isGameOver()) {
         hudPtr->drawGameOver(win);
+    } else {
+        hudPtr->drawZomSpawnManager(win, updatePtr->zomSpawnManagerPtr);
     }
 
     // Purchase panel
     purchasePanPtr->draw(win, 32 * 14, 32 * 14);
+
+    drawBulletExplosions(win);
 }
 
 void GameScreenRenderer::drawZombies(RenderWindow& win) {
@@ -82,7 +102,11 @@ void GameScreenRenderer::drawZombies(RenderWindow& win) {
 
         float zomX = zomPtr->boundPtr->left + mapPos.x;
         float zomY = zomPtr->boundPtr->top + mapPos.y;
-        aniZomPtr->draw(win, zomX, zomY, zomPtr->rotation, zomPtr->stateTime);
+        if (zomPtr->isFrozen()) {
+            aniFrozenZomPtr->draw(win, zomX, zomY, zomPtr->rotation, zomPtr->stateTime);
+        } else {
+            aniZomPtr->draw(win, zomX, zomY, zomPtr->rotation, zomPtr->stateTime);
+        }
     }
 
     // Drawing there life bars. I needed to separate it, as it should not be overdrawn by zombies
@@ -121,13 +145,14 @@ void GameScreenRenderer::drawNormalCannons(RenderWindow& win, const vector<Canno
             const IntRect& rect = bulletSprite->getBounds();
             boundPtr = bulPtr->boundPtr;
             if (bulPtr->isFired()) {
-                const IntRect& sprBound = bulletSprite->getBounds();
                 bulletSprite->draw(win, (boundPtr->left + (boundPtr->width / 2)) - (rect.width / 2) + mapPos.x,
                                     (boundPtr->top + (boundPtr->height / 2)) - (rect.height / 2) + mapPos.y, bulPtr->rotation);
             }
         }
+
     }
 }
+
 
 void GameScreenRenderer::drawIceCannons(RenderWindow& win, const vector<IceCannon*>& canPtrs) {
     Vector2f& mapPos = updatePtr->mapPos;
@@ -150,7 +175,6 @@ void GameScreenRenderer::drawIceCannons(RenderWindow& win, const vector<IceCanno
             const IntRect& rect = bulletSprite->getBounds();
             boundPtr = bulPtr->boundPtr;
             if (bulPtr->isFired()) {
-                const IntRect& sprBound = bulletSprite->getBounds();
                 bulletSprite->draw(win, (boundPtr->left + (boundPtr->width / 2)) - (rect.width / 2) + mapPos.x,
                                     (boundPtr->top + (boundPtr->height / 2)) - (rect.height / 2) + mapPos.y, bulPtr->rotation);
             }
@@ -179,7 +203,6 @@ void GameScreenRenderer::drawSplashCannons(RenderWindow& win, const vector<Splas
             const IntRect& rect = bulletSprite->getBounds();
             boundPtr = bulPtr->boundPtr;
             if (bulPtr->isFired()) {
-                const IntRect& sprBound = bulletSprite->getBounds();
                 bulletSprite->draw(win, (boundPtr->left + (boundPtr->width / 2)) - (rect.width / 2) + mapPos.x,
                                     (boundPtr->top + (boundPtr->height / 2)) - (rect.height / 2) + mapPos.y, bulPtr->rotation);
             }
@@ -187,6 +210,34 @@ void GameScreenRenderer::drawSplashCannons(RenderWindow& win, const vector<Splas
     }
 }
 
+
+void GameScreenRenderer::drawBulletExplosions(RenderWindow& win) {
+    vector<AnimationExplosionTimer*> timerPtrs = updatePtr->aniExpTimerPtrs;
+    Vector2f& mapPos = updatePtr->mapPos;
+
+    for (unsigned int index = 0; index < timerPtrs.size(); ++index) {
+        AnimationExplosionTimer* timer = timerPtrs.at(index);
+
+        float centerX;
+        float centerY;
+        if (timer->type == ExplosionType::NORMAL) {
+            centerX = (timer->x + mapPos.x) - (aniNorCanExplosionPtr->getWidth() / 2);
+            centerY = (timer->y + mapPos.y) - (aniNorCanExplosionPtr->getHeight() / 2);
+
+            aniNorCanExplosionPtr->draw(win, centerX, centerY, 0, 0.3f - timer->stateTime);
+        } else if (timer->type == ExplosionType::SPLASH) {
+            centerX = (timer->x + mapPos.x) - (aniSplCanExplosionPtr->getWidth() / 2);
+            centerY = (timer->y + mapPos.y) - (aniSplCanExplosionPtr->getHeight() / 2);
+
+            aniSplCanExplosionPtr->draw(win, centerX, centerY, 0, 0.5f - timer->stateTime);
+        } else {
+            centerX = (timer->x + mapPos.x) - (aniIceCanExplosionPtr->getWidth() / 2);
+            centerY = (timer->y + mapPos.y) - (aniIceCanExplosionPtr->getHeight() / 2);
+
+            aniIceCanExplosionPtr->draw(win, centerX, centerY, 0, 0.5f - timer->stateTime);
+        }
+    }
+}
 
 const vector<vector<float> >& GameScreenRenderer::getTileMapInfo() {
     return tiledMapPtr->tileInfo;
@@ -219,7 +270,10 @@ void GameScreenRenderer::captureBackground(RenderWindow& win) {
 }
 
 GameScreenRenderer::~GameScreenRenderer() {
+    delete aniFrozenZomPtr;
+    delete aniZomPtr;
+    delete hudPtr;
+    delete purchasePanPtr;
     delete textureAtlasPtr;
     delete tiledMapPtr;
-    delete purchasePanPtr;
 }

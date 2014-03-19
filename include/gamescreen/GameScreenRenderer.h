@@ -39,12 +39,21 @@ class GameScreenRenderer {
         void drawNormalCannons(RenderWindow& win, const vector<Cannon*>& canPtrs);
         void drawIceCannons(RenderWindow& win, const vector<IceCannon*>& canPtrs);
         void drawSplashCannons(RenderWindow& win, const vector<SplashCannon*>& canPtrs);
+        void drawBulletExplosions(RenderWindow& win);
+
         void drawZombies(RenderWindow& win);
 
         // Captures the whole background for mini map
         void captureBackground(RenderWindow& win);
 
         Animation* aniZomPtr;
+        Animation* aniFrozenZomPtr;
+        Animation* aniIceCanExplosionPtr;
+        Animation* aniNorCanExplosionPtr;
+        Animation* aniSplCanExplosionPtr;
+
+
+        // Never delete here
         GameScreenUpdate* updatePtr;
 
         TiledMap* tiledMapPtr;

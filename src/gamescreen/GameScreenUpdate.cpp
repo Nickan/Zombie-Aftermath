@@ -60,10 +60,37 @@ void GameScreenUpdate::update(const float& delta) {
         gameOver = true;
     }
 
+    updateZombies(delta);
+    updateNormalCannon(delta);
+    updateSplashCannon(delta);
+    updateIceCannon(delta);
+    MessageDispatcher::update(delta);
+
+    updateModelGcTimer(delta);
+    zombieDeletionManager();
+    updateBulletExplosions(delta);
+}
+
+void GameScreenUpdate::updateZombies(const float& delta) {
     if (zomSpawnManagerPtr != NULL) {
-        if (zomSpawnManagerPtr->spawnZombie(delta)) {
-            spawnZombie(zomSpawnManagerPtr->totalSpawn);
+
+        zomSpawnManagerPtr->update(delta);
+
+        // If it returns true, spawn a zombie based on the total spawned zombies
+        if (zomSpawnManagerPtr->spawnZombie()) {
+            spawnZombie(zomSpawnManagerPtr->getTotalSpawn());
         }
+
+        // Limit of spawned zombies reached
+        if (zomSpawnManagerPtr->stoppedSpawning()) {
+            // If there is no alive zombie
+            if (zomPtrs.empty()) {
+                //...
+                cout << "Stopped spawning" << endl;
+                zomSpawnManagerPtr->incrementStage();
+            }
+        }
+
     }
 
     for (unsigned int index = 0; index < zomPtrs.size(); ++index) {
@@ -72,14 +99,6 @@ void GameScreenUpdate::update(const float& delta) {
             zomPtrs.at(index)->update(delta);
         }
     }
-
-    updateNormalCannon(delta);
-    updateSplashCannon(delta);
-    updateIceCannon(delta);
-    MessageDispatcher::update(delta);
-
-    updateModelGcTimer(delta);
-    zombieDeletionManager();
 }
 
 void GameScreenUpdate::updateNormalCannon(const float& delta) {
@@ -106,6 +125,19 @@ void GameScreenUpdate::updateNormalCannon(const float& delta) {
         }
 
         canPtr->update(delta);
+
+        // Detect if the bullet has hit the ground and need to have explosion playing
+        const vector<Bullet*> bulPtrs = canPtr->getBullets();
+        for (unsigned int index = 0; index < bulPtrs.size(); ++index) {
+            if (bulPtrs.at(index)->playExplosionAnimation()) {
+                const FloatRect* rectPtr = bulPtrs.at(index)->boundPtr;
+                float centerX = rectPtr->left + (rectPtr->width / 2);
+                float centerY = rectPtr->top + (rectPtr->height / 2);
+
+                aniExpTimerPtrs.push_back(new AnimationExplosionTimer(centerX, centerY, 0.3f, ExplosionType::NORMAL));
+            }
+        }
+
     }
 }
 
@@ -133,6 +165,46 @@ void GameScreenUpdate::updateIceCannon(const float& delta) {
         }
 
         canPtr->update(delta);
+
+        if (canPtr->hasHitTheGround()) {
+            handleIceBulletBlast(canPtr);
+        }
+
+        // Detect if the bullet has hit the ground and need to have explosion playing
+        const vector<Bullet*> bulPtrs = canPtr->getBullets();
+        for (unsigned int index = 0; index < bulPtrs.size(); ++index) {
+            if (bulPtrs.at(index)->playExplosionAnimation()) {
+                const FloatRect* rectPtr = bulPtrs.at(index)->boundPtr;
+                float centerX = rectPtr->left;
+                float centerY = rectPtr->top;
+
+                aniExpTimerPtrs.push_back(new AnimationExplosionTimer(centerX, centerY, 0.5f, ExplosionType::ICE));
+            }
+        }
+    }
+}
+
+void GameScreenUpdate::handleIceBulletBlast(IceCannon* iceCanPtr) {
+    for (unsigned int zomIndex = 0; zomIndex < zomPtrs.size(); ++zomIndex) {
+        FloatRect* zomBoundPtr = zomPtrs.at(zomIndex)->boundPtr;
+
+        // If the zombie is dead, continue to the next zombie
+        if (zomPtrs.at(zomIndex)->getLife() <= 0) {
+            continue;
+        }
+
+        const Vector2i& bulletBlastPos = iceCanPtr->getBulletBlastPos();
+        float zomCenterX = zomBoundPtr->left + zomBoundPtr->width / 2;
+        float zomCenterY = zomBoundPtr->top + zomBoundPtr->height / 2;
+
+        // Detects if the zombie is caught in blast
+        if (isInRange(bulletBlastPos.x, bulletBlastPos.y, zomCenterX, zomCenterY, iceCanPtr->blastRadius) ) {
+            Zombie* zomPtr = zomPtrs.at(zomIndex);
+
+            // Create a container for the attack damage
+            Vector2i* atkDmgAndSlowPtr = new Vector2i(iceCanPtr->attackDamage, iceCanPtr->slowEffectPercentage);
+            MessageDispatcher::sendMessage(iceCanPtr->getId(), zomPtr->getId(), 0, MessageType::FROZEN, atkDmgAndSlowPtr);
+        }
     }
 }
 
@@ -160,6 +232,53 @@ void GameScreenUpdate::updateSplashCannon(const float& delta) {
         }
 
         canPtr->update(delta);
+
+        // Detects near zombies and send their are being hit by the bullet's explosion
+        if (canPtr->hasHitTheGround()) {
+            handleSplashBulletBlast(canPtr);
+        }
+
+        // Detect if the bullet has hit the ground and need to have explosion playing
+        const vector<Bullet*> bulPtrs = canPtr->getBullets();
+        for (unsigned int index = 0; index < bulPtrs.size(); ++index) {
+            if (bulPtrs.at(index)->playExplosionAnimation()) {
+                const FloatRect* rectPtr = bulPtrs.at(index)->boundPtr;
+
+                float centerX = rectPtr->left + (rectPtr->width / 2);
+                float centerY = rectPtr->top + (rectPtr->height / 2);
+
+                aniExpTimerPtrs.push_back(new AnimationExplosionTimer(centerX, centerY, 0.5f, ExplosionType::SPLASH));
+            }
+        }
+
+    }
+}
+
+void GameScreenUpdate::handleSplashBulletBlast(SplashCannon* splCanPtr) {
+    for (unsigned int zomIndex = 0; zomIndex < zomPtrs.size(); ++zomIndex) {
+        FloatRect* zomBoundPtr = zomPtrs.at(zomIndex)->boundPtr;
+
+        // If the zombie is dead, continue to the next zombie
+        if (zomPtrs.at(zomIndex)->getLife() <= 0) {
+            continue;
+        }
+
+
+        // Zombie in range
+        const Vector2i& bulletBlastPos = splCanPtr->getBulletBlastPos();
+        float zomCenterX = zomBoundPtr->left + zomBoundPtr->width / 2;
+        float zomCenterY = zomBoundPtr->top + zomBoundPtr->height / 2;
+
+        // Detects if the zombie is caught in blast
+        if (isInRange(bulletBlastPos.x, bulletBlastPos.y, zomCenterX, zomCenterY, splCanPtr->blastRadius) ) {
+            Zombie* zomPtr = zomPtrs.at(zomIndex);
+
+            // Create a container for the attack damage
+            Vector2i* atkDmgPtr = new Vector2i(splCanPtr->attackDamage, 0);
+            MessageDispatcher::sendMessage(splCanPtr->getId(), zomPtr->getId(), 0, MessageType::HIT_ZOMBIE, atkDmgPtr);
+        }
+
+
     }
 }
 
@@ -208,6 +327,20 @@ void GameScreenUpdate::zombieDeletionManager() {
     }
 }
 
+void GameScreenUpdate::updateBulletExplosions(const float& delta) {
+    for (unsigned int index = 0; index < aniExpTimerPtrs.size(); ++index) {
+        AnimationExplosionTimer* timerPtr = aniExpTimerPtrs.at(index);
+
+        timerPtr->stateTime -= delta;
+        // Delete the timer
+        if (timerPtr->stateTime <= 0) {
+            aniExpTimerPtrs.erase(aniExpTimerPtrs.begin() + index);
+            delete timerPtr;
+            --index;
+        }
+    }
+}
+
 
 //-------------------- Helper functions ------------------
 const bool GameScreenUpdate::zombieInRange(const FloatRect* canRect, const FloatRect* zomRect, const float& range) {
@@ -232,7 +365,7 @@ const bool GameScreenUpdate::isInRange(const float& x1, const float& y1, const f
 void GameScreenUpdate::spawnZombie(const int& spawnAreaNumber) {
     int fullLife = zomSpawnManagerPtr->getStageNumber() * 100;
     Zombie* newZom;
-    float speed = 64;
+    float speed = 16;
     float rotation = 0;
     float width = 32;
     float height = 32;
