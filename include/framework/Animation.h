@@ -2,14 +2,15 @@
 #define ANIMATION_H
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
 #include <vector>
 
 using namespace sf;
 
-/**
-    Plays an animation from texture sprite sheet, set the origin to the center (as I don't see a reason as of now that the origin shouldn't be
-    set this way)
-*/
+//---------------------------------------------------------------------------------
+//  Plays an animation from texture sprite sheet, set the origin to the center
+//  (as I don't see a reason as of now that the origin shouldn't be set this way)
+//---------------------------------------------------------------------------------
 
 
 // For debugging
@@ -33,18 +34,16 @@ class Animation {
         void setStartingFrame(const int&);
         void setEndingFrame(const int&);
 
-        int& getWidth();
-        int& getHeight();
+        const int& getWidth();
+        const int& getHeight();
 
-        Vector2f& getPosition();
+        const Vector2f& getPosition();
 
         ///< Testing
         void setNextRow(const bool&);
 
         static const int NORMAL;
         static const int LOOP;
-
-        const float getModulus(const float& firstNum, const float& secondNum);
         virtual ~Animation();
     protected:
         void updateSprite(const float& stateTime);
@@ -66,8 +65,6 @@ class Animation {
         IntRect drawRect;
 
         int playMode;
-
-
 };
 
 #endif // ANIMATION_H

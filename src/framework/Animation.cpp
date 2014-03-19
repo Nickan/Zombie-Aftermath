@@ -40,8 +40,8 @@ void Animation::draw(RenderWindow& win, const float& x, const float& y, const fl
 }
 
 void Animation::updateSprite(const float& stateTime) {
-    // Noninteger use of modulus is a big NONO.
-    float currentStateTime = getModulus(stateTime, duration);
+    // I just discovered the fmod() is existing, lately read it from the reference >_<
+    float currentStateTime = abs(fmod(stateTime, duration));
 
     switch (playMode) {
     case NORMAL:
@@ -59,37 +59,6 @@ void Animation::updateSprite(const float& stateTime) {
     drawRect.left = width * frameX;
     drawRect.top = height * frameY;
     sprite.setTextureRect(drawRect);
-
-    //...
-//    cout << "Current frame: " << currentFrame << endl;
-}
-
-//--------------------------------------------------------------
-//
-//  My attempt to simulate the modulus operation
-//  Not accurate, I might change this to double for accuracy
-//--------------------------------------------------------------
-const float Animation::getModulus(const float& firstNum, const float& secondNum) {
-    float mod = 0;
-    float div = firstNum / secondNum;
-
-    if (div >= 1.0f) {
-        // If the first number has a greater value than the second number
-        // Example 1: first num = 7.5, second num = 5, answer is 1.5
-        // Exmaple 2: first num = 12.5, second num = 5, answer is 2.5
-        // Get the decimal place by setting temporary the div to int
-            // float excessNum =  div - ((int) div);
-            // float mod = excessNum * secondNum;
-        // Then get the difference
-        float excessNum = div - ((int) div);
-        mod = excessNum * secondNum;
-    } else {
-        mod = firstNum;
-    }
-
-    //...
-//    cout << "Modulus: " << mod << endl;
-    return mod;
 }
 
 void Animation::setPosition(const float& x, const float& y) {
@@ -107,15 +76,15 @@ void Animation::setScale(const float& width, const float& height) {
 }
 
 
-int& Animation::getWidth() {
+const int& Animation::getWidth() {
     return width;
 }
 
-int& Animation::getHeight() {
+const int& Animation::getHeight() {
     return height;
 }
 
-Vector2f& Animation::getPosition() {
+const Vector2f& Animation::getPosition() {
     return position;
 }
 
