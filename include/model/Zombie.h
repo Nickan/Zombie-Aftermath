@@ -49,7 +49,7 @@ class Zombie : public Entity {
         // Will be called when there the zombie is not moving and there is still a path in the path list
         void setMovement();
 
-        unsigned int worldUnit;
+        static unsigned int worldUnit;
         float speed;
         float fullSpeed;
         float rotationSpeed;

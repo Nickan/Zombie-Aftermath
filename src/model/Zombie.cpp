@@ -1,11 +1,15 @@
 #include "Zombie.h"
 
+unsigned int Zombie::worldUnit = 32;
+
 Zombie::Zombie(FloatRect* boundPtr, const int& life, const float& rotation, const float& speed)
-: Entity(boundPtr, rotation), life(life), speed(speed) {
-    worldUnit = 32;
+: Entity(boundPtr, rotation) {
+    this->life = life;
+    this->speed = speed;
+
     rotationSpeed = 100.0f;
-    fullLife = life;
-    fullSpeed = speed;
+    fullLife = this->life;
+    fullSpeed = this->speed;
 
     goalNodePtr = NULL;
     goalReached = false;
@@ -44,8 +48,8 @@ void Zombie::update(const float& delta) {
 
             // Detects if the zombie has reached its goal
             if (goalNodePtr != NULL) {
-                if (goalNodePtr->x == (int) (boundPtr->left / worldUnit) &&
-                    goalNodePtr->y == (int) (boundPtr->top / worldUnit) ) {
+                if (goalNodePtr->x == (unsigned int) (boundPtr->left / worldUnit) &&
+                    goalNodePtr->y == (unsigned int) (boundPtr->top / worldUnit) ) {
                     goalReached = true;
                 }
             }
@@ -104,8 +108,9 @@ const bool Zombie::handleMessage(Message* msgPtr) {
 
             // If killed by the attack
             if (life <= 0) {
-                // Add money based on the full life
+                // Add money and score based on the full life
                 Settings::cash += (int) (fullLife / 50);
+                Settings::score += (int) (fullLife / 20);
             }
         } else {
             MessageDispatcher::sendMessage(id, msgPtr->senderId, 0, MessageType::KILLED, NULL);
@@ -117,6 +122,8 @@ const bool Zombie::handleMessage(Message* msgPtr) {
         // Check if still alive
         if (life > 0) {
             frozen = true;
+            // Reset the slow timer if there is existing one in effect
+            slowEffectTimer = 0;
 
             // Container for the attack damage
             Vector2i* atkDmgAndSlowPtr = (Vector2i*) msgPtr->extraInfo;
