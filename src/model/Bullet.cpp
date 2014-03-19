@@ -11,7 +11,25 @@ Bullet::Bullet(FloatRect* boundPtr, float rotation)
     targetRectPtr = NULL;
 }
 
-const bool Bullet::targetHit() {
+void Bullet::update(const float& delta) {
+    // Don't process anything when not set to be fired
+    if (!fired) {
+        return;
+    }
+
+    trackTarget(delta);
+
+    // Target is hit
+    if (getDistFromTarget() < boundAllowance * boundAllowance) {
+        fired = false;
+        playExplosion = true;
+        targetHit = true;
+    } else {
+        targetHit = false;
+    }
+}
+
+const float Bullet::getDistFromTarget() {
     float centerX = boundPtr->left + (boundPtr->width / 2);
     float centerY = boundPtr->top + (boundPtr->height / 2);
 
@@ -28,13 +46,11 @@ const bool Bullet::targetHit() {
         vec2.y = targetY - centerY;
     }
 
-    if (vec2.getLengthSqr() < boundAllowance * boundAllowance) {
-        targetRectPtr = NULL;
-        fired = false;
-        return true;
-    }
+    return vec2.getLengthSqr();
+}
 
-    return false;
+const bool& Bullet::isTargetHit() {
+    return targetHit;
 }
 
 void Bullet::trackTarget(const float& delta) {
@@ -62,16 +78,17 @@ void Bullet::trackTarget(const float& delta) {
 }
 
 void Bullet::setAsCenter(const float& x, const float& y) {
-    fired = true;
     boundPtr->left = x - boundPtr->width / 2;
     boundPtr->top = y - boundPtr->height / 2;
 }
 
 void Bullet::setTarget(FloatRect* targetRect) {
+    fired = true;
     this->targetRectPtr = targetRect;
 }
 
 void Bullet::setTarget(const float& targetX, const float& targetY) {
+    fired = true;
     this->targetX = targetX;
     this->targetY = targetY;
 }
@@ -79,6 +96,15 @@ void Bullet::setTarget(const float& targetX, const float& targetY) {
 
 const bool& Bullet::isFired() {
     return fired;
+}
+
+const bool Bullet::playExplosionAnimation() {
+    // Set it to false when detected true, making sure returns true only once per set true
+    if (playExplosion) {
+        playExplosion = false;
+        return true;
+    }
+    return false;
 }
 
 Bullet::~Bullet() {

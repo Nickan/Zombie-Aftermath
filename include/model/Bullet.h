@@ -20,17 +20,21 @@ class Bullet {
         Bullet(FloatRect* boundPtr, float rotation);
         virtual ~Bullet();
 
-        // Returns whether it hits the target
-        const bool targetHit();
+        void update(const float& delta);
 
-        const bool& isFired();
-
-        void trackTarget(const float& delta);
-
+        // Setting center position
         void setAsCenter(const float& x, const float& y);
 
         void setTarget(FloatRect* targetRect);
         void setTarget(const float& targetX, const float& targetY);
+
+        // Returns whether it hits the target
+        const bool& isTargetHit();
+        const bool& isFired();
+
+        // Switches to false every call to assure that will only return true once when
+        // set to true every bullet hit the target
+        const bool playExplosionAnimation();
 
         FloatRect* boundPtr;
         float rotation;
@@ -42,9 +46,17 @@ class Bullet {
 
     protected:
     private:
+        void trackTarget(const float& delta);
+
+        const float getDistFromTarget();
+
         static Vec2 vec2;
 
         bool fired;
+        bool targetHit;
+
+        // Exclusively for playing explosion
+        bool playExplosion;
 
         // The target is only coordinates on the map
         float targetX;
