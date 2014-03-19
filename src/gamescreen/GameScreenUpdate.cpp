@@ -435,18 +435,24 @@ void GameScreenUpdate::createCannon(const string& canName, const int& tileX, con
     float rotationSpeed = 100.0f;
 
     if (canName == "normalcannon") {
+        attackDamage = 20;
+        attackDelay = 0.5f;
         norCanPtrs.push_back(new Cannon(new FloatRect(tileX * 32, tileY * 32, 32, 32), attackDamage,
                                 range, attackDelay, rotation, rotationSpeed));
     }
 
     int blastRadius = 64;
     if (canName == "icecannon") {
+        attackDamage = 5;
+        attackDelay = 1.0f;
         float slowEffectPercentage = 50.0f;
         iceCanPtrs.push_back(new IceCannon(new FloatRect(tileX * 32, tileY * 32, 32, 32), attackDamage,
                                 range, attackDelay, rotation, rotationSpeed, blastRadius, slowEffectPercentage));
     }
 
     if (canName == "splashcannon") {
+        attackDamage = 20;
+        attackDelay = 1.5f;
         splashCanPtrs.push_back(new SplashCannon(new FloatRect(tileX * 32, tileY * 32, 32, 32), attackDamage,
                                 range, attackDelay, rotation, rotationSpeed, blastRadius));
     }
@@ -479,12 +485,18 @@ GameScreenUpdate::~GameScreenUpdate() {
     delete zomTarDistPtr;
     delete zomSpawnManagerPtr;
 
-    for (unsigned int index = 0; index < zomPtrs.size(); ++index) {
-        delete zomPtrs.at(index);
-    }
-
     // Delete the timer
     for (unsigned int index = 0; index < modelGcTimerPtrs.size(); ++index) {
         delete modelGcTimerPtrs.at(index);
     }
+
+    // Delete the timer
+    for (unsigned int index = 0; index < aniExpTimerPtrs.size(); ++index) {
+        delete aniExpTimerPtrs.at(index);
+    }
+
+    for (unsigned int index = 0; index < zomPtrs.size(); ++index) {
+        delete zomPtrs.at(index);
+    }
+
 }
