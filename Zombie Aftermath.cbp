@@ -64,6 +64,7 @@
 		<Unit filename="include/framework/Animation.h" />
 		<Unit filename="include/framework/Game.h" />
 		<Unit filename="include/framework/GameAudio.h" />
+		<Unit filename="include/framework/GameSound.h" />
 		<Unit filename="include/framework/GameSprite.h" />
 		<Unit filename="include/framework/GameText.h" />
 		<Unit filename="include/framework/Input.h" />
@@ -94,6 +95,7 @@
 		<Unit filename="include/gamescreen/ZombieSpawnManager.h" />
 		<Unit filename="include/menuscreen/MenuScreen.h" />
 		<Unit filename="include/menuscreen/MenuScreenInput.h" />
+		<Unit filename="include/model/AnimationExplosionTimer.h" />
 		<Unit filename="include/model/Bullet.h" />
 		<Unit filename="include/model/Cannon.h" />
 		<Unit filename="include/model/Entity.h" />
@@ -110,6 +112,7 @@
 		<Unit filename="src/framework/Animation.cpp" />
 		<Unit filename="src/framework/Game.cpp" />
 		<Unit filename="src/framework/GameAudio.cpp" />
+		<Unit filename="src/framework/GameSound.cpp" />
 		<Unit filename="src/framework/GameSprite.cpp" />
 		<Unit filename="src/framework/GameText.cpp" />
 		<Unit filename="src/framework/Input.cpp" />
@@ -140,6 +143,7 @@
 		<Unit filename="src/gamescreen/ZombieSpawnManager.cpp" />
 		<Unit filename="src/menuscreen/MenuScreen.cpp" />
 		<Unit filename="src/menuscreen/MenuScreenInput.cpp" />
+		<Unit filename="src/model/AnimationExplosionTimer.cpp" />
 		<Unit filename="src/model/Bullet.cpp" />
 		<Unit filename="src/model/Cannon.cpp" />
 		<Unit filename="src/model/Entity.cpp" />
