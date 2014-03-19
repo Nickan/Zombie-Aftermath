@@ -78,6 +78,24 @@ void HeadsUpDisplay::drawMinimap(RenderWindow& win, const vector<Zombie*> zomPtr
 }
 
 
+void HeadsUpDisplay::drawZomSpawnManager(RenderWindow& win, ZombieSpawnManager* zomSpawnManagerPtr) {
+    int timer = zomSpawnManagerPtr->getSpawnCountDown();
+    // If the timer has not done yet
+    if (timer > 0) {
+        float normalCharSize = 12;
+        float bigCharSize = 100;
+
+        gameTextPtr->setCharSize(normalCharSize);
+        gameTextPtr->draw(win, "Zombie will attack in:", (Game::getWidth() / 2) - (bigCharSize / 2),
+            (Game::getHeight() / 2) - (bigCharSize), Color::Yellow);
+
+        gameTextPtr->setCharSize(bigCharSize);
+        gameTextPtr->draw(win, ToString::getString(timer), (Game::getWidth() / 2) - (bigCharSize / 4),
+            (Game::getHeight() / 2) - bigCharSize, Color::Blue);
+    }
+}
+
+
 void HeadsUpDisplay::setMiniMapBgImage(const Image& image) {
     miniMapPtr->setImage(image);
 }

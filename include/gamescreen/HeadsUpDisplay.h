@@ -8,6 +8,7 @@
 #include "Settings.h"
 #include "TextureAtlas.h"
 #include "ToString.h"
+#include "ZombieSpawnManager.h"
 
 class HeadsUpDisplay {
     public:
@@ -18,6 +19,8 @@ class HeadsUpDisplay {
         void drawGameOver(RenderWindow& win);
         void drawMinimap(RenderWindow& win, const vector<Zombie*> zomPtrs,
             const vector<Cannon*> norCanPtrs, const vector<SplashCannon*> splCanPtrs, const vector<IceCannon*> iceCanPtrs);
+
+        void drawZomSpawnManager(RenderWindow& win, ZombieSpawnManager* zomSpawnManagerPtr);
 
         void setRestartButtonOpaque(const bool&);
         void setMenuButtonOpaque(const bool&);
