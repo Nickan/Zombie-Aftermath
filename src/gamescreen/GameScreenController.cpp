@@ -6,7 +6,9 @@ GameScreenController::GameScreenController(GameScreen* gameScreenPtr) {
 }
 
 void GameScreenController::keyPressed(const int& keycode) {
-
+    if (keycode == Keyboard::Escape) {
+        gameScreenPtr->gamePtr->setScreen(new MenuScreen(gameScreenPtr->gamePtr));
+    }
 }
 
 void GameScreenController::keyReleased(const int& keycode) {
