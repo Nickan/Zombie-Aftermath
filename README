@@ -5,4 +5,5 @@ I created this game on Windows 7 and decided to revive it using Ubuntu 13.10,
 and the experience is so painful as there are many things that has to be done 
 by hand. My aim is to improve my overall C++ skills, polish this game. 
 
-I will provide the needed files (The compiled SFML 2.1) and other updates later.
+The debug and release folder inside bin folder contains their corresponding
+executable files, tested running on Windows XP SP2 and 7 SP1.
