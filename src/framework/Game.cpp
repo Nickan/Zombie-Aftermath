@@ -21,21 +21,27 @@ void Game::startLooping() {
         win.clear();
 
         float delta = timerPtr->getDeltaTime();
-        scrPtr->render(win, delta);
+        if (this->scrPtr != NULL) {
+            scrPtr->render(win, delta);
+        }
 
         Event event;
         while (win.pollEvent(event)) {
             if (event.type == Event::Closed) {
                 win.close();
             }
-            scrPtr->updateInputEvent(win, event);
+            if (this->scrPtr != NULL) {
+                scrPtr->updateInputEvent(win, event);
+            }
         }
 
         // For mouse update
         cumulativeTime += delta;
         if (cumulativeTime >= updateTime) {
             cumulativeTime -= updateTime;
-            scrPtr->updateMouseMotion(win);
+            if (this->scrPtr != NULL) {
+                scrPtr->updateMouseMotion(win);
+            }
         }
 
 
@@ -49,7 +55,9 @@ void Game::startLooping() {
 }
 
 void Game::setScreen(Screen* scrPtr) {
-    delete this->scrPtr;
+    if (this->scrPtr != NULL) {
+        delete this->scrPtr;
+    }
     this->scrPtr = scrPtr;
 }
 
