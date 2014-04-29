@@ -6,4 +6,6 @@ and the experience is so painful as there are many things that has to be done
 by hand. My aim is to improve my overall C++ skills, polish this game. 
 
 The debug and release folder inside bin folder contains their corresponding
-executable files, tested running on Windows XP SP2 and 7 SP1.
+executable files and , tested running on Windows XP SP2/7 SP1 and Ubuntu 13.10.
+
+
