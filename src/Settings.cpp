@@ -69,7 +69,7 @@ void Settings::addScoreToList() {
 void Settings::loadSettings() {
     ///< To be changed later, for sound settings
     fileSettingsReader.clear();
-    fileSettingsReader.open("res/settings.txt");
+    fileSettingsReader.open("assets/settings.txt");
 
     if (fileSettingsReader.is_open()) {
         int settingsType;
@@ -85,7 +85,7 @@ void Settings::loadSettings() {
 
 void Settings::saveSettings() {
     fileSettingsWriter.clear();
-    fileSettingsWriter.open("res/settings.txt");
+    fileSettingsWriter.open("assets/settings.txt");
     if (soundEnable) {
         fileSettingsWriter << 1 << endl;
     } else {
